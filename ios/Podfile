@@ -8,6 +8,8 @@ target 'KwangWoonUniv_MileageService' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'KwangWoonUniv_MileageServiceTests' do
     inherit! :complete
     # Pods for testing

@@ -14,6 +14,7 @@ import MainScreen from './components/MainScreen.js'
 import LoginScreen from './components/LoginScreen'
 import LoadingScreen from './components/LoadingScreen'
 import RegisterScreen from './components/RegisterScreen'
+import HomeScreen from './components/HomeScreen'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -28,23 +29,22 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
 //
 //
-const AppStackNavigator = createStackNavigator({
-  Main: {screen: MainScreen} //MainScreen 등록
+const AppStack = createStackNavigator({
+  Main: MainScreen //MainScreen 등록
 })
 
 const AuthStack = createStackNavigator({
   Login: LoginScreen,
-  RegisterScreen: RegisterScreen
+  Register: RegisterScreen
 })
 
 export default createAppContainer(
   createSwitchNavigator({
     Loading: LoadingScreen,
-    App: AppStackNavigator,
+    App: AppStack,
     Auth: AuthStack
   },
   {
