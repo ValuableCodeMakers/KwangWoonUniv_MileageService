@@ -22,6 +22,7 @@ class RegisterScreen extends Component {
     errorMessage: null,
   };
 
+  // 로그인 
   handleSignUp = () => {
     firebase
       .auth()

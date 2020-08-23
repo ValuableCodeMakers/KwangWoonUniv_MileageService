@@ -7,21 +7,21 @@ import {
     StyleSheet
     } from 'react-native';
  
-class HomeTab extends Component{
+class MapTab extends Component{
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
-            <Icon name='ios-search' style={{ color: tintColor }} />
+            <Icon name='ios-map' style={{ color: tintColor }} />
         )
     }
     render(){
         return (
             <View style={style.container}>
-                <Text>Search</Text>
+                <Text>지도</Text>
             </View>
         );
     }
 }
-export default HomeTab;
+export default MapTab;
  
 const style = StyleSheet.create({
     container: {

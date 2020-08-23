@@ -1,10 +1,31 @@
 import React, {Component} from 'react';
-import {Content, Icon, Thumbnail, Body, Right, Header, Left,Container} from 'native-base';
+import {
+  Content,
+  Icon,
+  Thumbnail,
+  Body,
+  Right,
+  Header,
+  Left,
+  Container,
+} from 'native-base';
 import {View, Text, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import CardComponent from '../CardComponent';
+import * as firebase from 'firebase';
+import { createStackNavigator } from 'react-navigation-stack';
 
+const App = createStackNavigator(
+  {
+    
+  }
+)
 class HomeTab extends Component {
+  // 로그아웃 기능
+  signOutUser = () => {
+    firebase.auth().signOut();
+  };
+
   static navigationOptions = {
     tabBarIcon: ({tintColor}) => (
       <Icon name="ios-home" style={{color: tintColor}} />
@@ -14,20 +35,28 @@ class HomeTab extends Component {
   render() {
     return (
       <Container style={style.container}>
-        <Header style={{backgroundColor:'white'}}>
+        <Header style={{backgroundColor: '#353b48'}}>
           <Left>
-            <Icon name="ios-camera-outline" style={{paddingLeft: 10}} />
+            <Icon
+              name="person"
+              style={{paddingLeft: 10, color: 'white'}}
+              onPress={() => {
+                this.props.navigation.navigate('Profile');
+              }}
+            />
           </Left>
-          <Body>
-            <Text style={{fontWeight: 'bold'}}>Instagram</Text>
-          </Body>
+          <Body style={{justifyContent: 'center'}}></Body>
           <Right>
-            <Icon name="ios-send-outline" style={{paddingRight: 10}} />
+            <Icon
+              name="ios-send-outline"
+              onPress={this.signOutUser}
+              style={{paddingRight: 10, color: 'white'}}
+            />
           </Right>
         </Header>
 
         <Content>
-          <View style={{height: 90}}>
+          {/* <View style={{height: 90}}>
             <ScrollView
               contentContainerStyle={{
                 alignItems: 'center',
@@ -86,11 +115,9 @@ class HomeTab extends Component {
                 <Text>0_o</Text>
               </View>
             </ScrollView>
-          </View>
+          </View> */}
           <CardComponent imgSrc="1" likes="25"></CardComponent>
           <CardComponent imgSrc="2" likes="30"></CardComponent>
-          <CardComponent imgSrc="3" likes="150"></CardComponent>
-          <CardComponent imgSrc="4" likes="85"></CardComponent>
         </Content>
       </Container>
     );
@@ -101,7 +128,7 @@ export default HomeTab;
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: '#353b48',
   },
   story: {
     borderColor: '#8e44ad',

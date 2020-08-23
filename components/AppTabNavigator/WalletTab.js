@@ -7,21 +7,21 @@ import {
     StyleSheet
     } from 'react-native';
  
-class HomeTab extends Component{
+class WalletTab extends Component{
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
-            <Icon name='ios-heart' style={{ color: tintColor }} />
+            <Icon name='ios-wallet-sharp' style={{ color: tintColor }} />
         )
     }
     render(){
         return (
             <View style={style.container}>
-                <Text>Likes</Text>
+                <Text>결제 & 지갑</Text>
             </View>
         );
     }
 }
-export default HomeTab;
+export default WalletTab;
  
 const style = StyleSheet.create({
     container: {

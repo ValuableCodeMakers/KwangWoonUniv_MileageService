@@ -12,7 +12,7 @@ import {
 } from 'native-base';
 
 import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
-import CardComponent from '../CardComponent';
+import CardComponent from './CardComponent';
 
 var {width, height} = Dimensions.get('window');
 

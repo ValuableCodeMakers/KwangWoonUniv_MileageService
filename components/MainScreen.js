@@ -3,16 +3,26 @@ import {View, Text, StyleSheet, Platform} from 'react-native';
 import {Icon} from 'native-base';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
+import * as firebase from 'firebase';
 
 import HomeTab from './AppTabNavigator/HomeTab';
-import SearchTab from './AppTabNavigator/SearchTab';
-import AddMediaTab from './AppTabNavigator/AddMediaTab';
-import LikesTab from './AppTabNavigator/LikesTab';
-import ProfileTab from './AppTabNavigator/ProfileTab';
+import MapTab from './AppTabNavigator/MapTab';
+import WalletTab from './AppTabNavigator/WalletTab';
+import RankTab from './AppTabNavigator/RankTab';
 
 export default class MainScreen extends Component {
+  state = {
+    email: '',
+    displayName: '',
+  };
+
+  componentDidMount() {
+    const {email, displayName} = firebase.auth().currentUser;
+    this.setState({email, displayName});
+  }
+
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   render() {
@@ -23,13 +33,10 @@ export default class MainScreen extends Component {
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
 const AppTabNavigator = createMaterialTopTabNavigator(
   {
-    HomeTab: {
-      screen: HomeTab,
-    },
-    SearchTab: {screen: SearchTab},
-    AddMediaTab: {screen: AddMediaTab},
-    LikesTab: {screen: LikesTab},
-    ProfileTab: {screen: ProfileTab},
+    홈: {screen: HomeTab},
+    지도: {screen: MapTab},
+    결제: {screen: WalletTab},
+    랭킹: {screen: RankTab},
   },
   {
     bounces: true,
@@ -37,19 +44,23 @@ const AppTabNavigator = createMaterialTopTabNavigator(
     swipeEnabled: true,
     tabBarPosition: 'bottom',
     tabBarOptions: {
+      labelStyle: {fontSize: 12},
       style: {
+        borderTopWidth: 1,
+        height: 75,
         ...Platform.select({
           ios: {
             backgroundColor: 'white',
           },
-          android: {backgroundColor: 'white'},
+          android: {backgroundColor: '#353b48'},
         }),
       },
+
       iconStyle: {height: 30, width: 30},
-      activeTintColor: '#000',
-      inactiveTintColor: '#d1cece',
+      activeTintColor: '#b33939',
+      inactiveTintColor: 'white',
       upperCaseLabel: false,
-      showLabel: false,
+      showLabel: true,
       showIcon: true,
     },
   },
