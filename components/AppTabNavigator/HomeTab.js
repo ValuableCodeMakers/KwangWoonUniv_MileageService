@@ -15,11 +15,6 @@ import CardComponent from '../CardComponent';
 import * as firebase from 'firebase';
 import { createStackNavigator } from 'react-navigation-stack';
 
-const App = createStackNavigator(
-  {
-    
-  }
-)
 class HomeTab extends Component {
   // 로그아웃 기능
   signOutUser = () => {
@@ -41,6 +36,7 @@ class HomeTab extends Component {
               name="person"
               style={{paddingLeft: 10, color: 'white'}}
               onPress={() => {
+                console.log(this.props.navigation);
                 this.props.navigation.navigate('Profile');
               }}
             />

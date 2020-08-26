@@ -8,8 +8,7 @@ import MainScreen from './components/MainScreen.js';
 import LoginScreen from './components/LoginScreen';
 import LoadingScreen from './components/LoadingScreen';
 import RegisterScreen from './components/RegisterScreen';
-import HomeScreen from './components/HomeScreen';
-import ProfileScreen from './components/ProfileScreen';
+import Logintest from './components/Login';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -27,13 +26,9 @@ firebase.initializeApp(firebaseConfig);
 
 //
 //
-const AppStack = createStackNavigator(
-  {
-    Main: MainScreen, //MainScreen 등록
-    Profile: ProfileScreen,
-  },
-  {initialRouteName: 'Main'},
-);
+const AppStack = createStackNavigator({
+  Main: MainScreen, //MainScreen 등록
+});
 
 const AuthStack = createStackNavigator({
   Login: LoginScreen,

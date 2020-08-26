@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Platform} from 'react-native';
-import {Icon} from 'native-base';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 import * as firebase from 'firebase';
 
@@ -9,8 +9,13 @@ import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
 import WalletTab from './AppTabNavigator/WalletTab';
 import RankTab from './AppTabNavigator/RankTab';
+import ProfileScreen from './ProfileScreen';
 
 export default class MainScreen extends Component {
+  static navigationOptions = {
+    headerShown: false,
+  };
+
   state = {
     email: '',
     displayName: '',
@@ -20,10 +25,6 @@ export default class MainScreen extends Component {
     const {email, displayName} = firebase.auth().currentUser;
     this.setState({email, displayName});
   }
-
-  static navigationOptions = {
-    headerShown: false,
-  };
 
   render() {
     return <AppTabContainer></AppTabContainer>;
@@ -65,7 +66,19 @@ const AppTabNavigator = createMaterialTopTabNavigator(
     },
   },
 );
-const AppTabContainer = createAppContainer(AppTabNavigator);
+
+const AppTabContainer = createAppContainer(
+  createStackNavigator(
+    {
+      AppTabNavigator : AppTabNavigator, //MainScreen 등록
+      Profile: ProfileScreen,
+    },
+    {
+      headerMode: 'none',
+      initialRouteName: 'AppTabNavigator',
+    },
+  ),
+);
 
 //
 //

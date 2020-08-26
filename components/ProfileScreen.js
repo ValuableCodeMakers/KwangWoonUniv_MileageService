@@ -17,17 +17,18 @@ import CardComponent from './CardComponent';
 var {width, height} = Dimensions.get('window');
 
 var imgs = [
-  require('../../src/p1.jpg'),
-  require('../../src/p2.jpg'),
-  require('../../src/p3.jpg'),
-  require('../../src/p4.jpg'),
-  require('../../src/p5.jpg'),
-  require('../../src/p6.jpg'),
-  require('../../src/p7.jpg'),
+  require('../src/p1.jpg'),
+  require('../src/p2.jpg'),
+  require('../src/p3.jpg'),
+  require('../src/p4.jpg'),
+  require('../src/p5.jpg'),
+  require('../src/p6.jpg'),
+  require('../src/p7.jpg'),
 ];
 
-class HomeTab extends Component {
+class ProfileScreen extends Component {
   static navigationOptions = {
+    headerShown: false,
     tabBarIcon: ({tintColor}) => (
       <Icon name="person" style={{color: tintColor}} />
     ),
@@ -105,7 +106,7 @@ class HomeTab extends Component {
             <View style={{flexDirection: 'row'}}>
               <View style={{flex: 1.2, alignItems: 'center'}}>
                 <Thumbnail
-                  source={require('../../src/p1.jpg')}
+                  source={require('../src/p1.jpg')}
                   style={{
                     width: 100,
                     height: 100,
@@ -183,7 +184,7 @@ class HomeTab extends Component {
     );
   }
 }
-export default HomeTab;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
