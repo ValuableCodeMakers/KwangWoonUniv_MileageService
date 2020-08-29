@@ -92,7 +92,7 @@ class RegisterScreen extends Component {
           </View>
 
           <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-            <Text style={{color: '#ffffff', fontWeight: 'bold'}}>회원가입</Text>
+            <Text style={{color: '#ffffff', fontWeight: 'bold', fontSize:18}}>회원가입</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -142,12 +142,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#c0392b',
-    borderRadius: 4,
-    height: 50,
+    borderRadius: 35,
+    height: 70,
+    elevation: 10,
   },
   back: {
     position: 'absolute',
-    top: 40,
+    top: 30,
     left: 30,
     alignItems: 'center',
     justifyContent: 'center',

@@ -9,7 +9,11 @@ import {
 } from 'react-native';
 import * as firebase from 'firebase';
 import Animated, {Easing} from 'react-native-reanimated';
-import {TapGestureHandler, State} from 'react-native-gesture-handler';
+import {
+  TapGestureHandler,
+  State,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 const {width, height} = Dimensions.get('window');
 const {
   Value,
@@ -66,7 +70,7 @@ class LoginScreen extends Component {
   constructor() {
     super();
 
-    this.buttonOpacity = new Value(1);
+    this.buttonOpacity = new Value(1); // 초기 값
     this.onStateChange = event([
       {
         nativeEvent: ({state}) =>
@@ -99,13 +103,13 @@ class LoginScreen extends Component {
 
     this.backGroundY = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
-      outputRange: [-height / 3, 0],
+      outputRange: [-height / 2.5, 0],
       extrapolate: Extrapolate.CLAMP,
     });
 
     this.textInputZindex = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
-      outputRange: [-1, 1],
+      outputRange: [1, -1],
       extrapolate: Extrapolate.CLAMP,
     });
 
@@ -127,6 +131,7 @@ class LoginScreen extends Component {
       extrapolate: Extrapolate.CLAMP,
     });
   }
+
   state = {
     email: '',
     password: '',
@@ -154,37 +159,7 @@ class LoginScreen extends Component {
       //     )}
       //   </View>
 
-      //   <View style={styles.form}>
-      //     <View>
-      //       <Text style={styles.inputTitle}>Email Address</Text>
-      //       <TextInput
-      //         style={styles.input}
-      //         autoCapitalize="none"
-      //         onChangeText={(email) => this.setState({email})}
-      //         value={this.state.email}></TextInput>
-      //     </View>
 
-      //     <View style={{marginTop: 30}}>
-      //       <Text style={styles.inputTitle}>Password</Text>
-      //       <TextInput
-      //         secureTextEntry={true}
-      //         style={styles.input}
-      //         autoCapitalize="none"
-      //         onChangeText={(password) => this.setState({password})}
-      //         value={this.state.password}></TextInput>
-      //     </View>
-
-      //     <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
-      //       <Text style={{color: '#ffffff', fontWeight: 'bold'}}>로그인</Text>
-      //     </TouchableOpacity>
-
-      //     <TouchableOpacity style={{alignSelf: 'center', marginTop: 30}}>
-      //       <Text onPress={() => this.props.navigation.navigate('Register')}>
-      //         계정이 없으신가요? 회원가입
-      //       </Text>
-      //     </TouchableOpacity>
-      //   </View>
-      // </View>
       <View
         style={{flex: 1, backgroundColor: 'white', justifyContent: 'flex-end'}}>
         <Animated.View
@@ -194,9 +169,10 @@ class LoginScreen extends Component {
           }}>
           <Image
             source={require('../src/login.png')}
-            style={{flex: 1, height: null, width: null}}></Image>
+            style={{flex: 1, height: null, width: null, zIndex: -1}}></Image>
         </Animated.View>
-        <View style={{height: height / 3, justifyContent: 'center'}}>
+
+        <View style={{height: height / 2.5, justifyContent: 'center'}}>
           <TapGestureHandler onHandlerStateChange={this.onStateChange}>
             <Animated.View
               style={{
@@ -204,26 +180,29 @@ class LoginScreen extends Component {
                 opacity: this.buttonOpacity,
                 transform: [{translateY: this.buttonY}],
               }}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>로그인</Text>
+              <Text style={{fontSize: 18, fontWeight: 'bold'}}>로그인</Text>
             </Animated.View>
           </TapGestureHandler>
 
-          <Animated.View
-            style={{
-              opacity: this.buttonOpacity,
-              transform: [{translateY: this.buttonY}],
-            }}>
-            <View style={styles.button}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>회원가입</Text>
-            </View>
-          </Animated.View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Register')}>
+            <Animated.View
+              style={{
+                ...styles.button,
+                opacity: this.buttonOpacity,
+                transform: [{translateY: this.buttonY}],
+              }}>
+              <Text style={{fontSize: 18, fontWeight: 'bold'}}>회원가입</Text>
+            </Animated.View>
+          </TouchableOpacity>
 
+          {/* 로그인 화면 */}
           <Animated.View
             style={{
               zIndex: this.textInputZindex,
               opacity: this.textInputOpacity,
               transform: [{translateY: this.textInputY}],
-              height: height / 3,
+              height: height / 2.5,
               ...StyleSheet.absoluteFill,
               top: null,
               justifyContent: 'center',
@@ -233,6 +212,7 @@ class LoginScreen extends Component {
                 <Animated.Text
                   style={{
                     fontSize: 15,
+                    fontWeight: 'bold',
                     transform: [{rotate: concat(this.rotateCross, 'deg')}],
                   }}>
                   X
@@ -254,9 +234,11 @@ class LoginScreen extends Component {
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}></TextInput>
 
-            <Animated.View style={styles.button}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>로그인</Text>
-            </Animated.View>
+            <TouchableOpacity opacity={0.1} onPress={this.handleLogin}>
+              <Animated.View style={{...styles.button, marginTop: 10}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>로그인</Text>
+              </Animated.View>
+            </TouchableOpacity>
           </Animated.View>
         </View>
       </View>
@@ -267,6 +249,8 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   greeting: {
     marginTop: 32,
@@ -285,18 +269,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
   },
-  form: {
-    marginTop: 10,
-    marginBottom: 40,
-    marginHorizontal: 30,
-  },
   inputTitle: {
     color: '#7f8c8d',
     fontSize: 15,
     textTransform: 'uppercase',
   },
+
   closeButton: {
-    zIndex:1,
     height: 40,
     width: 40,
     backgroundColor: 'white',
@@ -306,7 +285,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -20,
     left: width / 2 - 20,
-    elevation: 3,
+    elevation: 30,
   },
   button: {
     marginHorizontal: 25,
@@ -316,16 +295,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 35,
     height: 70,
-    elevation: 3,
+    elevation: 10,
   },
   textInput: {
     height: 50,
     borderRadius: 25,
-    borderWidth: 0.5,
+    borderWidth: 1,
     marginHorizontal: 25,
     paddingLeft: 10,
     marginVertical: 5,
-    borderColor: 'black',
+    borderColor: '#bdc3c7',
   },
 });
 

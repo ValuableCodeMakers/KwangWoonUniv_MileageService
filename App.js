@@ -8,7 +8,6 @@ import MainScreen from './components/MainScreen.js';
 import LoginScreen from './components/LoginScreen';
 import LoadingScreen from './components/LoadingScreen';
 import RegisterScreen from './components/RegisterScreen';
-import Logintest from './components/Login';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
