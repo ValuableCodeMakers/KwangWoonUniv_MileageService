@@ -17,13 +17,12 @@ export default class MainScreen extends Component {
   };
 
   state = {
-    email: '',
-    displayName: '',
+    id: '',
   };
 
   componentDidMount() {
-    const {email, displayName} = firebase.auth().currentUser;
-    this.setState({email, displayName});
+    const id  = this.props.navigation.getParam('id')
+    this.setState(id);
   }
 
   render() {

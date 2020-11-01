@@ -6,8 +6,8 @@ import {
   Image,
   Dimensions,
   TextInput,
+  Alert,
 } from 'react-native';
-import * as firebase from 'firebase';
 import Animated, {Easing} from 'react-native-reanimated';
 import {
   TapGestureHandler,
@@ -133,18 +133,33 @@ class LoginScreen extends Component {
   }
 
   state = {
-    email: '',
+    id: '',
     password: '',
-    errorMessage: null,
   };
 
   handleLogin = () => {
-    const {email, password} = this.state;
+    const {id, password} = this.state;
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch((err) => this.setState({errorMessage: err.message}));
+    fetch('http://192.168.0.5:3000/routes/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(this.state),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => {
+        if (response.result == false) {
+          Alert.alert(
+            '회원 정보를 확인하세요.',
+            '',
+            [{text: '확인', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
+        } else {
+          this.props.navigation.navigate('App',this.state);
+        }
+      });
   };
 
   render() {
@@ -158,7 +173,6 @@ class LoginScreen extends Component {
       //       <Text style={styles.error}>{this.state.errorMessage}</Text>
       //     )}
       //   </View>
-
 
       <View
         style={{flex: 1, backgroundColor: 'white', justifyContent: 'flex-end'}}>
@@ -222,10 +236,10 @@ class LoginScreen extends Component {
 
             <TextInput
               style={styles.textInput}
-              placeholder="EMAIL"
+              placeholder="ID"
               autoCapitalize="none"
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.email}></TextInput>
+              onChangeText={(id) => this.setState({id})}
+              value={this.state.id}></TextInput>
 
             <TextInput
               style={styles.textInput}

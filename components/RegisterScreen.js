@@ -8,7 +8,6 @@ import {
   StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as firebase from 'firebase';
 
 class RegisterScreen extends Component {
   static navigationOptions = {
@@ -17,22 +16,33 @@ class RegisterScreen extends Component {
 
   state = {
     id: '',
-    email: '',
     password: '',
+    passwordCheck: '', 
     errorMessage: null,
   };
 
-  // 로그인 
+  // 회원가입 
   handleSignUp = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then((userCredentials) => {
-        return userCredentials.user.updateProfile({
-          displayName: this.state.id,
-        });
+    const userId = this.state.id;
+    const userPwd = this.state.password;
+    const userPwdCheck = this.state.passwordCheck;
+
+ 
+    if(userPwd === userPwdCheck){
+      fetch('http://192.168.0.5:3000/routes/register',{
+        method: 'POST',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(this.state)
+      }).then(res=>{console.log(res)})
+
+      this.props.navigation.navigate('Login');
+    }else{
+      this.setState({
+        ...this.state,
+        errorMessage: '비밀번호가 다릅니다.'
       })
-      .catch((err) => this.setState({errorMessage: err.message}));
+    }
+   
   };
 
   render() {
@@ -53,7 +63,7 @@ class RegisterScreen extends Component {
             width: '100%',
             alignItems: 'center',
           }}>
-          <Text style={styles.greeting}>{`회원가입하고 시작해보세요!`}</Text>
+          <Text style={styles.greeting}>{`회원가입하기`}</Text>
         </View>
 
         <View style={styles.errorMessage}>
@@ -73,22 +83,23 @@ class RegisterScreen extends Component {
           </View>
 
           <View style={{marginTop: 30}}>
-            <Text style={styles.inputTitle}>Email Address</Text>
-            <TextInput
-              style={styles.input}
-              autoCapitalize="none"
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.email}></TextInput>
-          </View>
-
-          <View style={{marginTop: 30}}>
-            <Text style={styles.inputTitle}>Password</Text>
+            <Text style={styles.inputTitle}>비밀번호</Text>
             <TextInput
               secureTextEntry={true}
               style={styles.input}
               autoCapitalize="none"
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}></TextInput>
+          </View>
+
+          <View style={{marginTop: 30}}>
+            <Text style={styles.inputTitle}>비밀번호 확인</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.input}
+              autoCapitalize="none"
+              onChangeText={(passwordCheck) => this.setState({passwordCheck})}
+              value={this.state.passwordCheck}></TextInput>
           </View>
 
           <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
