@@ -18,7 +18,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 class HomeTab extends Component {
   // 로그아웃 기능
   signOutUser = () => {
-    firebase.auth().signOut();
+    this.props.navigation.navigate('Auth')
   };
 
   componentDidMount() {
