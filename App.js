@@ -20,9 +20,12 @@ const AuthStack = createStackNavigator({
   Register: RegisterScreen,
 });
 
-const newRegisterStack = createStackNavigator({
+const NewRegisterStack = createStackNavigator({
   Setting: SettingScreen,
   CreateWallet: CreateWalletScreen
+},
+{
+  headerMode: "none"
 });
 
 
@@ -31,8 +34,8 @@ export default createAppContainer(
     {
       Loading: LoadingScreen,
       App: AppStack,
+      NewRegister: NewRegisterStack,
       Auth: AuthStack,
-      NewRegister: newRegisterStack,
     },
     {
       initialRouteName: 'Auth',

@@ -15,14 +15,14 @@ export default class MainScreen extends Component {
     headerShown: false,
   };
 
-  state = {
-    id: '',
-  };
+  // state = {
+  //   id: '',
+  // };
 
-  componentDidMount() {
-    const id  = this.props.navigation.getParam('id')
-    this.setState(id);
-  }
+  // componentDidMount() {
+  //   const id  = this.props.navigation.getParam('id')
+  //   this.setState(id);
+  // }
 
   render() {
     return <AppTabContainer></AppTabContainer>;

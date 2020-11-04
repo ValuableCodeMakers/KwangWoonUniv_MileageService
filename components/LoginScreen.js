@@ -140,7 +140,7 @@ class LoginScreen extends Component {
   handleLogin = () => {
     const {id, password} = this.state;
 
-    fetch('http://172.30.1.30:3000/routes/login', {
+    fetch('http://192.168.0.5:3000/routes/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(this.state),
@@ -149,7 +149,7 @@ class LoginScreen extends Component {
         return res.json();
       })
       .then((res) => {
-        console.log("응답 결과" + res.result);
+        console.log("응답 결과 " + res.result);
         if (res.result == false) {
           // 로그인 실패
           Alert.alert(
@@ -167,7 +167,7 @@ class LoginScreen extends Component {
           // 이미 회원
           console.log('이미 회원');
 
-          this.props.navigation.navigate('App',this.state);
+          this.props.navigation.navigate('App');
         }
       });
   };

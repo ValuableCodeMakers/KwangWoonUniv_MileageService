@@ -35,7 +35,7 @@ class RegisterScreen extends Component {
         body: JSON.stringify(this.state)
       }).then(res=>{console.log(res)})
 
-      this.props.navigation.navigate('Login');
+      this.props.navigation.back();
     }else{
       this.setState({
         ...this.state,
