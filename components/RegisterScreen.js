@@ -17,32 +17,31 @@ class RegisterScreen extends Component {
   state = {
     id: '',
     password: '',
-    passwordCheck: '', 
+    passwordCheck: '',
     errorMessage: null,
   };
 
-  // 회원가입 
+  // 회원가입
   handleSignUp = () => {
-    const userId = this.state.id;
     const userPwd = this.state.password;
     const userPwdCheck = this.state.passwordCheck;
 
- 
-    if(userPwd === userPwdCheck){
-      fetch('http://192.168.0.5:3000/routes/register',{
+    if (userPwd === userPwdCheck) {
+      fetch('http://192.168.0.5:3000/routes/register', {
         method: 'POST',
-        headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify(this.state)
-      }).then(res=>{console.log(res)})
-
-      this.props.navigation.back();
-    }else{
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(this.state),
+      }).then((res) => {
+        console.log(res);
+      });
+    } else {
       this.setState({
         ...this.state,
-        errorMessage: '비밀번호가 다릅니다.'
-      })
+        errorMessage: '비밀번호가 다릅니다.',
+      });
     }
-   
+
+    this.props.navigation.navigate('Login');
   };
 
   render() {
@@ -103,7 +102,9 @@ class RegisterScreen extends Component {
           </View>
 
           <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-            <Text style={{color: '#ffffff', fontWeight: 'bold', fontSize:18}}>회원가입</Text>
+            <Text style={{color: '#ffffff', fontWeight: 'bold', fontSize: 18}}>
+              회원가입
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
