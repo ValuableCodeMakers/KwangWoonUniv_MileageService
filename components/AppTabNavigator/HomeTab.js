@@ -12,7 +12,6 @@ import {
 import {View, Text, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import CardComponent from '../CardComponent';
-import * as firebase from 'firebase';
 import {createStackNavigator} from 'react-navigation-stack';
 
 class HomeTab extends Component {

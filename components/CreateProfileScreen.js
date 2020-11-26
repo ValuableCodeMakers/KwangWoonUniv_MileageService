@@ -12,12 +12,15 @@ import {Card} from 'native-base';
 
 const {width, height} = Dimensions.get('window');
 
-export default class SettingScreen extends Component {
-  state = {
-    name: '',
-    nickname: '',
-    department: '',
-  };
+export default class CreateProfileScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      nickname: '',
+      department: '',
+    };
+  }
 
   render() {
     return (
@@ -29,7 +32,6 @@ export default class SettingScreen extends Component {
             <View style={{marginTop: 30}}>
               <Text style={styles.inputTitle}>이름</Text>
               <TextInput
-                secureTextEntry={true}
                 style={styles.input}
                 autoCapitalize="none"
                 onChangeText={(name) => this.setState({name})}
@@ -39,7 +41,6 @@ export default class SettingScreen extends Component {
             <View style={{marginTop: 30}}>
               <Text style={styles.inputTitle}>학과</Text>
               <TextInput
-                secureTextEntry={true}
                 style={styles.input}
                 autoCapitalize="none"
                 onChangeText={(department) => this.setState({department})}
@@ -49,7 +50,6 @@ export default class SettingScreen extends Component {
             <View style={{marginTop: 30}}>
               <Text style={styles.inputTitle}>별명</Text>
               <TextInput
-                secureTextEntry={true}
                 style={styles.input}
                 autoCapitalize="none"
                 onChangeText={(nickname) => this.setState({nickname})}
@@ -59,7 +59,12 @@ export default class SettingScreen extends Component {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.props.navigation.navigate('CreateWallet')}>
+            onPress={() =>
+              this.props.navigation.navigate({
+                routeName: 'CreateWallet',
+                params: {preState: this.state}, // 다음 화면으로 state 전달
+              })
+            }>
             <Text style={{fontSize: 20}}>다음</Text>
           </TouchableOpacity>
         </View>

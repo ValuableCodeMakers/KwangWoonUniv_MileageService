@@ -8,7 +8,7 @@ import LoginScreen from './components/LoginScreen';
 import LoadingScreen from './components/LoadingScreen';
 import RegisterScreen from './components/RegisterScreen';
 
-import SettingScreen from './components/SettingScreen';
+import CreateProfileScreen from './components/CreateProfileScreen';
 import CreateWalletScreen from './components/CreateWalletScreen';
 
 const AppStack = createStackNavigator({
@@ -21,7 +21,7 @@ const AuthStack = createStackNavigator({
 });
 
 const NewRegisterStack = createStackNavigator({
-  Setting: SettingScreen,
+  Setting: CreateProfileScreen,
   CreateWallet: CreateWalletScreen
 },
 {

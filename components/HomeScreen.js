@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
-import * as firebase from 'firebase';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class HomeScreen extends Component {
@@ -10,13 +9,12 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    const {email, displayName} = firebase.auth().currentUser;
 
-    this.setState({email, displayName});
   }
 
+  // 로그아웃
   signOutUser = () => {
-    firebase.auth().signOut();
+
   };
 
   render() {
