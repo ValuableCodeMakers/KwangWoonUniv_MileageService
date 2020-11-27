@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
@@ -12,7 +11,8 @@ import {Card, Textarea} from 'native-base';
 const {width, height} = Dimensions.get('window');
 
 export default class CreateWalletScreen extends Component {
-  constructor(props){
+  
+  constructor(props) {
     super(props);
     this.state = {
       mnemonic: '',
@@ -20,32 +20,10 @@ export default class CreateWalletScreen extends Component {
     };
   }
 
-
-  handleProfile = () => {
-    const userPwd = this.state.password;
-    const userPwdCheck = this.state.passwordCheck;
-
-    if (userPwd === userPwdCheck) {
-      fetch('http://192.168.0.5:3000/routes/saveProfile', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(this.state),
-      }).then((res) => {
-        console.log(res);
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        errorMessage: '비밀번호가 다릅니다.',
-      });
-    }
-
-    this.props.navigation.navigate('Login');
-  };
-
   componentDidMount() {
     const preState = this.props.navigation.getParam('preState');
-    console.log(preState);
+    console.log('이전 state', preState);
+
     fetch('http://192.168.0.5:3000/routes/createWallet', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -56,11 +34,27 @@ export default class CreateWalletScreen extends Component {
       .then((res) => {
         console.log('응답받음 ', res);
 
-        this.setState({mnemonic: res.mnemonic, address: res.address}); // state에 mnemonic 저장
+        this.setState({
+          ...preState,
+          mnemonic: res.mnemonic,
+          address: res.address,
+        }); // state에 mnemonic 저장
 
-        console.log('state 출력',this.state);
+        console.log('state 출력', this.state);
       });
   }
+
+  handleProfile = () => {
+    fetch('http://192.168.0.5:3000/routes/saveProfile', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(this.state),
+    }).then((res) => {
+      console.log(res);
+    });
+
+    this.props.navigation.navigate('App');
+  };
 
   render() {
     return (
@@ -87,15 +81,11 @@ export default class CreateWalletScreen extends Component {
                 value={this.state.address}></Textarea>
             </View>
             <Text style={{marginTop: 10}}>
-              모든 니모닉, 주소는 서버에 저장됩니다.
+              모든 니모닉, 지갑의 주소는 서버에 저장됩니다.
             </Text>
           </Card>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={
-              (() => this.handleProfile, this.props.navigation.navigate('App'))
-            }>
+          <TouchableOpacity style={styles.button} onPress={this.handleProfile}>
             <Text style={{fontSize: 20}}>완료하기</Text>
           </TouchableOpacity>
         </View>

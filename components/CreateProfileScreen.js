@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
-  StatusBar,
 } from 'react-native';
 import {Card} from 'native-base';
 
