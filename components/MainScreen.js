@@ -45,19 +45,20 @@ const AppTabNavigator = createMaterialTopTabNavigator(
     tabBarOptions: {
       labelStyle: {fontSize: 12},
       style: {
-        borderTopWidth: 1,
-        height: 75,
+        borderTopWidth: 0.12,
+        height: 70,
+      
         ...Platform.select({
           ios: {
-            backgroundColor: 'white',
+            backgroundColor: '#ffffff',
           },
-          android: {backgroundColor: '#353b48'},
+          android: {backgroundColor: '#ffffff'},
         }),
       },
 
       iconStyle: {height: 30, width: 30},
       activeTintColor: '#b33939',
-      inactiveTintColor: 'white',
+      inactiveTintColor: 'black',
       upperCaseLabel: false,
       showLabel: true,
       showIcon: true,

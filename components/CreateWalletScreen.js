@@ -11,7 +11,6 @@ import {Card, Textarea} from 'native-base';
 const {width, height} = Dimensions.get('window');
 
 export default class CreateWalletScreen extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -32,8 +31,6 @@ export default class CreateWalletScreen extends Component {
         return res.json();
       })
       .then((res) => {
-        console.log('응답받음 ', res);
-
         this.setState({
           ...preState,
           mnemonic: res.mnemonic,
@@ -51,9 +48,8 @@ export default class CreateWalletScreen extends Component {
       body: JSON.stringify(this.state),
     }).then((res) => {
       console.log(res);
+      this.props.navigation.navigate('App');
     });
-
-    this.props.navigation.navigate('App');
   };
 
   render() {

@@ -62,7 +62,7 @@ class RegisterScreen extends Component {
             width: '100%',
             alignItems: 'center',
           }}>
-          <Text style={styles.greeting}>{`회원가입하기`}</Text>
+          <Text style={styles.greeting}>{`회원가입`}</Text>
         </View>
 
         <View style={styles.errorMessage}>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   greeting: {
     marginTop: 32,
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
   },

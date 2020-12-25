@@ -1,28 +1,32 @@
 import React, {Component} from 'react';
 import {
-  Content,
+  Card,
+  CardItem,
   Icon,
-  Thumbnail,
   Body,
   Right,
   Header,
   Left,
   Container,
 } from 'native-base';
-import {View, Text, StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import CardComponent from '../CardComponent';
-import {createStackNavigator} from 'react-navigation-stack';
+
+const {width, height} = Dimensions.get('window');
 
 class HomeTab extends Component {
   // 로그아웃 기능
   signOutUser = () => {
-    this.props.navigation.navigate('Auth')
+    fetch('http://192.168.0.5:3000/routes/logout', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+    }).then((res) => {
+      console.log(res);
+      this.props.navigation.navigate('Auth');
+    });
   };
 
-  componentDidMount() {
-   
-  }
+  componentDidMount() {}
 
   static navigationOptions = {
     tabBarIcon: ({tintColor}) => (
@@ -32,113 +36,113 @@ class HomeTab extends Component {
 
   render() {
     return (
-      <Container style={style.container}>
-        <Header style={{backgroundColor: '#353b48'}}>
+      <Container>
+        <Header style={{backgroundColor: '#c0392b'}}>
           <Left>
             <Icon
               name="person"
-              style={{paddingLeft: 10, color: 'white'}}
+              style={{paddingLeft: 10, color: '#fff'}}
               onPress={() => {
                 console.log(this.props.navigation);
                 this.props.navigation.navigate('Profile');
               }}
             />
           </Left>
-          <Body style={{justifyContent: 'center'}}></Body>
           <Right>
             <Icon
-              name="ios-send-outline"
+              name="menu"
               onPress={this.signOutUser}
-              style={{paddingRight: 10, color: 'white'}}
+              style={{paddingRight: 10, color: '#fff'}}
             />
           </Right>
         </Header>
 
-        <Content>
-          {/* <View style={{height: 90}}>
-            <ScrollView
-              contentContainerStyle={{
-                alignItems: 'center',
-                paddingStart: 10,
-                paddingEnd: 10,
-              }}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              <View style={style.storyName}>
-                <Thumbnail
-                  style={style.story}
-                  source={require('../../src/p1.jpg')}
-                />
-                <Text>kyoung_jnn</Text>
-              </View>
-              <View style={style.storyName}>
-                <Thumbnail
-                  style={style.story}
-                  source={require('../../src/p2.jpg')}
-                />
-                <Text>won</Text>
-              </View>
-              <View style={style.storyName}>
-                <Thumbnail
-                  style={style.story}
-                  source={require('../../src/p3.jpg')}
-                />
-                <Text>jun_6</Text>
-              </View>
-              <View style={style.storyName}>
-                <Thumbnail
-                  style={style.story}
-                  source={require('../../src/p4.jpg')}
-                />
-                <Text>NaEn</Text>
-              </View>
-              <View style={style.storyName}>
-                <Thumbnail
-                  style={style.story}
-                  source={require('../../src/p5.jpg')}
-                />
-                <Text>IU</Text>
-              </View>
-              <View style={style.storyName}>
-                <Thumbnail
-                  style={style.story}
-                  source={require('../../src/p6.jpg')}
-                />
-                <Text>Wak</Text>
-              </View>
-              <View style={style.storyName}>
-                <Thumbnail
-                  style={style.story}
-                  source={require('../../src/p7.jpg')}
-                />
-                <Text>0_o</Text>
-              </View>
+        <Container style={styles.container}>
+          <View style={styles.background}></View>
+
+          <View style={styles.cardContainer}>
+            <View style={{alignItems: 'center'}}>
+              <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
+              <Text style={{fontSize: 35, color: 'white'}}>
+                <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
+                35.0 토큰
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.eventContainer}>
+            <Text style={styles.eventText}>Event</Text>
+            <ScrollView style={styles.eventScrollView}>
+              <Card style={styles.currentEvent}>
+                <CardItem style={{height: 120}}>
+                  <Text>진행중인 이벤트가 없습니다. 😂</Text>
+                </CardItem>
+              </Card>
+              <Card style={styles.currentEvent}>
+                <CardItem style={{height: 120}}>
+                  <Text>진행중인 이벤트</Text>
+                </CardItem>
+              </Card>
+              <Card style={styles.currentEvent}>
+                <CardItem style={{height: 120}}>
+                  <Text>진행중인 이벤트</Text>
+                </CardItem>
+              </Card>
+              <Card style={styles.currentEvent}>
+                <CardItem style={{height: 120}}>
+                  <Text>진행중인 이벤트</Text>
+                </CardItem>
+              </Card>
             </ScrollView>
-          </View> */}
-          <CardComponent imgSrc="1" likes="25"></CardComponent>
-          <CardComponent imgSrc="2" likes="30"></CardComponent>
-        </Content>
+          </View>
+        </Container>
       </Container>
     );
   }
 }
 export default HomeTab;
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#353b48',
-  },
-  story: {
-    borderColor: '#8e44ad',
-    borderWidth: 2,
-    marginHorizontal: 12,
-    marginTop: 10,
-  },
-  storyName: {
-    flex: 1,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 20,
+  },
+  background: {
+    marginTop: 0,
+    height: height,
+    width: width,
+    backgroundColor: '#c0392b',
+  },
+  cardContainer: {
+    position: 'absolute',
+    alignItems: 'center',
+    width: width,
+    marginTop: '12%',
+  },
+  eventContainer: {
+    position: 'absolute',
+    alignItems: 'center',
+    width: width * 0.98,
+    height: '70%',
+    marginTop: '40%',
+
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    backgroundColor: '#fff',
+  },
+  eventText: {
+    fontSize: 25,
+    marginTop: 10,
+    marginBottom: 0,
+  },
+  eventScrollView: {
+    marginTop: 5,
+    marginBottom: 10,
+  },
+  wallet: {
+    width: width * 0.95,
+  },
+  currentEvent: {
+    width: width * 0.95,
   },
 });

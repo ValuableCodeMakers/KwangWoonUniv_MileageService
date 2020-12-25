@@ -15,19 +15,25 @@ const AppStack = createStackNavigator({
   Main: MainScreen, //MainScreen 등록
 });
 
-const AuthStack = createStackNavigator({
-  Login: LoginScreen,
-  Register: RegisterScreen,
-});
+const AuthStack = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Register: RegisterScreen,
+  },
+  {
+    initialRouteName: 'Login',
+  },
+);
 
-const NewRegisterStack = createStackNavigator({
-  Setting: CreateProfileScreen,
-  CreateWallet: CreateWalletScreen
-},
-{
-  headerMode: "none"
-});
-
+const NewRegisterStack = createStackNavigator(
+  {
+    Setting: CreateProfileScreen,
+    CreateWallet: CreateWalletScreen,
+  },
+  {
+    headerMode: 'none',
+  },
+);
 
 export default createAppContainer(
   createSwitchNavigator(
