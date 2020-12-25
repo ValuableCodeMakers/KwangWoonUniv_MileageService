@@ -6,4 +6,6 @@
 사용자는 이벤트를 통해 토큰을 얻고, 사용할 수 있습니다.
 
 ## 프로젝트 Stack
-http://img.shields.io/badge/react-1.0-blue?style=flat&logo=#61DAFB
+![react badge](http://img.shields.io/badge/react-16.13.1-blue?style=flat&logo=react)
+![node badge](http://img.shields.io/badge/node-12.14.1-green?style=flat&logo=Node.js)
+
