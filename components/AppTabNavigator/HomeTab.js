@@ -16,6 +16,20 @@ const {width, height} = Dimensions.get('window');
 
 class HomeTab extends Component {
   // 로그아웃 기능
+  state = {
+    Wallet: '',
+  };
+
+  componentDidMount() {
+    // fetch('http://192.168.0.5:3000/routes/getWalletBalance', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify(this.state.Wallet),
+    // }).then((res) => {
+    //   console.log(res);
+    // });
+  }
+
   signOutUser = () => {
     fetch('http://192.168.0.5:3000/routes/logout', {
       method: 'POST',
@@ -25,8 +39,6 @@ class HomeTab extends Component {
       this.props.navigation.navigate('Auth');
     });
   };
-
-  componentDidMount() {}
 
   static navigationOptions = {
     tabBarIcon: ({tintColor}) => (

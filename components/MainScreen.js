@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
@@ -19,10 +19,16 @@ export default class MainScreen extends Component {
   //   id: '',
   // };
 
-  // componentDidMount() {
-  //   const id  = this.props.navigation.getParam('id')
-  //   this.setState(id);
-  // }
+  componentDidMount() {
+    console.log(this.props.navigation)
+    const userId = this.props.navigation.getParam('userId');
+    const userWalletAddress = this.props.navigation.getParam(
+      'userWalletAddress'
+    );
+
+    console.log(userId);
+    console.log(userWalletAddress);
+  }
 
   render() {
     return <AppTabContainer></AppTabContainer>;

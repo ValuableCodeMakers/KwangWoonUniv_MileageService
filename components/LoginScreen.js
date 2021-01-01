@@ -149,7 +149,10 @@ class LoginScreen extends Component {
         return res.json();
       })
       .then((res) => {
-        console.log('응답 결과 ' + res.result);
+        console.log('응답 결과 ', res);
+        console.log(res.userId);
+        console.log(res.userWalletAddress);
+
         if (res.result == false) {
           // 로그인 실패
           Alert.alert(
@@ -166,7 +169,11 @@ class LoginScreen extends Component {
           // 이미 회원
           console.log('이미 회원');
 
-          this.props.navigation.navigate('App');
+          this.props.screenProps = {
+            userId: res.userId,
+            userWalletAddress: res.userWalletAddress,
+          };
+          this.props.navigation.navigate('Main');
         }
       });
   };

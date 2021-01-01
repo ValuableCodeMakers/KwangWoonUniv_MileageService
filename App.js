@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {StyleSheet, ScrollView, View, Text, StatusBar} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
@@ -35,11 +35,11 @@ const NewRegisterStack = createStackNavigator(
   },
 );
 
-export default createAppContainer(
+const MainContainer = createAppContainer(
   createSwitchNavigator(
     {
       Loading: LoadingScreen,
-      App: AppStack,
+      Main: AppStack,
       NewRegister: NewRegisterStack,
       Auth: AuthStack,
     },
@@ -49,4 +49,11 @@ export default createAppContainer(
   ),
 );
 
-const styles = StyleSheet.create({});
+export default class App extends Component {
+  render() {
+    return (
+      <MainContainer
+        screenProps={{userId: '', userWalletId: ''}}></MainContainer>
+    );
+  }
+}
