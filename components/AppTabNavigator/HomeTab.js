@@ -17,17 +17,24 @@ const {width, height} = Dimensions.get('window');
 class HomeTab extends Component {
   // 로그아웃 기능
   state = {
-    Wallet: '',
+    balance: -1,
   };
 
   componentDidMount() {
-    // fetch('http://192.168.0.5:3000/routes/getWalletBalance', {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify(this.state.Wallet),
-    // }).then((res) => {
-    //   console.log(res);
-    // });
+    const address = this.props.navigation.getScreenProps().userWalletAddress;
+    if (address != null) {
+      fetch('http://192.168.0.5:3000/routes/getWalletBalance', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({address: address}),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          this.setState({balance: res.balance});
+        });
+    }
   }
 
   signOutUser = () => {
@@ -76,8 +83,8 @@ class HomeTab extends Component {
             <View style={{alignItems: 'center'}}>
               <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
               <Text style={{fontSize: 35, color: 'white'}}>
-                <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-                35.0 토큰
+                <Icon name="server-outline" style={{color: 'white'}}></Icon>
+                {this.state.balance} 토큰
               </Text>
             </View>
           </View>

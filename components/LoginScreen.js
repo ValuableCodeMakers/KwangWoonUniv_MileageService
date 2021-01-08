@@ -134,7 +134,6 @@ class LoginScreen extends Component {
 
   state = {
     id: '',
-    password: '',
   };
 
   handleLogin = () => {
@@ -168,12 +167,12 @@ class LoginScreen extends Component {
         } else {
           // 이미 회원
           console.log('이미 회원');
-
-          this.props.screenProps = {
-            userId: res.userId,
-            userWalletAddress: res.userWalletAddress,
-          };
-          this.props.navigation.navigate('Main');
+          console.log(res);
+          
+          this.props.navigation.navigate('Main', {
+            screen: 'HomeTab',
+            params: {userId: res.userId},
+          });
         }
       });
   };

@@ -11,7 +11,7 @@ import RegisterScreen from './components/RegisterScreen';
 import CreateProfileScreen from './components/CreateProfileScreen';
 import CreateWalletScreen from './components/CreateWalletScreen';
 
-const AppStack = createStackNavigator({
+const MainStack = createStackNavigator({
   Main: MainScreen, //MainScreen 등록
 });
 
@@ -39,7 +39,7 @@ const MainContainer = createAppContainer(
   createSwitchNavigator(
     {
       Loading: LoadingScreen,
-      Main: AppStack,
+      Main: MainStack,
       NewRegister: NewRegisterStack,
       Auth: AuthStack,
     },
@@ -52,8 +52,7 @@ const MainContainer = createAppContainer(
 export default class App extends Component {
   render() {
     return (
-      <MainContainer
-        screenProps={{userId: '', userWalletId: ''}}></MainContainer>
+      <MainContainer></MainContainer>
     );
   }
 }
