@@ -18,10 +18,11 @@ export default class MainScreen extends Component {
   state = {
     userId: '',
     userWalletAddress: '',
+    userBalance: '',
   };
 
   componentDidMount() {
-    fetch('http://192.168.0.5:3000/routes/getUserId', {
+    fetch('http://172.30.1.16:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -48,12 +49,17 @@ export default class MainScreen extends Component {
       });
   }
 
+  handleBalance = (balance) => {
+    this.setState({userBalance: balance});
+  };
+
   render() {
     return (
       <AppTabContainer
         screenProps={{
           userId: this.state.userId,
           userWalletAddress: this.state.userWalletAddress,
+          handleBalance: this.handleBalance
         }}></AppTabContainer>
     );
   }

@@ -3,7 +3,6 @@ import {
   Card,
   CardItem,
   Icon,
-  Body,
   Right,
   Header,
   Left,
@@ -17,13 +16,17 @@ const {width, height} = Dimensions.get('window');
 class HomeTab extends Component {
   // 로그아웃 기능
   state = {
-    balance: -1,
+    balance: "N/A",
   };
 
   componentDidMount() {
+    console.log(this.props.navigation.getScreenProps());
+
     const address = this.props.navigation.getScreenProps().userWalletAddress;
+    const handleBalance = this.props.navigation.getScreenProps().handleBalance;
+
     if (address != null) {
-      fetch('http://192.168.0.5:3000/routes/getWalletBalance', {
+      fetch('http://172.30.1.16:3000/routes/getWalletBalance', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({address: address}),
@@ -32,7 +35,10 @@ class HomeTab extends Component {
           return res.json();
         })
         .then((res) => {
-          this.setState({balance: res.balance});
+          let balance = res.balance;
+          balance = balance.substr(0, balance.length - 18);
+          this.setState({balance: balance});
+          handleBalance(balance)
         });
     }
   }
@@ -83,7 +89,7 @@ class HomeTab extends Component {
             <View style={{alignItems: 'center'}}>
               <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
               <Text style={{fontSize: 35, color: 'white'}}>
-                <Icon name="server-outline" style={{color: 'white'}}></Icon>
+                <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
                 {this.state.balance} 토큰
               </Text>
             </View>
