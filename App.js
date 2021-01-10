@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import {StyleSheet, ScrollView, View, Text, StatusBar} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 

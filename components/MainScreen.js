@@ -22,7 +22,7 @@ export default class MainScreen extends Component {
   };
 
   componentDidMount() {
-    fetch('http://172.30.1.16:3000/routes/getUserId', {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {

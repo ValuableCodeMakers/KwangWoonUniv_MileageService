@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {
   Icon,
-  Card,
-  CardItem,
   Right,
   Header,
   Left,
   Container,
+  Card,
+  CardItem,
 } from 'native-base';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -43,7 +43,7 @@ class WalletTab extends Component {
         </Header>
 
         <Container style={styles.container}>
-          <View style={styles.totalToken}>
+          <Card style={styles.mainContainer}>
             <View style={{alignItems: 'center'}}>
               <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
               <Text style={{fontSize: 35, color: 'white'}}>
@@ -51,14 +51,41 @@ class WalletTab extends Component {
                 토큰
               </Text>
             </View>
-            <View style={{alignItems: 'center'}}>
-              <TouchableOpacity activeOpacity={0.8}>
-                <Card>
-                  <Text>현재 잔액</Text>
-                </Card>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.sendButton} activeOpacity={0.8}>
+                <Icon
+                  name="exit-outline"
+                  style={{fontSize: 20, color: 'white'}}></Icon>
+                <Text style={{fontSize: 15, color: 'white'}}>보내기</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.receiveButton}
+                activeOpacity={0.8}>
+                <Icon
+                  name="enter-outline"
+                  style={{fontSize: 20, color: 'white'}}></Icon>
+                <Text style={{fontSize: 15, color: 'white'}}> 받기</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </Card>
+
+          <Card style={styles.bacodeContainer}>
+            <CardItem>
+              <View style={styles.detailButtonContainer}>
+                <TouchableOpacity style={styles.sendButton} activeOpacity={0.8}>
+                  <Text style={{fontSize: 15}}>사용 내역</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.receiveButton}
+                  activeOpacity={0.8}>
+                  <Text style={{fontSize: 15}}>습득 내역</Text>
+                </TouchableOpacity>
+              </View>
+            </CardItem>
+            <CardItem>
+              <Text style={{fontSize: 50}}>바코드</Text>
+            </CardItem>
+          </Card>
         </Container>
       </Container>
     );
@@ -71,46 +98,51 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
-  totalToken: {
-    position: 'absolute',
+  mainContainer: {
+    position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.85,
-    height: height * 0.2,
+    height: height * 0.25,
     elevation: 10,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    shadowRadius: 20,
     marginTop: '12%',
     backgroundColor: '#c0392b',
-    
-  },
-  eventContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-    width: width * 0.98,
-    height: '70%',
-    marginTop: '40%',
+    elevation:10
 
+  },
+  buttonContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  sendButton: {
+    alignItems: 'center',
+  },
+  receiveButton: {
+    alignItems: 'center',
+  },
+  bacodeContainer: {
+    alignItems: 'center',
+    width: width * 0.85,
+    height: height * 0.5,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
-    backgroundColor: '#fff',
+    marginTop:15,
+    elevation:10
   },
-  eventText: {
-    fontSize: 25,
-    marginTop: 10,
-    marginBottom: 0,
+  detailButtonContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop:10
   },
-  eventScrollView: {
-    marginTop: 5,
-    marginBottom: 10,
-  },
-  wallet: {
-    width: width * 0.95,
-  },
-  currentEvent: {
-    width: width * 0.95,
-  },
+  
+ 
 });

@@ -9,7 +9,6 @@ import {
   Container,
 } from 'native-base';
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import CardComponent from '../CardComponent';
 
 const {width, height} = Dimensions.get('window');
 
@@ -26,7 +25,7 @@ class HomeTab extends Component {
     const handleBalance = this.props.navigation.getScreenProps().handleBalance;
 
     if (address != null) {
-      fetch('http://172.30.1.16:3000/routes/getWalletBalance', {
+      fetch('http://192.168.0.5:3000/routes/getWalletBalance', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({address: address}),
@@ -95,7 +94,7 @@ class HomeTab extends Component {
             </View>
           </View>
 
-          <View style={styles.eventContainer}>
+          <Card style={styles.eventContainer}>
             <Text style={styles.eventText}>Event</Text>
             <ScrollView style={styles.eventScrollView}>
               <Card style={styles.currentEvent}>
@@ -119,7 +118,7 @@ class HomeTab extends Component {
                 </CardItem>
               </Card>
             </ScrollView>
-          </View>
+          </Card>
         </Container>
       </Container>
     );
@@ -150,7 +149,6 @@ const styles = StyleSheet.create({
     width: width * 0.98,
     height: '70%',
     marginTop: '40%',
-
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     backgroundColor: '#fff',
