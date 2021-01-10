@@ -48,7 +48,7 @@ export default class CreateWalletScreen extends Component {
       body: JSON.stringify(this.state),
     }).then((res) => {
       console.log(res);
-      this.props.navigation.navigate('App');
+      this.props.navigation.navigate('Main');
     });
   };
 

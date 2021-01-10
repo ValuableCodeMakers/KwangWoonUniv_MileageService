@@ -3,19 +3,45 @@ import {
   Card,
   CardItem,
   Icon,
-  Body,
   Right,
   Header,
   Left,
   Container,
 } from 'native-base';
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import CardComponent from '../CardComponent';
 
 const {width, height} = Dimensions.get('window');
 
 class HomeTab extends Component {
   // 로그아웃 기능
+  state = {
+    balance: "N/A",
+  };
+
+  componentDidMount() {
+    console.log(this.props.navigation.getScreenProps());
+
+    const address = this.props.navigation.getScreenProps().userWalletAddress;
+    const handleBalance = this.props.navigation.getScreenProps().handleBalance;
+
+    if (address != null) {
+      fetch('http://192.168.0.5:3000/routes/getWalletBalance', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({address: address}),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          let balance = res.balance;
+          balance = balance.substr(0, balance.length - 18);
+          this.setState({balance: balance});
+          handleBalance(balance)
+        });
+    }
+  }
+
   signOutUser = () => {
     fetch('http://192.168.0.5:3000/routes/logout', {
       method: 'POST',
@@ -25,8 +51,6 @@ class HomeTab extends Component {
       this.props.navigation.navigate('Auth');
     });
   };
-
-  componentDidMount() {}
 
   static navigationOptions = {
     tabBarIcon: ({tintColor}) => (
@@ -65,12 +89,12 @@ class HomeTab extends Component {
               <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
               <Text style={{fontSize: 35, color: 'white'}}>
                 <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-                35.0 토큰
+                {this.state.balance} 토큰
               </Text>
             </View>
           </View>
 
-          <View style={styles.eventContainer}>
+          <Card style={styles.eventContainer}>
             <Text style={styles.eventText}>Event</Text>
             <ScrollView style={styles.eventScrollView}>
               <Card style={styles.currentEvent}>
@@ -94,7 +118,7 @@ class HomeTab extends Component {
                 </CardItem>
               </Card>
             </ScrollView>
-          </View>
+          </Card>
         </Container>
       </Container>
     );
@@ -125,7 +149,6 @@ const styles = StyleSheet.create({
     width: width * 0.98,
     height: '70%',
     marginTop: '40%',
-
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     backgroundColor: '#fff',

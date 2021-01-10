@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
@@ -15,17 +15,53 @@ export default class MainScreen extends Component {
     headerShown: false,
   };
 
-  // state = {
-  //   id: '',
-  // };
+  state = {
+    userId: '',
+    userWalletAddress: '',
+    userBalance: '',
+  };
 
-  // componentDidMount() {
-  //   const id  = this.props.navigation.getParam('id')
-  //   this.setState(id);
-  // }
+  componentDidMount() {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
+      method: 'GET',
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        this.setState({userId: res.userId});
+      })
+      .then(() => {
+        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(this.state),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            this.setState({userWalletAddress: res.userWalletAddress});
+          })
+          .then(() => {
+            console.log('현재 MainScreen state', this.state);
+          });
+      });
+  }
+
+  handleBalance = (balance) => {
+    this.setState({userBalance: balance});
+  };
 
   render() {
-    return <AppTabContainer></AppTabContainer>;
+    return (
+      <AppTabContainer
+        screenProps={{
+          userId: this.state.userId,
+          userWalletAddress: this.state.userWalletAddress,
+          handleBalance: this.handleBalance
+        }}></AppTabContainer>
+    );
   }
 }
 
@@ -47,7 +83,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
       style: {
         borderTopWidth: 0.12,
         height: 70,
-      
+
         ...Platform.select({
           ios: {
             backgroundColor: '#ffffff',
@@ -69,7 +105,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
 const AppTabContainer = createAppContainer(
   createStackNavigator(
     {
-      AppTabNavigator : AppTabNavigator, //MainScreen 등록
+      AppTabNavigator: AppTabNavigator, //MainScreen 등록
       Profile: ProfileScreen,
     },
     {
