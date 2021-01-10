@@ -16,6 +16,7 @@
     "native-base": "^2.13.13",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-geolocation-service": "5.1.1",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-maps": "0.27.1",
     "react-native-reanimated": "^1.9.0",
