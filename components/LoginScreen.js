@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,13 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import Animated, {Easing} from 'react-native-reanimated';
+import Animated, { Easing } from 'react-native-reanimated';
 import {
   TapGestureHandler,
   State,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const {
   Value,
   event,
@@ -73,7 +73,7 @@ class LoginScreen extends Component {
     this.buttonOpacity = new Value(1); // 초기 값
     this.onStateChange = event([
       {
-        nativeEvent: ({state}) =>
+        nativeEvent: ({ state }) =>
           block([
             cond(
               eq(state, State.END),
@@ -85,7 +85,7 @@ class LoginScreen extends Component {
 
     this.onCloseState = event([
       {
-        nativeEvent: ({state}) =>
+        nativeEvent: ({ state }) =>
           block([
             cond(
               eq(state, State.END),
@@ -137,11 +137,11 @@ class LoginScreen extends Component {
   };
 
   handleLogin = () => {
-    const {id, password} = this.state;
+    const { id, password } = this.state;
 
-    fetch('http://192.168.0.5:3000/routes/login', {
+    fetch('http://192.168.0.3:3000/routes/login', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
     })
       .then((res) => {
@@ -156,8 +156,8 @@ class LoginScreen extends Component {
           // 로그인 실패
           Alert.alert(
             '회원 정보를 확인하세요.',
-            [{text: '확인', onPress: () => console.log('OK Pressed')}],
-            {cancelable: false},
+            [{ text: '확인', onPress: () => console.log('OK Pressed') }],
+            { cancelable: false },
           );
         } else if (res.result == 'NEW_REGISTER') {
           // 처음 회원 가입
@@ -190,26 +190,26 @@ class LoginScreen extends Component {
       //   </View>
 
       <View
-        style={{flex: 1, backgroundColor: 'white', justifyContent: 'flex-end'}}>
+        style={{ flex: 1, backgroundColor: 'white', justifyContent: 'flex-end' }}>
         <Animated.View
           style={{
             ...StyleSheet.absoluteFill,
-            transform: [{translateY: this.backGroundY}],
+            transform: [{ translateY: this.backGroundY }],
           }}>
           <Image
             source={require('../src/login.png')}
-            style={{flex: 1, height: null, width: null, zIndex: -1}}></Image>
+            style={{ flex: 1, height: null, width: null, zIndex: -1 }}></Image>
         </Animated.View>
 
-        <View style={{height: height / 2.5, justifyContent: 'center'}}>
+        <View style={{ height: height / 2.5, justifyContent: 'center' }}>
           <TapGestureHandler onHandlerStateChange={this.onStateChange}>
             <Animated.View
               style={{
                 ...styles.button,
                 opacity: this.buttonOpacity,
-                transform: [{translateY: this.buttonY}],
+                transform: [{ translateY: this.buttonY }],
               }}>
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>로그인</Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>로그인</Text>
             </Animated.View>
           </TapGestureHandler>
 
@@ -219,9 +219,9 @@ class LoginScreen extends Component {
               style={{
                 ...styles.button,
                 opacity: this.buttonOpacity,
-                transform: [{translateY: this.buttonY}],
+                transform: [{ translateY: this.buttonY }],
               }}>
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>회원가입</Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>회원가입</Text>
             </Animated.View>
           </TouchableOpacity>
 
@@ -230,7 +230,7 @@ class LoginScreen extends Component {
             style={{
               zIndex: this.textInputZindex,
               opacity: this.textInputOpacity,
-              transform: [{translateY: this.textInputY}],
+              transform: [{ translateY: this.textInputY }],
               height: height / 2.5,
               ...StyleSheet.absoluteFill,
               top: null,
@@ -242,7 +242,7 @@ class LoginScreen extends Component {
                   style={{
                     fontSize: 15,
                     fontWeight: 'bold',
-                    transform: [{rotate: concat(this.rotateCross, 'deg')}],
+                    transform: [{ rotate: concat(this.rotateCross, 'deg') }],
                   }}>
                   X
                 </Animated.Text>
@@ -253,19 +253,19 @@ class LoginScreen extends Component {
               style={styles.textInput}
               placeholder="ID"
               autoCapitalize="none"
-              onChangeText={(id) => this.setState({id})}
+              onChangeText={(id) => this.setState({ id })}
               value={this.state.id}></TextInput>
 
             <TextInput
               style={styles.textInput}
               placeholder="PASSWORD"
               secureTextEntry={true}
-              onChangeText={(password) => this.setState({password})}
+              onChangeText={(password) => this.setState({ password })}
               value={this.state.password}></TextInput>
 
             <TouchableOpacity opacity={0.1} onPress={this.handleLogin}>
-              <Animated.View style={{...styles.button, marginTop: 10}}>
-                <Text style={{fontSize: 18, fontWeight: 'bold'}}>로그인</Text>
+              <Animated.View style={{ ...styles.button, marginTop: 10 }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>로그인</Text>
               </Animated.View>
             </TouchableOpacity>
           </Animated.View>

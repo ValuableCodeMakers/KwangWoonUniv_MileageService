@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -27,9 +27,9 @@ class RegisterScreen extends Component {
     const userPwdCheck = this.state.passwordCheck;
 
     if (userPwd === userPwdCheck) {
-      fetch('http://192.168.0.5:3000/routes/register', {
+      fetch('http://192.168.0.3:3000/routes/register', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state),
       }).then((res) => {
         console.log(res);
@@ -77,32 +77,32 @@ class RegisterScreen extends Component {
             <TextInput
               style={styles.input}
               autoCapitalize="none"
-              onChangeText={(id) => this.setState({id})}
+              onChangeText={(id) => this.setState({ id })}
               value={this.state.id}></TextInput>
           </View>
 
-          <View style={{marginTop: 30}}>
+          <View style={{ marginTop: 30 }}>
             <Text style={styles.inputTitle}>비밀번호</Text>
             <TextInput
               secureTextEntry={true}
               style={styles.input}
               autoCapitalize="none"
-              onChangeText={(password) => this.setState({password})}
+              onChangeText={(password) => this.setState({ password })}
               value={this.state.password}></TextInput>
           </View>
 
-          <View style={{marginTop: 30}}>
+          <View style={{ marginTop: 30 }}>
             <Text style={styles.inputTitle}>비밀번호 확인</Text>
             <TextInput
               secureTextEntry={true}
               style={styles.input}
               autoCapitalize="none"
-              onChangeText={(passwordCheck) => this.setState({passwordCheck})}
+              onChangeText={(passwordCheck) => this.setState({ passwordCheck })}
               value={this.state.passwordCheck}></TextInput>
           </View>
 
           <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-            <Text style={{color: '#ffffff', fontWeight: 'bold', fontSize: 18}}>
+            <Text style={{ color: '#ffffff', fontWeight: 'bold', fontSize: 18 }}>
               회원가입
             </Text>
           </TouchableOpacity>
