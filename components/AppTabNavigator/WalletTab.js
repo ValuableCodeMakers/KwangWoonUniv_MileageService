@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {
   Icon,
   Right,
@@ -8,7 +9,6 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import SendScreen from './Wallet/SendScreen';
 
@@ -20,7 +20,10 @@ class WalletTab extends Component {
       <Icon name="ios-wallet-sharp" style={{color: tintColor}} />
     ),
   };
+  
   render() {
+    const address = this.props.navigation.getScreenProps().userWalletAddress;
+
     return (
       <Container>
         <Header style={{backgroundColor: '#fff'}}>
@@ -68,7 +71,7 @@ class WalletTab extends Component {
                 style={styles.receiveButton}
                 activeOpacity={0.8}
                 onPress={() => {
-                  this.props.navigation.navigate('Receive');
+                  this.props.navigation.navigate('Receive',address);
                 }}>
                 <Icon
                   name="enter-outline"

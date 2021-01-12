@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {Root} from 'native-base'
 
 import MainScreen from './components/MainScreen';
 import LoginScreen from './components/LoginScreen';
@@ -51,7 +52,10 @@ const MainContainer = createAppContainer(
 export default class App extends Component {
   render() {
     return (
+      <Root>
+
       <MainContainer></MainContainer>
+      </Root>
     );
   }
 }

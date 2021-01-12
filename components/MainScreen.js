@@ -105,6 +105,9 @@ const AppTabNavigator = createMaterialTopTabNavigator(
   },
 );
 
+AppTabNavigator.navigationOptions = {
+  headerShown: false
+}
 const AppTabContainer = createAppContainer(
   createStackNavigator(
     {
@@ -114,7 +117,6 @@ const AppTabContainer = createAppContainer(
       Receive: ReceiveScreen,
     },
     {
-      headerMode: 'none',
       initialRouteName: 'AppTabNavigator',
     },
   ),

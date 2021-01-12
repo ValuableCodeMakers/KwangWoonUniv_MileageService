@@ -1,27 +1,51 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Card, CardItem} from 'native-base';
+import {Container, Card, CardItem, Toast, Button, Icon} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import QRCode from 'react-native-qrcode-svg';
 
-let {width, height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 class ReceiveScreen extends Component {
-  state = {walletAddressURL: ''};
-  constructor() {
-    super();
-  }
+  static navigationOptions = {
+    title: '토큰받기',
+    headerTitleAlign: 'center',
+  };
 
   render() {
+    const qrValue = this.props.navigation.state.params;
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <Card style={styles.bacodeContainer}>
+      <Container style={styles.container}>
+        <Card style={styles.qrContainer}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', marginVertical: 10}}>
+            내 주소
+          </Text>
           <CardItem>
-            <QRCode value="https://github.com/kyoung-jnn"></QRCode>
+            <QRCode value={qrValue} size={200}></QRCode>
+          </CardItem>
+          <CardItem>
+            <Card style={styles.addressContainer}>
+              <Text>{qrValue}</Text>
+            </Card>
+          </CardItem>
+          <CardItem>
+            <Button
+              rounded
+              iconLeft
+              style={styles.copyButton}
+              danger
+              onPress={() =>
+                Toast.show({
+                  text: '주소가 복사되었습니다 😊',
+                  textStyle: {textAlign: 'center'},
+                })
+              }>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>주소 복사</Text>
+            </Button>
           </CardItem>
         </Card>
-      </View>
+      </Container>
     );
   }
 }
@@ -30,51 +54,32 @@ export default ReceiveScreen;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  mainContainer: {
-    position: 'relative',
+  qrContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.85,
-    height: height * 0.25,
-    elevation: 10,
+    height: height * 0.65,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
-    borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    marginTop: '12%',
-    backgroundColor: '#c0392b',
+    borderBottomLeftRadius: 20,
     elevation: 10,
   },
-  buttonContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop: 15,
+  addressContainer: {
+    padding: 10,
+    borderTopStartRadius: 10,
+    borderTopEndRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    backgroundColor: '#747d8c'
   },
-  sendButton: {
-    alignItems: 'center',
-  },
-  receiveButton: {
-    alignItems: 'center',
-  },
-  bacodeContainer: {
-    alignItems: 'center',
-    width: width * 0.85,
-    height: height * 0.5,
-    borderTopStartRadius: 20,
-    borderTopEndRadius: 20,
-    marginTop: 15,
-    elevation: 10,
-  },
-  detailButtonContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop: 10,
+  copyButton: {
+    width: 150,
+    justifyContent: 'center',
   },
 });

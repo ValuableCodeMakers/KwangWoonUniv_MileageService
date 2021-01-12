@@ -13,7 +13,11 @@ import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 const {width, height} = Dimensions.get('window');
 
 class HomeTab extends Component {
-  // 로그아웃 기능
+  static navigationOptions = {
+    headerMode: 'none',
+    headerShown: false,
+    tabBarVisible: 'true'
+  };
   state = {
     balance: "N/A",
   };
