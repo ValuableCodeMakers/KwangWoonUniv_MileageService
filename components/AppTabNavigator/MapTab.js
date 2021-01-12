@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon } from 'native-base';
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
@@ -24,10 +24,6 @@ async function requestPermission() {
     } catch (e) {
         console.log(e);
     }
-}
-
-function getLocation() {
-
 }
 
 const MapTab = () => {
@@ -68,7 +64,6 @@ const MapTab = () => {
         )
     }
 
-    //render() {
     return (
         <View style={{ flex: 1 }}>
             <MapView
@@ -83,7 +78,6 @@ const MapTab = () => {
             />
         </View>
     );
-    //}
 }
 export default MapTab;
 

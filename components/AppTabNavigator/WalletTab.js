@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import SendScreen from './Wallet/SendScreen';
 
 const {width, height} = Dimensions.get('window');
 
@@ -52,7 +53,12 @@ class WalletTab extends Component {
               </Text>
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.sendButton} activeOpacity={0.8}>
+              <TouchableOpacity
+                style={styles.sendButton}
+                activeOpacity={0.8}
+                onPress={() => {
+                  this.props.navigation.navigate('Send');
+                }}>
                 <Icon
                   name="exit-outline"
                   style={{fontSize: 20, color: 'white'}}></Icon>
@@ -60,7 +66,10 @@ class WalletTab extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.receiveButton}
-                activeOpacity={0.8}>
+                activeOpacity={0.8}
+                onPress={() => {
+                  this.props.navigation.navigate('Receive');
+                }}>
                 <Icon
                   name="enter-outline"
                   style={{fontSize: 20, color: 'white'}}></Icon>
@@ -111,8 +120,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     marginTop: '12%',
     backgroundColor: '#c0392b',
-    elevation:10
-
+    elevation: 10,
   },
   buttonContainer: {
     width: '100%',
@@ -133,16 +141,14 @@ const styles = StyleSheet.create({
     height: height * 0.5,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
-    marginTop:15,
-    elevation:10
+    marginTop: 15,
+    elevation: 10,
   },
   detailButtonContainer: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop:10
+    marginTop: 10,
   },
-  
- 
 });

@@ -67,7 +67,6 @@ class HomeTab extends Component {
               name="person"
               style={{paddingLeft: 10, color: '#fff'}}
               onPress={() => {
-                console.log(this.props.navigation);
                 this.props.navigation.navigate('Profile');
               }}
             />

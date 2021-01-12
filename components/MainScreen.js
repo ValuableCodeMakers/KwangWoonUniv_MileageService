@@ -9,6 +9,9 @@ import MapTab from './AppTabNavigator/MapTab';
 import WalletTab from './AppTabNavigator/WalletTab';
 import RankTab from './AppTabNavigator/RankTab';
 import ProfileScreen from './ProfileScreen';
+import SendScreen from './AppTabNavigator/Wallet/SendScreen';
+import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
+
 
 export default class MainScreen extends Component {
   static navigationOptions = {
@@ -107,6 +110,8 @@ const AppTabContainer = createAppContainer(
     {
       AppTabNavigator: AppTabNavigator, //MainScreen 등록
       Profile: ProfileScreen,
+      Send: SendScreen,
+      Receive: ReceiveScreen,
     },
     {
       headerMode: 'none',
