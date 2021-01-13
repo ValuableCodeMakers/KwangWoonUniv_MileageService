@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 import { Icon } from 'native-base';
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
 
 import {
@@ -24,10 +24,6 @@ async function requestPermission() {
     } catch (e) {
         console.log(e);
     }
-}
-
-function getLocation() {
-
 }
 
 const MapTab = () => {
@@ -80,7 +76,16 @@ const MapTab = () => {
                     latitudeDelta: 0.004,
                     longitudeDelta: 0.002,
                 }}
-            />
+            >
+                <Marker
+                    coordinate={{
+                        latitude: location.latitude,
+                        longitude: location.longitude
+                    }}
+                    title="현재위치"
+                    description="https://www.kw.ac.kr/ko/"
+                ></Marker>
+            </MapView>
         </View>
     );
     //}
