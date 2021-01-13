@@ -41,7 +41,7 @@ class ReceiveScreen extends Component {
                   textStyle: {textAlign: 'center'},
                 })
               }>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>주소 복사</Text>
+              <Text style={{fontSize: 15, fontWeight: 'bold',color:'white'}}>주소 복사</Text>
             </Button>
           </CardItem>
         </Card>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 10,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    backgroundColor: '#747d8c'
+    backgroundColor: '#f5f6fa'
   },
   copyButton: {
     width: 150,

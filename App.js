@@ -1,7 +1,7 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {Root} from 'native-base'
+import {Root} from 'native-base';
 
 import MainScreen from './components/MainScreen';
 import LoginScreen from './components/LoginScreen';
@@ -53,8 +53,7 @@ export default class App extends Component {
   render() {
     return (
       <Root>
-
-      <MainContainer></MainContainer>
+        <MainContainer></MainContainer>
       </Root>
     );
   }

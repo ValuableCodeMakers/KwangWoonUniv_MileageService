@@ -10,7 +10,6 @@ import {
   CardItem,
 } from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import SendScreen from './Wallet/SendScreen';
 
 const {width, height} = Dimensions.get('window');
 

@@ -12,7 +12,6 @@ import ProfileScreen from './ProfileScreen';
 import SendScreen from './AppTabNavigator/Wallet/SendScreen';
 import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
 
-
 export default class MainScreen extends Component {
   static navigationOptions = {
     headerShown: false,
