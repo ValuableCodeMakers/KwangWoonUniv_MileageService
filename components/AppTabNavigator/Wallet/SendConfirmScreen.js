@@ -3,13 +3,11 @@ import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {
   Container,
   Card,
-  CardItem,
   Button,
   Item,
   Label,
   Content,
   Textarea,
-  Footer,
   Input,
   Icon,
 } from 'native-base';
@@ -17,9 +15,9 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('window');
 
-class SendScreen extends Component {
+class SendConfirmScreen extends Component {
   static navigationOptions = {
-    title: '토큰전송',
+    title: '',
     headerTitleAlign: 'center',
   };
 
@@ -28,26 +26,11 @@ class SendScreen extends Component {
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <Content contentContainerStyle={{flex: 1}}>
-            <View style={styles.formContainer}>
-              <View>
-                <View style={styles.addressFrom}>
-                  <Text style={{fontSize: 18}}>상대 주소</Text>
-                  <Icon name="camera" style={{fontSize: 22}} />
-                </View>
-                <Textarea
-                  placeholder="상대방의 주소를 입력해주세요."
-                  rowSpan={4}
-                  placeholderTextColor="#BBB"
-                  backgroundColor="#f5f6fa"
-                  width="100%"></Textarea>
-              </View>
-              <View style={styles.transferForm}>
-                <Text style={{fontSize: 18}}>토큰 수량</Text>
-                <Item floatingLabel>
-                  <Label>전송할 토큰 수량을 적어주세요.</Label>
-                  <Input />
-                  <Text>KWC</Text>
-                </Item>
+            <View>
+              <View style={styles.confirmContainer}>
+                <Text style={{fontSize: 15}}>주소 에게</Text>
+                <Text style={{fontSize: 30}}>100 KWC</Text>
+                <Text style={{fontSize: 15}}>토큰을 보낼까요?</Text>
               </View>
             </View>
             <View style={styles.cautionText}>
@@ -73,9 +56,15 @@ class SendScreen extends Component {
                 취소
               </Text>
             </Button>
-            <Button iconLeft style={styles.nextButton} onPress={()=>{this.props.navigation.navigate('SendConfirm')}} danger>
+            <Button
+              iconLeft
+              style={styles.nextButton}
+              onPress={() => {
+                this.props.navigation.navigate('SendConfirm');
+              }}
+              danger>
               <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
-                다음
+                전송
               </Text>
             </Button>
           </View>
@@ -85,7 +74,7 @@ class SendScreen extends Component {
   }
 }
 
-export default SendScreen;
+export default SendConfirmScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -105,19 +94,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     elevation: 10,
   },
-  addressFrom: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 5,
-  },
-  formContainer: {
-    marginTop: 20,
-    width: width * 0.8,
-  },
-  transferForm: {
-    padding: 5,
-    width: '100%',
-    marginTop: 12,
+  confirmContainer: {
+    height: height * 0.4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   cautionText: {
     marginTop: 20,
