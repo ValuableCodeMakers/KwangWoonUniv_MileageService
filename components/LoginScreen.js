@@ -134,6 +134,7 @@ class LoginScreen extends Component {
 
   state = {
     id: '',
+    password: ''
   };
 
   handleLogin = () => {

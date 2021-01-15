@@ -23,6 +23,11 @@ class SendScreen extends Component {
     headerTitleAlign: 'center',
   };
 
+  state = {
+    toAddress: '',
+    transferToken: 0,
+  };
+
   render() {
     return (
       <Container style={styles.container}>
@@ -39,13 +44,20 @@ class SendScreen extends Component {
                   rowSpan={4}
                   placeholderTextColor="#BBB"
                   backgroundColor="#f5f6fa"
-                  width="100%"></Textarea>
+                  width="100%"
+                  onChangeText={(toAddress) => {
+                    this.setState({toAddress});
+                  }}></Textarea>
               </View>
               <View style={styles.transferForm}>
                 <Text style={{fontSize: 18}}>토큰 수량</Text>
                 <Item floatingLabel>
                   <Label>전송할 토큰 수량을 적어주세요.</Label>
-                  <Input />
+                  <Input
+                    onChangeText={(transferToken) => {
+                      this.setState({transferToken}); 
+                    }}
+                  />
                   <Text>KWC</Text>
                 </Item>
               </View>
@@ -73,7 +85,13 @@ class SendScreen extends Component {
                 취소
               </Text>
             </Button>
-            <Button iconLeft style={styles.nextButton} onPress={()=>{this.props.navigation.navigate('SendConfirm')}} danger>
+            <Button
+              iconLeft
+              style={styles.nextButton}
+              onPress={() => {
+                this.props.navigation.navigate('SendConfirm', this.state);
+              }}
+              danger>
               <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
                 다음
               </Text>

@@ -20,49 +20,12 @@ class SendConfirmScreen extends Component {
     headerTitleAlign: 'center',
   };
 
-  constructor(props) {
-    super(props);
-
-    const address = this.props.navigation.getScreenProps().userWalletAddress;
-    const transferData = this.props.navigation.state.params;
-
-    this.state = {
-      from: address,
-      to: transferData.toAddress,
-      total: transferData.transferToken,
-    };
-  }
-
-  handleTransfer = () => {
-    console.log('토큰 전송 메소드')
-    fetch('http://192.168.0.5:3000/routes/transferToken', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(this.state),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        this.setState({userWalletAddress: res.userWalletAddress});
-      })
-      .then(() => {
-        this.props.navigation.navigate('SendResult');
-      });
-  };
-
   render() {
     return (
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <Content contentContainerStyle={{flex: 1}}>
-            <View>
-              <View style={styles.confirmContainer}>
-                <Text style={{fontSize: 15}}>{this.state.to} 에게</Text>
-                <Text style={{fontSize: 30}}>{this.state.total} KWC</Text>
-                <Text style={{fontSize: 15}}>토큰을 보낼까요?</Text>
-              </View>
-            </View>
+        
             <View style={styles.cautionText}>
               <Text style={{fontSize: 12}}>
                 상대방의 주소와 토큰의 양을 확인하세요.
@@ -80,16 +43,11 @@ class SendConfirmScreen extends Component {
           </Content>
           <View style={styles.buttonContainer}>
             <Button
-              style={styles.cancelButton}
-              onPress={() => this.props.navigation.goBack()}>
-              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
-                취소
-              </Text>
-            </Button>
-            <Button
               iconLeft
               style={styles.nextButton}
-              onPress={this.handleTransfer}
+              onPress={() => {
+                this.props.navigation.navigate('SendConfirm');
+              }}
               danger>
               <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
                 전송

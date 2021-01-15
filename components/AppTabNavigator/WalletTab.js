@@ -59,7 +59,7 @@ class WalletTab extends Component {
                 style={styles.sendButton}
                 activeOpacity={0.8}
                 onPress={() => {
-                  this.props.navigation.navigate('Send');
+                  this.props.navigation.navigate('Send',address);
                 }}>
                 <Icon
                   name="exit-outline"

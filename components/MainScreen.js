@@ -11,6 +11,8 @@ import RankTab from './AppTabNavigator/RankTab';
 import ProfileScreen from './ProfileScreen';
 import SendScreen from './AppTabNavigator/Wallet/SendScreen';
 import SendConfirmScreen from './AppTabNavigator/Wallet/SendConfirmScreen';
+import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
+
 import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
 
 export default class MainScreen extends Component {
@@ -115,6 +117,7 @@ const AppTabContainer = createAppContainer(
       Profile: ProfileScreen,
       Send: SendScreen,
       SendConfirm: SendConfirmScreen,
+      SendResult: SendResultScreen,
       Receive: ReceiveScreen,
     },
     {
