@@ -44,11 +44,11 @@ class SendConfirmScreen extends Component {
         return res.json();
       })
       .then((res) => {
-        this.setState({userWalletAddress: res.userWalletAddress});
+        console.log(res)
       })
-      .then(() => {
-        this.props.navigation.navigate('SendResult');
-      });
+      // .then(() => {
+      //   this.props.navigation.navigate('SendResult');
+      // });
   };
 
   render() {

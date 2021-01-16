@@ -25,21 +25,7 @@ class SendConfirmScreen extends Component {
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <Content contentContainerStyle={{flex: 1}}>
-        
-            <View style={styles.cautionText}>
-              <Text style={{fontSize: 12}}>
-                상대방의 주소와 토큰의 양을 확인하세요.
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  color: '#c23616',
-                  marginTop: 2,
-                }}>
-                블록체인 특성상 한번 보낸 토큰 전송은 취소가 불가능합니다.
-              </Text>
-            </View>
+            <View style={styles.cautionText}></View>
           </Content>
           <View style={styles.buttonContainer}>
             <Button
@@ -50,7 +36,7 @@ class SendConfirmScreen extends Component {
               }}
               danger>
               <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
-                전송
+                확인
               </Text>
             </Button>
           </View>

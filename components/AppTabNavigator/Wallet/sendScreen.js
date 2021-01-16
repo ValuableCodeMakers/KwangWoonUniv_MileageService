@@ -3,17 +3,14 @@ import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {
   Container,
   Card,
-  CardItem,
   Button,
   Item,
   Label,
   Content,
   Textarea,
-  Footer,
   Input,
   Icon,
 } from 'native-base';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('window');
 
@@ -23,10 +20,13 @@ class SendScreen extends Component {
     headerTitleAlign: 'center',
   };
 
-  state = {
-    toAddress: '',
-    transferToken: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      toAddress: '',
+      transferToken: 0,
+    };
+  }
 
   render() {
     return (
@@ -55,7 +55,7 @@ class SendScreen extends Component {
                   <Label>전송할 토큰 수량을 적어주세요.</Label>
                   <Input
                     onChangeText={(transferToken) => {
-                      this.setState({transferToken}); 
+                      this.setState({transferToken});
                     }}
                   />
                   <Text>KWC</Text>
