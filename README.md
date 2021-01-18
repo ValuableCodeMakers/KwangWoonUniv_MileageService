@@ -17,9 +17,8 @@ react-native run-android
 ![node badge](http://img.shields.io/badge/node-12.14.1-green?style=flat&logo=Node.js)
 
 -----------
-## Team 
-### 개발자 💻
-
+## Team 💻
+#### 개발자 
 * 노경진 / rudwls468@gmail.com
 * 김지원 / kimjiwon97@gmail.com
 * 강철구 / ironballk97@gmail.com
