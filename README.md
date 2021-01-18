@@ -8,6 +8,7 @@
 
 ### 설치
 ```
+// 프론트엔드 실행
 npm install
 react-native run-android
 ```
