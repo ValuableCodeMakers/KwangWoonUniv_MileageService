@@ -4,7 +4,9 @@
 ## 프로젝트 소개 🔎
 블록체인 기술(암호화폐)을 사용한 광운대학교 마일리지 어플리케이션입니다.
 
-사용자는 이벤트를 통해 토큰을 얻고, 사용할 수 있습니다.
+사용자는 어플리케이션의 위치(지도)기반 이벤트를 통해 토큰을 획득합니다.
+
+사용자는 해당 토큰 교환을 통해 물질적인 이득과 토큰을 얻음으로 학교 생활에 대한 성취감을 얻을 수 있습니다.
 
 ### 설치
 ```
@@ -16,20 +18,26 @@ react-native run-android
 ## 프로젝트 기술 Stack ⚙️
 
 ### Front-End
-![react badge](http://img.shields.io/badge/JavaScript-yellow?style=flat-square&logo=JavaScript)
+![react badge](http://img.shields.io/badge/JavaScript-yellow?style=flat-square&logo=JavaScript) ![react badge](http://img.shields.io/badge/react-v16.13.1-blue?style=flat-square&logo=react)
+ 
 
-![react badge](http://img.shields.io/badge/react-v16.13.1-blue?style=flat-square&logo=react)
 
 ### Back-End
-![node badge](http://img.shields.io/badge/node-v12.14.1-green?style=flat-square&logo=Node.js)
+![node badge](http://img.shields.io/badge/node-v12.14.1-green?style=flat-square&logo=Node.js) ![node badge](http://img.shields.io/badge/Express-v4.17.1-lightgrey?style=flat-square&logo=Express)
 
-![node badge](http://img.shields.io/badge/Express-v4.17.1-lightgrey?style=flat-square&logo=Express)
+
 
 ### DataBase
-![node badge](http://img.shields.io/badge/MySQL-v8.0.21-white?style=flat-square&logo=MySQL&logoColor=white)
+![node badge](http://img.shields.io/badge/MySQL-v8.0.21-inactive?style=flat-square&logo=MySQL&logoColor=white)
 
 ### BlockChain
-![node badge](http://img.shields.io/badge/Ethereum-grey?style=flat&logo=Ethereum&labelColor=#ecf0f1)
+![node badge](http://img.shields.io/badge/Ethereum-grey?style=flat-square&logo=Ethereum&labelColor=#ecf0f1)
+
+Infura
+
+Web3
+
+OpenZeppelin / https://github.com/OpenZeppelin/openzeppelin-contracts
 
 -----------
 ## Team 💻
