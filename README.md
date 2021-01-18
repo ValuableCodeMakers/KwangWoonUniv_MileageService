@@ -14,8 +14,22 @@ react-native run-android
 ```
   
 ## 프로젝트 기술 Stack ⚙️
-![react badge](http://img.shields.io/badge/react-16.13.1-blue?style=flat&logo=react)
-![node badge](http://img.shields.io/badge/node-12.14.1-green?style=flat&logo=Node.js)
+
+### Front-End
+![react badge](http://img.shields.io/badge/JavaScript-yellow?style=flat-square&logo=JavaScript)
+
+![react badge](http://img.shields.io/badge/react-v16.13.1-blue?style=flat-square&logo=react)
+
+### Back-End
+![node badge](http://img.shields.io/badge/node-v12.14.1-green?style=flat-square&logo=Node.js)
+
+![node badge](http://img.shields.io/badge/Express-v4.17.1-lightgrey?style=flat-square&logo=Express)
+
+### DataBase
+![node badge](http://img.shields.io/badge/MySQL-v8.0.21-white?style=flat-square&logo=MySQL&logoColor=white)
+
+### BlockChain
+![node badge](http://img.shields.io/badge/Ethereum-grey?style=flat&logo=Ethereum&labelColor=#ecf0f1)
 
 -----------
 ## Team 💻
