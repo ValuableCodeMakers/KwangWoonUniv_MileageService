@@ -29,12 +29,13 @@ class SendConfirmScreen extends Component {
     this.state = {
       from: address,
       to: transferData.toAddress,
-      total: transferData.transferToken,
+      value: transferData.transferToken,
     };
+    console.log(this.state);
   }
 
   handleTransfer = () => {
-    console.log('토큰 전송 메소드')
+    console.log('토큰 전송 메소드');
     fetch('http://192.168.0.5:3000/routes/transferToken', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -43,23 +44,30 @@ class SendConfirmScreen extends Component {
       .then((res) => {
         return res.json();
       })
-      .then((res) => {
-        console.log(res)
-      })
-      // .then(() => {
-      //   this.props.navigation.navigate('SendResult');
-      // });
+      .then((data) => {
+        console.log('converting', data.txhash);
+
+        const confirmData = {
+          to: this.state.to,
+          value: this.state.value,
+          txHash: data.txhash,
+        };
+
+        this.props.navigation.navigate('SendResult', confirmData);
+      });
   };
 
   render() {
+    let toAddress = this.state.to.substr(0, 10); // 상대방 주소
+
     return (
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <Content contentContainerStyle={{flex: 1}}>
             <View>
               <View style={styles.confirmContainer}>
-                <Text style={{fontSize: 15}}>{this.state.to} 에게</Text>
-                <Text style={{fontSize: 30}}>{this.state.total} KWC</Text>
+                <Text style={{fontSize: 15}}>{toAddress}... 에게</Text>
+                <Text style={{fontSize: 30}}>{this.state.value} KWC</Text>
                 <Text style={{fontSize: 15}}>토큰을 보낼까요?</Text>
               </View>
             </View>

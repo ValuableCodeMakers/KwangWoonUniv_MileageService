@@ -19,10 +19,31 @@ class WalletTab extends Component {
       <Icon name="ios-wallet-sharp" style={{color: tintColor}} />
     ),
   };
-  
-  render() {
-    const address = this.props.navigation.getScreenProps().userWalletAddress;
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      address: '',
+      balance: 'N/A',
+    };
+  }
+
+  // props => state 업데이트
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('WalletTab getDerivedStateFromProps');
+    console.log(nextProps.navigation.getScreenProps().userBalance);
+    if (
+      nextProps.navigation.getScreenProps().userBalance !== prevState.balance
+    ) {
+      return {
+        address: nextProps.navigation.getScreenProps().userWalletAddress,
+        balance: nextProps.navigation.getScreenProps().userBalance,
+      };
+    }
+    return null;
+  }
+
+  render() {
     return (
       <Container>
         <Header style={{backgroundColor: '#fff'}}>
@@ -51,7 +72,7 @@ class WalletTab extends Component {
               <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
               <Text style={{fontSize: 35, color: 'white'}}>
                 <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-                토큰
+                {this.state.balance} 토큰
               </Text>
             </View>
             <View style={styles.buttonContainer}>
@@ -59,7 +80,7 @@ class WalletTab extends Component {
                 style={styles.sendButton}
                 activeOpacity={0.8}
                 onPress={() => {
-                  this.props.navigation.navigate('Send',address);
+                  this.props.navigation.navigate('Send', this.state.address);
                 }}>
                 <Icon
                   name="exit-outline"
@@ -70,7 +91,7 @@ class WalletTab extends Component {
                 style={styles.receiveButton}
                 activeOpacity={0.8}
                 onPress={() => {
-                  this.props.navigation.navigate('Receive',address);
+                  this.props.navigation.navigate('Receive', this.state.address);
                 }}>
                 <Icon
                   name="enter-outline"

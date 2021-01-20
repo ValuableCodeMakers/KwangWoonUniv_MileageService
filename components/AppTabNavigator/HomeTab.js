@@ -16,44 +16,35 @@ class HomeTab extends Component {
   static navigationOptions = {
     headerMode: 'none',
     headerShown: false,
-    tabBarVisible: 'true'
-  };
-  state = {
-    balance: "N/A",
+    tabBarVisible: 'true',
   };
 
-  componentDidMount() {
-    console.log(this.props.navigation.getScreenProps());
+  constructor(props) {
+    super(props);
 
-    const address = this.props.navigation.getScreenProps().userWalletAddress;
-    const handleBalance = this.props.navigation.getScreenProps().handleBalance;
+    this.state = {
+      balance: 'N/A',
+    };
+  }
 
-    if (address != null) {
-      fetch('http://192.168.0.5:3000/routes/getWalletBalance', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({address: address}),
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((res) => {
-          let balance = res.balance;
-          balance = balance.substr(0, balance.length - 18);
-          this.setState({balance: balance});
-          handleBalance(balance)
-        });
+  // props => state 업데이트
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('HomeTab getDerivedStateFromProps');
+    console.log(nextProps.navigation.getScreenProps().userBalance);
+    if (nextProps.navigation.getScreenProps().userBalance !== prevState.balance) {
+      return {balance: nextProps.navigation.getScreenProps().userBalance};
     }
+    return null;
   }
 
   signOutUser = () => {
-    fetch('http://192.168.0.5:3000/routes/logout', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    }).then((res) => {
-      console.log(res);
-      this.props.navigation.navigate('Auth');
-    });
+    // fetch('http://192.168.0.5:3000/routes/logout', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    // }).then((res) => {
+    //   console.log(res);
+    //   this.props.navigation.navigate('Auth');
+    // });
   };
 
   static navigationOptions = {

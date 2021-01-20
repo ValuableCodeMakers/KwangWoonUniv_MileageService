@@ -70,6 +70,11 @@ class LoginScreen extends Component {
   constructor() {
     super();
 
+    this.state = {
+      id: '',
+      password: ''
+    };
+    
     this.buttonOpacity = new Value(1); // 초기 값
     this.onStateChange = event([
       {
@@ -132,10 +137,7 @@ class LoginScreen extends Component {
     });
   }
 
-  state = {
-    id: '',
-    password: ''
-  };
+ 
 
   handleLogin = () => {
     const { id, password } = this.state;

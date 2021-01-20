@@ -1,16 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {
-  Container,
-  Card,
-  Button,
-  Item,
-  Label,
-  Content,
-  Textarea,
-  Input,
-  Icon,
-} from 'native-base';
+import {Container, Card, Button, Content, Icon} from 'native-base';
 
 const {width, height} = Dimensions.get('window');
 
@@ -20,19 +10,67 @@ class SendConfirmScreen extends Component {
     headerTitleAlign: 'center',
   };
 
+  constructor(props) {
+    super(props);
+    const transferedData = this.props.navigation.state.params;
+    this.state = {
+      txHash: transferedData.txHash,
+      to: transferedData.to,
+      value: transferedData.value,
+    };
+  }
   render() {
+    let txHash = this.state.txHash.substr(0, 10); // 상대방 주소
+    let toAddress = this.state.to.substr(0, 10); // 상대방 주소
+
     return (
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
-          <Content contentContainerStyle={{flex: 1}}>
-            <View style={styles.cautionText}></View>
-          </Content>
+          <View style={styles.completeText}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>토큰 전송이</Text>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              완료되었습니다. 🤗
+            </Text>
+          </View>
+          <View style={styles.resultContainer}>
+            <View style={styles.resultText}>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                생성된 해쉬
+              </Text>
+            </View>
+            <View style={styles.resultText}>
+              <Text style={{fontSize: 15}}>{txHash} ...</Text>
+            </View>
+          </View>
+          <View style={styles.resultContainer}>
+            <View style={styles.resultText}>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>받은 주소</Text>
+            </View>
+            <View style={styles.resultText}>
+              <Text>{toAddress} ...</Text>
+            </View>
+          </View>
+          <View style={styles.resultContainer}>
+            <View style={styles.resultText}>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수량</Text>
+            </View>
+            <View style={styles.resultText}>
+              <Text>{this.state.value} KWC</Text>
+            </View>
+          </View>
+          <View style={styles.resultContainer}>
+            <View style={styles.resultText}>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수수료</Text>
+            </View>
+            <View style={styles.resultText}>
+              <Text></Text>
+            </View>
+          </View>
           <View style={styles.buttonContainer}>
             <Button
-              iconLeft
               style={styles.nextButton}
               onPress={() => {
-                this.props.navigation.navigate('SendConfirm');
+                this.props.navigation.navigate('AppTabNavigator');
               }}
               danger>
               <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
@@ -66,24 +104,25 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     elevation: 10,
   },
-  confirmContainer: {
-    height: height * 0.4,
-    justifyContent: 'center',
+  completeText: {
     alignItems: 'center',
-  },
-  cautionText: {
-    marginTop: 20,
-    padding: 10,
     width: '100%',
+    margin: 20
+  },
+  resultContainer: {
+    flexDirection: 'row',
+    padding: 15,
+    width: '90%',
+    borderBottomWidth: 0.2,
+    borderBottomColor: '#bdc3c7',
+  },
+  resultText: {
+    justifyContent: 'flex-start',
+    width: '50%',
   },
   buttonContainer: {
+    marginTop: 20,
     flexDirection: 'row',
-    padding: 20,
-  },
-  cancelButton: {
-    justifyContent: 'center',
-    width: '30%',
-    backgroundColor: '#2f3640',
   },
   nextButton: {
     justifyContent: 'center',
