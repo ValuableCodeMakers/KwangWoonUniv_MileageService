@@ -70,6 +70,11 @@ class LoginScreen extends Component {
   constructor() {
     super();
 
+    this.state = {
+      id: '',
+      password: ''
+    };
+    
     this.buttonOpacity = new Value(1); // 초기 값
     this.onStateChange = event([
       {
@@ -132,14 +137,12 @@ class LoginScreen extends Component {
     });
   }
 
-  state = {
-    id: '',
-  };
+ 
 
   handleLogin = () => {
     const { id, password } = this.state;
 
-    fetch('http://192.168.0.3:3000/routes/login', {
+    fetch('http://192.168.0.5:3000/routes/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),

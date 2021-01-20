@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon } from 'native-base';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
@@ -64,7 +64,6 @@ const MapTab = () => {
         )
     }
 
-    //render() {
     return (
         <View style={{ flex: 1 }}>
             <MapView
@@ -88,7 +87,6 @@ const MapTab = () => {
             </MapView>
         </View>
     );
-    //}
 }
 export default MapTab;
 

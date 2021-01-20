@@ -9,17 +9,25 @@ import MapTab from './AppTabNavigator/MapTab';
 import WalletTab from './AppTabNavigator/WalletTab';
 import RankTab from './AppTabNavigator/RankTab';
 import ProfileScreen from './ProfileScreen';
+import SendScreen from './AppTabNavigator/Wallet/SendScreen';
+import SendConfirmScreen from './AppTabNavigator/Wallet/SendConfirmScreen';
+import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
+
+import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
 
 export default class MainScreen extends Component {
   static navigationOptions = {
     headerShown: false,
   };
 
-  state = {
-    userId: '',
-    userWalletAddress: '',
-    userBalance: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      userId: '',
+      userWalletAddress: '',
+      userBalance: 'N/A',
+    };
+  }
 
   componentDidMount() {
     fetch('http://192.168.0.5:3000/routes/getUserId', {
@@ -44,14 +52,25 @@ export default class MainScreen extends Component {
             this.setState({userWalletAddress: res.userWalletAddress});
           })
           .then(() => {
-            console.log('현재 MainScreen state', this.state);
+            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({address: this.state.userWalletAddress}),
+            })
+              .then((res) => {
+                return res.json();
+              })
+              .then((res) => {
+                let balance = res.balance;
+                balance = balance.substr(0, balance.length - 18);
+                this.setState({userBalance: balance});
+              })
+              .then(() => {
+                console.log('MainScreen state', this.state);
+              });
           });
       });
   }
-
-  handleBalance = (balance) => {
-    this.setState({userBalance: balance});
-  };
 
   render() {
     return (
@@ -59,7 +78,7 @@ export default class MainScreen extends Component {
         screenProps={{
           userId: this.state.userId,
           userWalletAddress: this.state.userWalletAddress,
-          handleBalance: this.handleBalance
+          userBalance: this.state.userBalance,
         }}></AppTabContainer>
     );
   }
@@ -102,14 +121,20 @@ const AppTabNavigator = createMaterialTopTabNavigator(
   },
 );
 
+AppTabNavigator.navigationOptions = {
+  headerShown: false,
+};
 const AppTabContainer = createAppContainer(
   createStackNavigator(
     {
       AppTabNavigator: AppTabNavigator, //MainScreen 등록
       Profile: ProfileScreen,
+      Send: SendScreen,
+      SendConfirm: SendConfirmScreen,
+      SendResult: SendResultScreen,
+      Receive: ReceiveScreen,
     },
     {
-      headerMode: 'none',
       initialRouteName: 'AppTabNavigator',
     },
   ),
