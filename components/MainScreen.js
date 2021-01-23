@@ -30,7 +30,7 @@ export default class MainScreen extends Component {
   }
 
   componentDidMount() {
-    fetch('http://172.30.1.45:3000/routes/getUserId', {
+    fetch('http://192.168.8.192:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -40,7 +40,7 @@ export default class MainScreen extends Component {
         this.setState({userId: res.userId});
       })
       .then(() => {
-        fetch('http://172.30.1.45:3000/routes/getWalletAddress', {
+        fetch('http://192.168.8.192:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(this.state),
@@ -52,7 +52,7 @@ export default class MainScreen extends Component {
             this.setState({userWalletAddress: res.userWalletAddress});
           })
           .then(() => {
-            fetch('http://172.30.1.45:3000/routes/getTokenBalance', {
+            fetch('http://192.168.8.192:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({address: this.state.userWalletAddress}),

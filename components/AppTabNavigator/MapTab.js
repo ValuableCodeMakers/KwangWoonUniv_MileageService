@@ -31,9 +31,9 @@ const MapTab = (props) => {
   const [location, setLocation] = useState();
   useEffect(() => {
     requestPermission().then((result) => {
-      console.log({result});
+      console.log("위치 접근 권한",result);
       if (result === 'granted') {
-        Geolocation.getCurrentPosition(
+        const watchId = Geolocation.watchPosition(
           (pos) => {
             setLocation(pos.coords);
           },
@@ -42,10 +42,17 @@ const MapTab = (props) => {
           },
           {
             enableHighAccuracy: true,
-            timeout: 3600,
-            maximumAge: 3600,
-          },
+            distanceFilter:0,
+            interval: 5000,
+            fastestInterval: 2000,
+        },
         );
+
+        return()=>{
+            if(watchId){
+                Geolocation.clearWatch(watchId)
+            }
+        }
       }
     });
   }, []);
