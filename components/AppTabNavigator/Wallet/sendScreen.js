@@ -32,51 +32,49 @@ class SendScreen extends Component {
     return (
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
-          <Content contentContainerStyle={{flex: 1}}>
-            <View style={styles.formContainer}>
-              <View>
-                <View style={styles.addressFrom}>
-                  <Text style={{fontSize: 18}}>상대 주소</Text>
-                  <Icon name="camera" style={{fontSize: 22}} />
-                </View>
-                <Textarea
-                  placeholder="상대방의 주소를 입력해주세요."
-                  rowSpan={4}
-                  placeholderTextColor="#BBB"
-                  backgroundColor="#f5f6fa"
-                  width="100%"
-                  onChangeText={(toAddress) => {
-                    this.setState({toAddress});
-                  }}></Textarea>
+          <View style={styles.formContainer}>
+            <View style={styles.addressForm}>
+              <View style={styles.addressMenu}>
+                <Text style={{fontSize: 18}}>상대 주소</Text>
+                <Icon name="camera" style={{fontSize: 22}} />
               </View>
-              <View style={styles.transferForm}>
-                <Text style={{fontSize: 18}}>토큰 수량</Text>
-                <Item floatingLabel>
-                  <Label>전송할 토큰 수량을 적어주세요.</Label>
-                  <Input
-                    onChangeText={(transferToken) => {
-                      this.setState({transferToken});
-                    }}
-                  />
-                  <Text>KWC</Text>
-                </Item>
-              </View>
+              <Textarea
+                placeholder="상대방의 주소를 입력해주세요."
+                rowSpan={4}
+                placeholderTextColor="#BBB"
+                backgroundColor="#f5f6fa"
+                width="100%"
+                onChangeText={(toAddress) => {
+                  this.setState({toAddress});
+                }}></Textarea>
             </View>
-            <View style={styles.cautionText}>
-              <Text style={{fontSize: 12}}>
-                상대방의 주소와 토큰의 양을 확인하세요.
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  color: '#c23616',
-                  marginTop: 2,
-                }}>
-                블록체인 특성상 한번 보낸 토큰 전송은 취소가 불가능합니다.
-              </Text>
+            <View style={styles.transferForm}>
+              <Text style={{fontSize: 18}}>토큰 수량</Text>
+              <Item floatingLabel>
+                <Label>전송할 토큰 수량을 적어주세요.</Label>
+                <Input
+                  onChangeText={(transferToken) => {
+                    this.setState({transferToken});
+                  }}
+                />
+                <Text>KWC</Text>
+              </Item>
             </View>
-          </Content>
+          </View>
+          <View style={styles.cautionTextContainer}>
+            <Text style={{fontSize: 12}}>
+              ! 상대방의 주소와 토큰의 양을 확인하세요.
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: 'bold',
+                color: '#c23616',
+                marginTop: 2,
+              }}>
+              ! 블록체인 특성상 한번 보낸 토큰 전송은 취소가 불가능합니다.
+            </Text>
+          </View>
           <View style={styles.buttonContainer}>
             <Button
               style={styles.cancelButton}
@@ -108,9 +106,9 @@ export default SendScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   mainContainer: {
     alignItems: 'center',
@@ -123,24 +121,24 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     elevation: 10,
   },
-  addressFrom: {
+  formContainer: {
+    marginBottom: 20,
+    width: width * 0.8,
+  },
+  addressMenu: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 5,
   },
-  formContainer: {
-    marginTop: 20,
-    width: width * 0.8,
-  },
+  addressForm: {},
   transferForm: {
     padding: 5,
     width: '100%',
     marginTop: 12,
   },
-  cautionText: {
-    marginTop: 20,
-    padding: 10,
-    width: '100%',
+  cautionTextContainer: {
+    alignItems: 'center',
+    padding: 20,
   },
   buttonContainer: {
     flexDirection: 'row',
