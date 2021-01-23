@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Icon} from 'native-base';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 
 import {
@@ -31,7 +31,7 @@ const MapTab = (props) => {
   const [location, setLocation] = useState();
   useEffect(() => {
     requestPermission().then((result) => {
-      console.log("위치 접근 권한",result);
+      console.log('위치 접근 권한', result);
       if (result === 'granted') {
         const watchId = Geolocation.watchPosition(
           (pos) => {
@@ -42,17 +42,17 @@ const MapTab = (props) => {
           },
           {
             enableHighAccuracy: true,
-            distanceFilter:0,
+            distanceFilter: 1000,
             interval: 5000,
             fastestInterval: 2000,
-        },
+          },
         );
 
-        return()=>{
-            if(watchId){
-                Geolocation.clearWatch(watchId)
-            }
-        }
+        return () => {
+          if (watchId) {
+            Geolocation.clearWatch(watchId);
+          }
+        };
       }
     });
   }, []);
@@ -60,7 +60,7 @@ const MapTab = (props) => {
   if (!location) {
     return (
       <View>
-        <Text>Splash Screen</Text>
+        <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );
   }
@@ -70,20 +70,16 @@ const MapTab = (props) => {
       <MapView
         style={{flex: 1}}
         provider={PROVIDER_GOOGLE}
+        showsMyLocationButton={true}
+        showsUserLocation={true}
+        followsUserLocation={true}
         initialRegion={{
           latitude: location.latitude,
           longitude: location.longitude,
           latitudeDelta: 0.004,
           longitudeDelta: 0.002,
-        }}>
-        <Marker
-          coordinate={{
-            latitude: location.latitude,
-            longitude: location.longitude,
-          }}
-          title="현재위치"
-          description="https://www.kw.ac.kr/ko/"></Marker>
-      </MapView>
+        }}
+        loadingEnabled={true}></MapView>
     </View>
   );
 };
