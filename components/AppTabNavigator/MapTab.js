@@ -59,7 +59,7 @@ const MapTab = (props) => {
 
   if (!location) {
     return (
-      <View>
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );

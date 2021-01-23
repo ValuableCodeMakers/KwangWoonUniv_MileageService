@@ -60,7 +60,7 @@ class WalletTab extends Component {
           <Right>
             <Icon
               name="menu"
-              onPress={this.signOutUser}
+              onPress={() => this.props.navigation.toggleDrawer()}
               style={{paddingRight: 10, color: 'black'}}
             />
           </Right>
