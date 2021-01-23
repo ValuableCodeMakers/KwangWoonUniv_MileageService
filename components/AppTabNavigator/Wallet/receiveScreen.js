@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Container, Card, CardItem, Toast, Button, Icon} from 'native-base';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import QRCode from 'react-native-qrcode-svg';
 
