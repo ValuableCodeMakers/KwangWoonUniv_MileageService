@@ -11,11 +11,13 @@ import {Card, Textarea} from 'native-base';
 const {width, height} = Dimensions.get('window');
 
 export default class CreateWalletScreen extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       mnemonic: '',
       address: '',
+      privateKey: ''
     };
   }
 
@@ -35,7 +37,8 @@ export default class CreateWalletScreen extends Component {
           ...preState,
           mnemonic: res.mnemonic,
           address: res.address,
-        }); // state에 mnemonic 저장
+          privateKey: res.privateKey
+        }); 
 
         console.log('state 출력', this.state);
       });
@@ -47,7 +50,6 @@ export default class CreateWalletScreen extends Component {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(this.state),
     }).then((res) => {
-      console.log(res);
       this.props.navigation.navigate('Main');
     });
   };
