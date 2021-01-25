@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Container, Card, CardItem, Toast, Button, Icon} from 'native-base';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { Container, Card, CardItem, Toast, Button, Icon } from 'native-base';
 
 import QRCode from 'react-native-qrcode-svg';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class ReceiveScreen extends Component {
   static navigationOptions = {
@@ -17,7 +17,7 @@ class ReceiveScreen extends Component {
     return (
       <Container style={styles.container}>
         <Card style={styles.qrContainer}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', marginVertical: 10}}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 10 }}>
             내 주소
           </Text>
           <CardItem>
@@ -37,10 +37,10 @@ class ReceiveScreen extends Component {
               onPress={() =>
                 Toast.show({
                   text: '주소가 복사되었습니다 😊',
-                  textStyle: {textAlign: 'center'},
+                  textStyle: { textAlign: 'center' },
                 })
               }>
-              <Text style={{fontSize: 15, fontWeight: 'bold',color:'white'}}>주소 복사</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>주소 복사</Text>
             </Button>
           </CardItem>
         </Card>

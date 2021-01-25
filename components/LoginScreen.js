@@ -74,7 +74,7 @@ class LoginScreen extends Component {
       id: '',
       password: ''
     };
-    
+
     this.buttonOpacity = new Value(1); // 초기 값
     this.onStateChange = event([
       {
@@ -137,12 +137,12 @@ class LoginScreen extends Component {
     });
   }
 
- 
+
 
   handleLogin = () => {
     const { id, password } = this.state;
 
-    fetch('http://192.168.8.192:3000/routes/login', {
+    fetch('http://192.168.0.5:3000/routes/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
@@ -171,10 +171,10 @@ class LoginScreen extends Component {
           // 이미 회원
           console.log('이미 회원');
           console.log(res);
-          
+
           this.props.navigation.navigate('Main', {
             screen: 'HomeTab',
-            params: {userId: res.userId},
+            params: { userId: res.userId },
           });
         }
       });

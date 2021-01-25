@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Card,
   CardItem,
@@ -8,9 +8,9 @@ import {
   Left,
   Container,
 } from 'native-base';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class HomeTab extends Component {
   static navigationOptions = {
@@ -32,7 +32,7 @@ class HomeTab extends Component {
     console.log('HomeTab getDerivedStateFromProps');
     console.log(nextProps.navigation.getScreenProps().userBalance);
     if (nextProps.navigation.getScreenProps().userBalance !== prevState.balance) {
-      return {balance: nextProps.navigation.getScreenProps().userBalance};
+      return { balance: nextProps.navigation.getScreenProps().userBalance };
     }
     return null;
   }
@@ -48,19 +48,19 @@ class HomeTab extends Component {
   };
 
   static navigationOptions = {
-    tabBarIcon: ({tintColor}) => (
-      <Icon name="ios-home" style={{color: tintColor}} />
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="ios-home" style={{ color: tintColor }} />
     ),
   };
 
   render() {
     return (
       <Container>
-        <Header style={{backgroundColor: '#c0392b'}}>
+        <Header style={{ backgroundColor: '#c0392b' }}>
           <Left>
             <Icon
               name="person"
-              style={{paddingLeft: 10, color: '#fff'}}
+              style={{ paddingLeft: 10, color: '#fff' }}
               onPress={() => {
                 this.props.navigation.navigate('Profile');
               }}
@@ -70,7 +70,7 @@ class HomeTab extends Component {
             <Icon
               name="menu"
               onPress={this.signOutUser}
-              style={{paddingRight: 10, color: '#fff'}}
+              style={{ paddingRight: 10, color: '#fff' }}
             />
           </Right>
         </Header>
@@ -79,10 +79,10 @@ class HomeTab extends Component {
           <View style={styles.background}></View>
 
           <View style={styles.cardContainer}>
-            <View style={{alignItems: 'center'}}>
-              <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
-              <Text style={{fontSize: 35, color: 'white'}}>
-                <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ fontSize: 15, color: 'white' }}>현재 잔액</Text>
+              <Text style={{ fontSize: 35, color: 'white' }}>
+                <Icon name="server-outline" style={{ color: 'white' }}></Icon>{' '}
                 {this.state.balance} 토큰
               </Text>
             </View>
@@ -92,22 +92,22 @@ class HomeTab extends Component {
             <Text style={styles.eventText}>Event</Text>
             <ScrollView style={styles.eventScrollView}>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트가 없습니다. 😂</Text>
                 </CardItem>
               </Card>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트</Text>
                 </CardItem>
               </Card>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트</Text>
                 </CardItem>
               </Card>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트</Text>
                 </CardItem>
               </Card>
