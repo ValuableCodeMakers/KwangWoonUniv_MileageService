@@ -70,6 +70,11 @@ class LoginScreen extends Component {
   constructor() {
     super();
 
+    this.state = {
+      id: '',
+      password: ''
+    };
+
     this.buttonOpacity = new Value(1); // 초기 값
     this.onStateChange = event([
       {
@@ -132,15 +137,12 @@ class LoginScreen extends Component {
     });
   }
 
-  state = {
-    id: '',
-    password: '',
-  };
+
 
   handleLogin = () => {
     const { id, password } = this.state;
 
-    fetch('http://192.168.0.3:3000/routes/login', {
+    fetch('http://192.168.0.5:3000/routes/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
@@ -149,7 +151,10 @@ class LoginScreen extends Component {
         return res.json();
       })
       .then((res) => {
-        console.log('응답 결과 ' + res.result);
+        console.log('응답 결과 ', res);
+        console.log(res.userId);
+        console.log(res.userWalletAddress);
+
         if (res.result == false) {
           // 로그인 실패
           Alert.alert(
@@ -165,8 +170,12 @@ class LoginScreen extends Component {
         } else {
           // 이미 회원
           console.log('이미 회원');
+          console.log(res);
 
-          this.props.navigation.navigate('App');
+          this.props.navigation.navigate('Main', {
+            screen: 'HomeTab',
+            params: { userId: res.userId },
+          });
         }
       });
   };

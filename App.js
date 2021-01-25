@@ -1,7 +1,7 @@
-import React from 'react';
-import {StyleSheet, ScrollView, View, Text, StatusBar} from 'react-native';
+import React, {Component} from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {Root} from 'native-base';
 
 import MainScreen from './components/MainScreen';
 import LoginScreen from './components/LoginScreen';
@@ -11,7 +11,7 @@ import RegisterScreen from './components/RegisterScreen';
 import CreateProfileScreen from './components/CreateProfileScreen';
 import CreateWalletScreen from './components/CreateWalletScreen';
 
-const AppStack = createStackNavigator({
+const MainStack = createStackNavigator({
   Main: MainScreen, //MainScreen 등록
 });
 
@@ -35,11 +35,11 @@ const NewRegisterStack = createStackNavigator(
   },
 );
 
-export default createAppContainer(
+const MainContainer = createAppContainer(
   createSwitchNavigator(
     {
       Loading: LoadingScreen,
-      App: AppStack,
+      Main: MainStack,
       NewRegister: NewRegisterStack,
       Auth: AuthStack,
     },
@@ -49,4 +49,12 @@ export default createAppContainer(
   ),
 );
 
-const styles = StyleSheet.create({});
+export default class App extends Component {
+  render() {
+    return (
+      <Root>
+        <MainContainer></MainContainer>
+      </Root>
+    );
+  }
+}

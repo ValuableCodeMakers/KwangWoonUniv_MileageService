@@ -1,49 +1,67 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Card,
   CardItem,
   Icon,
-  Body,
   Right,
   Header,
   Left,
   Container,
 } from 'native-base';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import CardComponent from '../CardComponent';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class HomeTab extends Component {
-  // 로그아웃 기능
-  signOutUser = () => {
-    fetch('http://192.168.0.5:3000/routes/logout', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    }).then((res) => {
-      console.log(res);
-      this.props.navigation.navigate('Auth');
-    });
+  static navigationOptions = {
+    headerMode: 'none',
+    headerShown: false,
+    tabBarVisible: 'true',
   };
 
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      balance: 'N/A',
+    };
+  }
+
+  // props => state 업데이트
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('HomeTab getDerivedStateFromProps');
+    console.log(nextProps.navigation.getScreenProps().userBalance);
+    if (nextProps.navigation.getScreenProps().userBalance !== prevState.balance) {
+      return { balance: nextProps.navigation.getScreenProps().userBalance };
+    }
+    return null;
+  }
+
+  signOutUser = () => {
+    // fetch('http://192.168.0.5:3000/routes/logout', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    // }).then((res) => {
+    //   console.log(res);
+    //   this.props.navigation.navigate('Auth');
+    // });
+  };
 
   static navigationOptions = {
-    tabBarIcon: ({tintColor}) => (
-      <Icon name="ios-home" style={{color: tintColor}} />
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="ios-home" style={{ color: tintColor }} />
     ),
   };
 
   render() {
     return (
       <Container>
-        <Header style={{backgroundColor: '#c0392b'}}>
+        <Header style={{ backgroundColor: '#c0392b' }}>
           <Left>
             <Icon
               name="person"
-              style={{paddingLeft: 10, color: '#fff'}}
+              style={{ paddingLeft: 10, color: '#fff' }}
               onPress={() => {
-                console.log(this.props.navigation);
                 this.props.navigation.navigate('Profile');
               }}
             />
@@ -52,7 +70,7 @@ class HomeTab extends Component {
             <Icon
               name="menu"
               onPress={this.signOutUser}
-              style={{paddingRight: 10, color: '#fff'}}
+              style={{ paddingRight: 10, color: '#fff' }}
             />
           </Right>
         </Header>
@@ -61,40 +79,40 @@ class HomeTab extends Component {
           <View style={styles.background}></View>
 
           <View style={styles.cardContainer}>
-            <View style={{alignItems: 'center'}}>
-              <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
-              <Text style={{fontSize: 35, color: 'white'}}>
-                <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-                35.0 토큰
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ fontSize: 15, color: 'white' }}>현재 잔액</Text>
+              <Text style={{ fontSize: 35, color: 'white' }}>
+                <Icon name="server-outline" style={{ color: 'white' }}></Icon>{' '}
+                {this.state.balance} 토큰
               </Text>
             </View>
           </View>
 
-          <View style={styles.eventContainer}>
+          <Card style={styles.eventContainer}>
             <Text style={styles.eventText}>Event</Text>
             <ScrollView style={styles.eventScrollView}>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트가 없습니다. 😂</Text>
                 </CardItem>
               </Card>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트</Text>
                 </CardItem>
               </Card>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트</Text>
                 </CardItem>
               </Card>
               <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
+                <CardItem style={{ height: 120 }}>
                   <Text>진행중인 이벤트</Text>
                 </CardItem>
               </Card>
             </ScrollView>
-          </View>
+          </Card>
         </Container>
       </Container>
     );
@@ -125,7 +143,6 @@ const styles = StyleSheet.create({
     width: width * 0.98,
     height: '70%',
     marginTop: '40%',
-
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     backgroundColor: '#fff',
