@@ -23,10 +23,12 @@ class SendConfirmScreen extends Component {
   constructor(props) {
     super(props);
 
+    const id = this.props.navigation.getScreenProps().userId;
     const address = this.props.navigation.getScreenProps().userWalletAddress;
     const transferData = this.props.navigation.state.params;
 
     this.state = {
+      id : id,
       from: address,
       to: transferData.toAddress,
       value: transferData.transferToken,

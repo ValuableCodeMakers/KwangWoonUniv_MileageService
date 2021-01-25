@@ -14,9 +14,9 @@ const {width, height} = Dimensions.get('window');
 
 class HomeTab extends Component {
   static navigationOptions = {
-    headerMode: 'none',
-    headerShown: false,
-    tabBarVisible: 'true',
+    tabBarIcon: ({tintColor}) => (
+      <Icon name="ios-home" style={{color: tintColor}} />
+    ),
   };
 
   constructor(props) {
@@ -30,8 +30,10 @@ class HomeTab extends Component {
   // props => state 업데이트
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log('HomeTab getDerivedStateFromProps');
-    console.log(nextProps.navigation.getScreenProps().userBalance);
-    if (nextProps.navigation.getScreenProps().userBalance !== prevState.balance) {
+
+    if (
+      nextProps.navigation.getScreenProps().userBalance !== prevState.balance
+    ) {
       return {balance: nextProps.navigation.getScreenProps().userBalance};
     }
     return null;
@@ -45,12 +47,6 @@ class HomeTab extends Component {
     //   console.log(res);
     //   this.props.navigation.navigate('Auth');
     // });
-  };
-
-  static navigationOptions = {
-    tabBarIcon: ({tintColor}) => (
-      <Icon name="ios-home" style={{color: tintColor}} />
-    ),
   };
 
   render() {
@@ -69,7 +65,7 @@ class HomeTab extends Component {
           <Right>
             <Icon
               name="menu"
-              onPress={this.signOutUser}
+              onPress={() => this.props.navigation.toggleDrawer()}
               style={{paddingRight: 10, color: '#fff'}}
             />
           </Right>
