@@ -74,7 +74,7 @@ class LoginScreen extends Component {
       id: '',
       password: ''
     };
-    
+
     this.buttonOpacity = new Value(1); // 초기 값
     this.onStateChange = event([
       {
@@ -137,7 +137,7 @@ class LoginScreen extends Component {
     });
   }
 
- 
+
 
   handleLogin = () => {
     const { id, password } = this.state;
@@ -171,10 +171,10 @@ class LoginScreen extends Component {
           // 이미 회원
           console.log('이미 회원');
           console.log(res);
-          
+
           this.props.navigation.navigate('Main', {
             screen: 'HomeTab',
-            params: {userId: res.userId},
+            params: { userId: res.userId },
           });
         }
       });

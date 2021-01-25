@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {
   Container,
   Card,
@@ -12,7 +12,7 @@ import {
   Icon,
 } from 'native-base';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class SendConfirmScreen extends Component {
   static navigationOptions = {
@@ -40,7 +40,7 @@ class SendConfirmScreen extends Component {
     console.log('토큰 전송 메소드');
     fetch('http://192.168.0.5:3000/routes/transferToken', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
     })
       .then((res) => {
@@ -65,16 +65,16 @@ class SendConfirmScreen extends Component {
     return (
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
-          <Content contentContainerStyle={{flex: 1}}>
+          <Content contentContainerStyle={{ flex: 1 }}>
             <View>
               <View style={styles.confirmContainer}>
-                <Text style={{fontSize: 15}}>{toAddress}... 에게</Text>
-                <Text style={{fontSize: 30}}>{this.state.value} KWC</Text>
-                <Text style={{fontSize: 15}}>토큰을 보낼까요?</Text>
+                <Text style={{ fontSize: 15 }}>{toAddress}... 에게</Text>
+                <Text style={{ fontSize: 30 }}>{this.state.value} KWC</Text>
+                <Text style={{ fontSize: 15 }}>토큰을 보낼까요?</Text>
               </View>
             </View>
             <View style={styles.cautionText}>
-              <Text style={{fontSize: 12}}>
+              <Text style={{ fontSize: 12 }}>
                 상대방의 주소와 토큰의 양을 확인하세요.
               </Text>
               <Text
@@ -92,7 +92,7 @@ class SendConfirmScreen extends Component {
             <Button
               style={styles.cancelButton}
               onPress={() => this.props.navigation.goBack()}>
-              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
                 취소
               </Text>
             </Button>
@@ -101,7 +101,7 @@ class SendConfirmScreen extends Component {
               style={styles.nextButton}
               onPress={this.handleTransfer}
               danger>
-              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
                 전송
               </Text>
             </Button>
