@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {useState, useEffect} from 'react';
 import {
   Card,
   CardItem,
@@ -9,111 +10,80 @@ import {
   Container,
 } from 'native-base';
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const {width, height} = Dimensions.get('window');
 
-class HomeTab extends Component {
-  static navigationOptions = {
-    tabBarIcon: ({tintColor}) => (
-      <Icon name="ios-home" style={{color: tintColor}} />
-    ),
-  };
+const HomeTab = (props) => {
+  const [balance, setBalance] = useState('N/A');
+  const reduxState = useSelector((state) => state); // redux의 store 가져오기
+  const eventList = []
+  eventList.push(reduxState.event);
+  console.log('이벤트 리스트',eventList);
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      balance: 'N/A',
-    };
-  }
-
-  // props => state 업데이트
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('HomeTab getDerivedStateFromProps');
-
-    if (
-      nextProps.navigation.getScreenProps().userBalance !== prevState.balance
-    ) {
-      return {balance: nextProps.navigation.getScreenProps().userBalance};
+  if (props.navigation.getScreenProps().userBalance) {
+    if (props.navigation.getScreenProps().userBalance !== balance) {
+      return setBalance(props.navigation.getScreenProps().userBalance);
     }
-    return null;
   }
+ 
+  return (
+    <Container>
+      <Header style={{backgroundColor: '#c0392b'}}>
+        <Left>
+          <Icon
+            name="person"
+            style={{paddingLeft: 10, color: '#fff'}}
+            onPress={() => {
+              props.navigation.navigate('Profile');
+            }}
+          />
+        </Left>
+        <Right>
+          <Icon
+            name="menu"
+            onPress={() => props.navigation.toggleDrawer()}
+            style={{paddingRight: 10, color: '#fff'}}
+          />
+        </Right>
+      </Header>
 
-  signOutUser = () => {
-    // fetch('http://192.168.0.5:3000/routes/logout', {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'application/json'},
-    // }).then((res) => {
-    //   console.log(res);
-    //   this.props.navigation.navigate('Auth');
-    // });
-  };
+      <Container style={styles.container}>
+        <View style={styles.background}></View>
 
-  render() {
-    return (
-      <Container>
-        <Header style={{backgroundColor: '#c0392b'}}>
-          <Left>
-            <Icon
-              name="person"
-              style={{paddingLeft: 10, color: '#fff'}}
-              onPress={() => {
-                this.props.navigation.navigate('Profile');
-              }}
-            />
-          </Left>
-          <Right>
-            <Icon
-              name="menu"
-              onPress={() => this.props.navigation.toggleDrawer()}
-              style={{paddingRight: 10, color: '#fff'}}
-            />
-          </Right>
-        </Header>
-
-        <Container style={styles.container}>
-          <View style={styles.background}></View>
-
-          <View style={styles.cardContainer}>
-            <View style={{alignItems: 'center'}}>
-              <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
-              <Text style={{fontSize: 35, color: 'white'}}>
-                <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-                {this.state.balance} 토큰
-              </Text>
-            </View>
+        <View style={styles.cardContainer}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
+            <Text style={{fontSize: 35, color: 'white'}}>
+              <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
+              {balance} 토큰
+            </Text>
           </View>
+        </View>
 
-          <Card style={styles.eventContainer}>
-            <Text style={styles.eventText}>Event</Text>
-            <ScrollView style={styles.eventScrollView}>
+        <Card style={styles.eventContainer}>
+          <Text style={styles.eventText}>Event</Text>
+          <ScrollView style={styles.eventScrollView}>
+            {eventList.map((data) => (
               <Card style={styles.currentEvent}>
                 <CardItem style={{height: 120}}>
-                  <Text>진행중인 이벤트가 없습니다. 😂</Text>
+                  <Text style={{fontSize:18}}> 이벤트 완료! 😊</Text>
                 </CardItem>
               </Card>
-              <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
-                  <Text>진행중인 이벤트</Text>
-                </CardItem>
-              </Card>
-              <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
-                  <Text>진행중인 이벤트</Text>
-                </CardItem>
-              </Card>
-              <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
-                  <Text>진행중인 이벤트</Text>
-                </CardItem>
-              </Card>
-            </ScrollView>
-          </Card>
-        </Container>
+            ))}
+          </ScrollView>
+        </Card>
       </Container>
-    );
-  }
-}
+    </Container>
+  );
+};
+
+HomeTab.navigationOptions = () => ({
+  tabBarIcon: ({tintColor}) => (
+    <Icon name="ios-home" style={{color: tintColor}} />
+  ),
+});
+
 export default HomeTab;
 
 const styles = StyleSheet.create({
@@ -152,10 +122,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
   },
-  wallet: {
-    width: width * 0.95,
-  },
   currentEvent: {
     width: width * 0.95,
+    position: 'relative',
   },
 });
