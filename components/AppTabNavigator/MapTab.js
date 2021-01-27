@@ -31,7 +31,7 @@ import {
   Anni80,
   IceLink,
 } from './Coordinates/Coordinate';
-import {completeEvent1} from '../../redux/action'
+import {completeEvent} from '../../redux/action'
 
 async function requestPermission() {
   try {
@@ -79,7 +79,7 @@ const MapTab = (props) => {
         console.log('학교도착! 시간 이벤트 실행', locationResult);
         setArriveLocation(true)
 
-        dispatch(completeEvent1(locationResult)) // dispatch 에 true 전달
+        dispatch(completeEvent("학교도착")) // dispatch 에 true 전달
       }
     }
   }, [location]);

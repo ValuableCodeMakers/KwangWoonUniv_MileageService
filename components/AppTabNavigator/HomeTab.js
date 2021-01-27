@@ -16,16 +16,17 @@ const {width, height} = Dimensions.get('window');
 
 const HomeTab = (props) => {
   const [balance, setBalance] = useState('N/A');
-  const reduxState = useSelector((state) => state);
-  const eventList = reduxState.event;
-  console.log(eventList);
+  const reduxState = useSelector((state) => state); // redux의 store 가져오기
+  const eventList = []
+  eventList.push(reduxState.event);
+  console.log('이벤트 리스트',eventList);
 
   if (props.navigation.getScreenProps().userBalance) {
     if (props.navigation.getScreenProps().userBalance !== balance) {
       return setBalance(props.navigation.getScreenProps().userBalance);
     }
   }
-
+ 
   return (
     <Container>
       <Header style={{backgroundColor: '#c0392b'}}>
@@ -63,19 +64,13 @@ const HomeTab = (props) => {
         <Card style={styles.eventContainer}>
           <Text style={styles.eventText}>Event</Text>
           <ScrollView style={styles.eventScrollView}>
-            {eventList ? (
+            {eventList.map((data) => (
               <Card style={styles.currentEvent}>
                 <CardItem style={{height: 120}}>
-                  <Text>{eventList.event1} 이벤트 완료! 😊</Text>
+                  <Text style={{fontSize:18}}> 이벤트 완료! 😊</Text>
                 </CardItem>
               </Card>
-            ) : (
-              <Card style={styles.currentEvent}>
-                <CardItem style={{height: 120}}>
-                  <Text>현재 완료한 이벤트가 없습니다. 😂</Text>
-                </CardItem>
-              </Card>
-            )}
+            ))}
           </ScrollView>
         </Card>
       </Container>
@@ -127,10 +122,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
   },
-  wallet: {
-    width: width * 0.95,
-  },
   currentEvent: {
     width: width * 0.95,
+    position: 'relative',
   },
 });
