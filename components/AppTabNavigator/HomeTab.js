@@ -17,9 +17,7 @@ const {width, height} = Dimensions.get('window');
 const HomeTab = (props) => {
   const [balance, setBalance] = useState('N/A');
   const reduxState = useSelector((state) => state); // redux의 store 가져오기
-  const eventList = []
-  eventList.push(reduxState.event);
-  console.log('이벤트 리스트',eventList);
+  console.log(JSON.stringify(reduxState));
 
   if (props.navigation.getScreenProps().userBalance) {
     if (props.navigation.getScreenProps().userBalance !== balance) {
@@ -64,13 +62,13 @@ const HomeTab = (props) => {
         <Card style={styles.eventContainer}>
           <Text style={styles.eventText}>Event</Text>
           <ScrollView style={styles.eventScrollView}>
-            {eventList.map((data) => (
+            {/* {eventList.map((data) => (
               <Card style={styles.currentEvent}>
                 <CardItem style={{height: 120}}>
                   <Text style={{fontSize:18}}> 이벤트 완료! 😊</Text>
                 </CardItem>
               </Card>
-            ))}
+            ))} */}
           </ScrollView>
         </Card>
       </Container>

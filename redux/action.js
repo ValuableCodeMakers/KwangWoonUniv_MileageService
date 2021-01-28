@@ -1,5 +1,11 @@
 export function completeEvent(type) {
   switch (type) {
+    // 학교 도착
+    case '학교도착':
+      return {
+        type: '학교도착',
+        result: true,
+      };
     case '화도관':
       return {
         type: '화도관',
@@ -60,12 +66,7 @@ export function completeEvent(type) {
         type: '아이스링크',
         result: true,
       };
-    // 학교 도착
-    case '학교도착':
-      return {
-        type: '학교도착',
-        result: true,
-      };
+
     default:
       return false;
   }

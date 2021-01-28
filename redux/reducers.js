@@ -1,19 +1,21 @@
 import {FlatList} from 'react-native-gesture-handler';
 
 const eventReducer_initialState = {
-  HwaDo: false,
-  BiMa: false,
-  OgUi: false,
-  BokJi: false,
-  YeonGu: false,
-  DongHae: false,
-  ChamBit: false,
-  SaeBit: false,
-  HanWool: false,
-  NooRi: false,
-  Anni80: false,
-  IceLink: false,
-  Arrive: false,
+  events: [
+    {id: '화도관', state: false},
+    {id: '비마관', state: false},
+    {id: '옥의관', state: false},
+    {id: '복지관', state: false},
+    {id: '연구관', state: false},
+    {id: '동해문화예술관', state: false},
+    {id: '참빛관', state: false},
+    {id: '새빛관', state: false},
+    {id: '한울관', state: false},
+    {id: '누리관', state: false},
+    {id: '80주년기념관', state: false},
+    {id: '아이스링크', state: false},
+    {id: '학교도착', state: false},
+  ],
 };
 
 const userData_initialState = {
@@ -46,9 +48,11 @@ export const eventReducer = (state = eventReducer_initialState, action) => {
     case '80주년기념관':
       return {...state, Anni80: action.result};
     case '아이스링크':
-      return {...state, IceLink: action.result};
+      return {...state, events: newArray};
     case '학교도착':
-      return {...state, Arrive: action.result};
+      const index = state.events.findIndex((data) => data.id === action.type); 
+      const newArray = [...state.events]; 
+      newArray[index].state = true; 
     default:
       return state;
   }
