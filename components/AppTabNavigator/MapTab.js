@@ -8,7 +8,7 @@ import MapView, {
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   Text,
@@ -31,7 +31,7 @@ import {
   Anni80,
   IceLink,
 } from './Coordinates/Coordinate';
-import {completeEvent} from '../../redux/action'
+import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 
 async function requestPermission() {
   try {
@@ -51,7 +51,6 @@ async function requestPermission() {
 
 const MapTab = (props) => {
   const [location, setLocation] = useState();
-  const [arriveLocation, setArriveLocation] = useState(false);
   const buildingList = [
     HwaDo,
     BiMa,
@@ -66,20 +65,34 @@ const MapTab = (props) => {
     Anni80,
     IceLink,
   ];
+  const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const dispatch = useDispatch();
+
+  // 건물 이벤트 상태
+  const buildingState = reduxState.buildingEvent.events;
+  //console.log(JSON.stringify(buildingState));
+
+  // 위치 이벤트 상태
+  const holdingState = reduxState.holdingEvent;
 
   // 현재 위치 변경시
   useEffect(() => {
-    if (location && !arriveLocation) {
+    if (location) {
       const locationResult = geolib.isPointInPolygon(
         {latitude: location.latitude, longitude: location.longitude},
         KW_Area[0],
       );
-      if (locationResult) {
-        console.log('학교도착! 시간 이벤트 실행', locationResult);
-        setArriveLocation(true)
 
-        dispatch(completeEvent("학교도착")) // dispatch 에 true 전달
+      if (locationResult && !holdingState.state) {
+        console.log('학교도착! 시간 이벤트 실행', locationResult);
+
+        setTimeout(() => {
+          dispatch(handleHoldingEvent('학교도착, 이벤트 실행')); // dispatch 에 true 전달
+        }, 1000);
+      } else if (!locationResult && holdingState.state) {
+        console.log('학교 이탈! 시간 이벤트 중단', locationResult);
+
+        dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
       }
     }
   }, [location]);
