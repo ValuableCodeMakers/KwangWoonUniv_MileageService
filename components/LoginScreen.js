@@ -141,8 +141,8 @@ class LoginScreen extends Component {
 
   handleLogin = () => {
     const { id, password } = this.state;
-    
-    fetch('http://172.30.1.52:3000/routes/login', {
+
+    fetch('http://172.30.1.31:3000/routes/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),

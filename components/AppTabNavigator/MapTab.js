@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Icon} from 'native-base';
+import React, { useState, useEffect } from 'react';
+import { Icon } from 'native-base';
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
@@ -8,7 +8,7 @@ import MapView, {
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   View,
   Text,
@@ -31,7 +31,7 @@ import {
   Anni80,
   IceLink,
 } from './Coordinates/Coordinate';
-import {completeEvent} from '../../redux/action'
+import { completeEvent } from '../../redux/action'
 
 async function requestPermission() {
   try {
@@ -68,15 +68,39 @@ const MapTab = (props) => {
   ];
   const dispatch = useDispatch();
 
-  // 현재 위치 변경시
+  // 학교 도착 시
   useEffect(() => {
     if (location && !arriveLocation) {
       const locationResult = geolib.isPointInPolygon(
-        {latitude: location.latitude, longitude: location.longitude},
+        { latitude: location.latitude, longitude: location.longitude },
         KW_Area[0],
       );
       if (locationResult) {
         console.log('학교도착! 시간 이벤트 실행', locationResult);
+        setArriveLocation(true)
+
+        dispatch(completeEvent("학교도착")) // dispatch 에 true 전달
+      }
+    }
+  }, [location]);
+
+
+  useEffect(() => {
+    var locationBuilding = '';
+    var i;
+    if (location) {
+      for (i = 0; i < buildingList.length; i++) {
+        if (geolib.isPointInPolygon(
+          { latitude: location.latitude, longitude: location.longitude },
+          buildingList[i].coordinate,
+        )) {
+          console.log(buildingList[i].title);
+          locationBuilding = buildingList[i].title;
+        }
+      }
+
+      if (locationBuilding != '') {
+        console.log(locationBuilding + '도착! 시간 이벤트 실행');
         setArriveLocation(true)
 
         dispatch(completeEvent("학교도착")) // dispatch 에 true 전달
@@ -115,16 +139,16 @@ const MapTab = (props) => {
 
   if (!location) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );
   }
 
   return (
-    <View style={{flex: 1, width: '100%'}}>
+    <View style={{ flex: 1, width: '100%' }}>
       <MapView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         provider={PROVIDER_GOOGLE}
         showsMyLocationButton={true}
         showsCompass={true}
@@ -180,8 +204,8 @@ const MapTab = (props) => {
 };
 
 MapTab.navigationOptions = (screenProps) => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-map" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-map" style={{ color: tintColor }} />
   ),
 });
 
