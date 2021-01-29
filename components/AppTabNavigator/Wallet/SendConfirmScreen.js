@@ -28,7 +28,7 @@ class SendConfirmScreen extends Component {
     const transferData = this.props.navigation.state.params;
 
     this.state = {
-      id : id,
+      id: id,
       from: address,
       to: transferData.toAddress,
       value: transferData.transferToken,
@@ -38,7 +38,7 @@ class SendConfirmScreen extends Component {
 
   handleTransfer = () => {
     console.log('토큰 전송 메소드');
-    fetch('http://192.168.0.5:3000/routes/transferToken', {
+    fetch('http://172.30.1.20:3000/routes/transferToken', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),

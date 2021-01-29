@@ -103,7 +103,7 @@ const MapTab = (props) => {
         console.log(locationBuilding + '도착! 시간 이벤트 실행');
         setArriveLocation(true)
 
-        dispatch(completeEvent("학교도착")) // dispatch 에 true 전달
+        dispatch(completeEvent(locationBuilding)) // dispatch 에 true 전달
       }
     }
   }, [location]);
