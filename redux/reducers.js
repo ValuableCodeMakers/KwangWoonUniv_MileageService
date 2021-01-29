@@ -1,6 +1,6 @@
 import {FlatList} from 'react-native-gesture-handler';
 
-const eventReducer_initialState = {
+const buildingEvent_Reducer_initialState = {
   events: [
     {id: '화도관', state: false},
     {id: '비마관', state: false},
@@ -14,8 +14,12 @@ const eventReducer_initialState = {
     {id: '누리관', state: false},
     {id: '80주년기념관', state: false},
     {id: '아이스링크', state: false},
-    {id: '학교도착', state: false},
   ],
+};
+
+const holdingEvent_Reducer_initialState = {
+  id: '학교도착',
+  state: false,
 };
 
 const userData_initialState = {
@@ -23,7 +27,17 @@ const userData_initialState = {
 };
 
 // 건물 도착 이벤트 관련 reducer
-export const eventReducer = (state = eventReducer_initialState, action) => {
+
+// buildingEvent_Reducer_initialState 변경시 참고 코드
+
+// const index = state.events.findIndex((data) => data.id === action.type); 
+// const newArray = [...state.events]; 
+// newArray[index].state = true; 
+
+export const buildingEventReducer = (
+  state = buildingEvent_Reducer_initialState,
+  action,
+) => {
   switch (action.type) {
     case '화도관':
       return {...state, HwaDo: action.result};
@@ -49,10 +63,21 @@ export const eventReducer = (state = eventReducer_initialState, action) => {
       return {...state, Anni80: action.result};
     case '아이스링크':
       return {...state, events: newArray};
-    case '학교도착':
-      const index = state.events.findIndex((data) => data.id === action.type); 
-      const newArray = [...state.events]; 
-      newArray[index].state = true; 
+    default:
+      return state;
+  }
+};
+
+
+export const holdingEventReducer = (
+  state = holdingEvent_Reducer_initialState,
+  action,
+) => {
+  switch (action.type) {
+    case '이벤트 실행':
+      return {...state, state: action.result};
+    case '이벤트 중단':
+      return {...state, state: action.result};
     default:
       return state;
   }

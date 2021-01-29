@@ -1,4 +1,4 @@
-export function completeEvent(type) {
+export function handleBuildingEvent(type) {
   switch (type) {
     // 학교 도착
     case '학교도착':
@@ -66,8 +66,28 @@ export function completeEvent(type) {
         type: '아이스링크',
         result: true,
       };
-
     default:
       return false;
+  }
+}
+
+export function handleHoldingEvent(type) {
+  switch (type) {
+    // 학교 도착
+    case '학교도착, 이벤트 실행':
+      return {
+        type: '이벤트 실행',
+        result: true,
+      };
+    case '학교대기, 이벤트 중단':
+      return {
+        type: '이벤트 중단',
+        result: false,
+      };
+    default:
+      return {
+        type: '이벤트 중단',
+        result: false,
+      };
   }
 }
