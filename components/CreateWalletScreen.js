@@ -25,7 +25,7 @@ export default class CreateWalletScreen extends Component {
     const preState = this.props.navigation.getParam('preState');
     console.log('이전 state', preState);
 
-    fetch('http://192.168.0.5:3000/routes/createWallet', {
+    fetch('http://172.30.1.20:3000/routes/createWallet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -38,14 +38,14 @@ export default class CreateWalletScreen extends Component {
           mnemonic: res.mnemonic,
           address: res.address,
           privateKey: res.privateKey
-        }); 
+        });
 
         console.log('state 출력', this.state);
       });
   }
 
   handleProfile = () => {
-    fetch('http://192.168.0.5:3000/routes/saveProfile', {
+    fetch('http://172.30.1.20:3000/routes/saveProfile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
