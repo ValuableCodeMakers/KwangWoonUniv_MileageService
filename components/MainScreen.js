@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Platform, Dimensions } from 'react-native';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createAppContainer } from 'react-navigation';
+import React, {Component} from 'react';
+import {Platform, Dimensions} from 'react-native';
+import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
+import {createAppContainer} from 'react-navigation';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
@@ -16,7 +16,7 @@ import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
 import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
 import CustomDrawerNavigator from './CustomDrawerNavigator';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export default class MainScreen extends Component {
   static navigationOptions = {
@@ -33,32 +33,32 @@ export default class MainScreen extends Component {
   }
 
   componentDidMount() {
-    fetch('http://172.30.1.20:3000/routes/getUserId', {
+    fetch('http://172.30.1.10:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        this.setState({ userId: res.userId });
+        this.setState({userId: res.userId});
       })
       .then(() => {
-        fetch('http://172.30.1.20:3000/routes/getWalletAddress', {
+        fetch('http://172.30.1.10:3000/routes/getWalletAddress', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(this.state),
         })
           .then((res) => {
             return res.json();
           })
           .then((res) => {
-            this.setState({ userWalletAddress: res.userWalletAddress });
+            this.setState({userWalletAddress: res.userWalletAddress});
           })
           .then(() => {
-            fetch('http://172.30.1.20:3000/routes/getTokenBalance', {
+            fetch('http://172.30.1.10:3000/routes/getTokenBalance', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ address: this.state.userWalletAddress }),
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({address: this.state.userWalletAddress}),
             })
               .then((res) => {
                 return res.json();
@@ -66,7 +66,7 @@ export default class MainScreen extends Component {
               .then((res) => {
                 let balance = res.balance;
                 balance = balance.substr(0, balance.length - 18);
-                this.setState({ userBalance: balance });
+                this.setState({userBalance: balance});
               })
               .then(() => {
                 console.log('MainScreen state', this.state);
@@ -90,10 +90,10 @@ export default class MainScreen extends Component {
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
 const AppTabNavigator = createMaterialTopTabNavigator(
   {
-    홈: { screen: HomeTab },
-    지도: { screen: MapTab },
-    결제: { screen: WalletTab },
-    랭킹: { screen: RankTab },
+    홈: {screen: HomeTab},
+    지도: {screen: MapTab},
+    결제: {screen: WalletTab},
+    랭킹: {screen: RankTab},
   },
   {
     bounces: true,
@@ -101,7 +101,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
     swipeEnabled: true,
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      labelStyle: { fontSize: 12 },
+      labelStyle: {fontSize: 12},
       style: {
         borderTopWidth: 0.12,
         height: 70,
@@ -109,11 +109,11 @@ const AppTabNavigator = createMaterialTopTabNavigator(
           ios: {
             backgroundColor: '#ffffff',
           },
-          android: { backgroundColor: '#ffffff' },
+          android: {backgroundColor: '#ffffff'},
         }),
       },
 
-      iconStyle: { height: 30, width: 30 },
+      iconStyle: {height: 30, width: 30},
       activeTintColor: '#b33939',
       inactiveTintColor: 'black',
       upperCaseLabel: false,

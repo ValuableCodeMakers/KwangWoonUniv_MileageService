@@ -1,8 +1,11 @@
 import {createStore, combineReducers} from 'redux';
-import {eventReducer} from './reducers'; // 리듀서들을 가져옵니다
+import {buildingEventReducer, holdingEventReducer} from './reducers'; 
 
-const reducer = combineReducers({event: eventReducer}); // reducers 
+const reducer = combineReducers({
+  buildingEvent: buildingEventReducer,
+  holdingEvent: holdingEventReducer,
+}); 
 
-const store = createStore(reducer); 
+const store = createStore(reducer);
 
 export default store;
