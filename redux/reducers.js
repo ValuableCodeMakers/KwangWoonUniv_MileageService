@@ -23,16 +23,18 @@ const holdingEvent_Reducer_initialState = {
 };
 
 const userData_initialState = {
-  event1: false,
+  userId: '',
+  userWalletAddress: '',
+  userBalance: 'N/A',
 };
 
 // 건물 도착 이벤트 관련 reducer
 
 // buildingEvent_Reducer_initialState 변경시 참고 코드
 
-// const index = state.events.findIndex((data) => data.id === action.type); 
-// const newArray = [...state.events]; 
-// newArray[index].state = true; 
+// const index = state.events.findIndex((data) => data.id === action.type);
+// const newArray = [...state.events];
+// newArray[index].state = true;
 
 export const buildingEventReducer = (
   state = buildingEvent_Reducer_initialState,
@@ -68,7 +70,6 @@ export const buildingEventReducer = (
   }
 };
 
-
 export const holdingEventReducer = (
   state = holdingEvent_Reducer_initialState,
   action,
@@ -84,11 +85,20 @@ export const holdingEventReducer = (
 };
 
 // 유저 정보 관련 reducer
-export const userinfoReducer = (state = userData_initialState, action) => {
+export const userInfoReducer = (state = userData_initialState, action) => {
+  console.log("reducer",action)
   switch (action.type) {
-    case 'ID':
-      return {...state, id: true};
+    case 'UPDATE_id':
+      return {...state, userId: action.userId};
+      break;
+    case 'UPDATE_address':
+      return {...state, userWalletAddress: action.userWalletAddress};
+      break;
+    case 'UPDATE_balacne':
+      return {...state, userBalance: action.userBalance};
+      break;
     default:
+      console.log('기본')
       return state;
   }
 };

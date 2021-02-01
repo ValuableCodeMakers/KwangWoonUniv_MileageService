@@ -12,16 +12,33 @@ import {
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import CountDown from 'react-native-countdown-component';
-import BackgroundTimer from 'react-native-background-timer';
+import BackgroundTimer from 'react-native-background-timer'; // 삭제
 
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 
 const {width, height} = Dimensions.get('window');
 
+handleGetEventToken = () => {
+  console.log('이벤트 토큰 전송 메소드');
+  fetch('http://192.168.0.5:3000/routes/getEventToken', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({}),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log('converting', data.txhash);
+    });
+};
+
 const HomeTab = (props) => {
-  const [balance, setBalance] = useState('N/A');
   const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const dispatch = useDispatch();
+
+  // 유저 정보
+  const userInfoState = reduxState.userInfo
 
   // 건물 이벤트 상태
   const buildingState = reduxState.buildingEvent.events;
@@ -30,20 +47,19 @@ const HomeTab = (props) => {
   // 위치 이벤트 상태
   const holdingState = reduxState.holdingEvent;
 
-  if (props.navigation.getScreenProps().userBalance) {
-    if (props.navigation.getScreenProps().userBalance !== balance) {
-      return setBalance(props.navigation.getScreenProps().userBalance);
-    }
-  }
-
   const event_locationIn = () => {
     if (holdingState.state) {
-      console.log('위치 이벤트 카드 불러오기');
-      console.log(JSON.stringify(holdingState));
+      //console.log('위치 이벤트 카드 불러오기');
+      //console.log(JSON.stringify(holdingState));
 
       return (
         <Card style={styles.currentEvent}>
-          <CardItem style={{height: 120, justifyContent:'center',flexDirection: 'column'}}>
+          <CardItem
+            style={{
+              height: 120,
+              justifyContent: 'center',
+              flexDirection: 'column',
+            }}>
             <Text style={{fontSize: 18}}>
               <Text style={{fontWeight: 'bold'}}>'학교에서 있기'</Text> 이벤트가
               진행중입니다.😊
@@ -57,7 +73,7 @@ const HomeTab = (props) => {
               }}>
               <Text style={{fontSize: 18}}>남은 시간 </Text>
               <CountDown
-                until={10} // 45분 60 * 45
+                until={60 * 10} // 45분 60 * 45
                 size={20}
                 timeToShow={['M', 'S']}
                 timeLabels={{m: null, s: null}}
@@ -65,6 +81,7 @@ const HomeTab = (props) => {
                 digitStyle={{backgroundColor: '#ecf0f1'}}
                 onFinish={() => {
                   alert(`이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`);
+
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
                 }}
                 onPress={() => {
@@ -107,7 +124,7 @@ const HomeTab = (props) => {
             <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
             <Text style={{fontSize: 35, color: 'white'}}>
               <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-              {balance} 토큰
+              {userInfoState.userBalance} 토큰
             </Text>
           </View>
         </View>

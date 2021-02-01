@@ -12,8 +12,10 @@ const {width, height} = Dimensions.get('window');
 
 
 const CustomDrawerNavigator = (props) => {
-  const id = props.navigation.getScreenProps().userId;
-  const balance = props.navigation.getScreenProps().userBalance;
+  // const id = props.navigation.getScreenProps().userId;
+  // const balance = props.navigation.getScreenProps().userBalance;
+  const id = 'test'
+  const balance = 'test'
   return (
     <View style={styles.container}>
       <View style={styles.infoContainer}>

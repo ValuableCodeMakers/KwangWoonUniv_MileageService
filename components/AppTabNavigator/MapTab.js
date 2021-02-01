@@ -165,26 +165,31 @@ const MapTab = (props) => {
         <Polyline coordinates={KW_Area[1]} strokeColor="#000" strokeWidth={3} />
         <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,0,0.3)" />
 
-        {buildingList.map((building) => (
+        {buildingList.map((building,index) => (
           <Marker
             coordinate={building.point}
             title={building.title}
             description="1토큰"
+            key={index}
+
           />
         ))}
 
-        {buildingList.map((building) => (
+        {buildingList.map((building,index) => (
           <Polyline
             coordinates={building.coordinate}
             strokeColor="#000"
             strokeWidth={2}
+            key={index}
           />
         ))}
 
-        {buildingList.map((building) => (
+        {buildingList.map((building,index) => (
           <Polygon
             coordinates={building.coordinate}
             fillColor="rgba(100,100,0,0.5)"
+            key={index}
+
           />
         ))}
       </MapView>
