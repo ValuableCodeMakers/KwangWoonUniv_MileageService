@@ -1,11 +1,5 @@
-export function completeEvent(type) {
+export function handleBuildingEvent(type) {
   switch (type) {
-    // 학교 도착
-    case '학교도착':
-      return {
-        type: '학교도착',
-        result: true,
-      };
     case '화도관':
       return {
         type: '화도관',
@@ -66,8 +60,33 @@ export function completeEvent(type) {
         type: '아이스링크',
         result: true,
       };
-
+    case '방문 코인 수령, 이벤트 중단':
+      return {
+        type: '방문 이벤트 중단',
+        result: false,
+      };
     default:
       return false;
+  }
+}
+
+export function handleHoldingEvent(type) {
+  switch (type) {
+    // 학교 도착
+    case '학교도착, 이벤트 실행':
+      return {
+        type: '이벤트 실행',
+        result: true,
+      };
+    case '학교대기, 이벤트 중단':
+      return {
+        type: '이벤트 중단',
+        result: false,
+      };
+    default:
+      return {
+        type: '이벤트 중단',
+        result: false,
+      };
   }
 }
