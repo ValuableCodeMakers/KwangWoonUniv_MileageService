@@ -1,5 +1,5 @@
-import React, {Component, Fragment} from 'react';
-import {useState, useEffect} from 'react';
+import React, { Component, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Card,
   CardItem,
@@ -9,14 +9,14 @@ import {
   Left,
   Container,
 } from 'native-base';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { View, Text, StyleSheet, Dimensions, ScrollView, Button, Alert } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import CountDown from 'react-native-countdown-component';
 import BackgroundTimer from 'react-native-background-timer';
 
-import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
+import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const HomeTab = (props) => {
   const [balance, setBalance] = useState('N/A');
@@ -43,9 +43,9 @@ const HomeTab = (props) => {
 
       return (
         <Card style={styles.currentEvent}>
-          <CardItem style={{height: 120, justifyContent:'center',flexDirection: 'column'}}>
-            <Text style={{fontSize: 18}}>
-              <Text style={{fontWeight: 'bold'}}>'학교에서 있기'</Text> 이벤트가
+          <CardItem style={{ height: 120, justifyContent: 'center', flexDirection: 'column' }}>
+            <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontWeight: 'bold' }}>'학교에서 있기'</Text> 이벤트가
               진행중입니다.😊
             </Text>
             <View
@@ -55,14 +55,14 @@ const HomeTab = (props) => {
                 flexDirection: 'row',
                 marginTop: 15,
               }}>
-              <Text style={{fontSize: 18}}>남은 시간 </Text>
+              <Text style={{ fontSize: 18 }}>남은 시간 </Text>
               <CountDown
                 until={10} // 45분 60 * 45
                 size={20}
                 timeToShow={['M', 'S']}
-                timeLabels={{m: null, s: null}}
+                timeLabels={{ m: null, s: null }}
                 showSeparator={true}
-                digitStyle={{backgroundColor: '#ecf0f1'}}
+                digitStyle={{ backgroundColor: '#ecf0f1' }}
                 onFinish={() => {
                   alert(`이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`);
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
@@ -81,11 +81,11 @@ const HomeTab = (props) => {
 
   return (
     <Container>
-      <Header style={{backgroundColor: '#c0392b'}}>
+      <Header style={{ backgroundColor: '#c0392b' }}>
         <Left>
           <Icon
             name="person"
-            style={{paddingLeft: 10, color: '#fff'}}
+            style={{ paddingLeft: 10, color: '#fff' }}
             onPress={() => {
               props.navigation.navigate('Profile');
             }}
@@ -95,7 +95,7 @@ const HomeTab = (props) => {
           <Icon
             name="menu"
             onPress={() => props.navigation.toggleDrawer()}
-            style={{paddingRight: 10, color: '#fff'}}
+            style={{ paddingRight: 10, color: '#fff' }}
           />
         </Right>
       </Header>
@@ -103,10 +103,10 @@ const HomeTab = (props) => {
       <Container style={styles.container}>
         <View style={styles.background}></View>
         <View style={styles.cardContainer}>
-          <View style={{alignItems: 'center'}}>
-            <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
-            <Text style={{fontSize: 35, color: 'white'}}>
-              <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
+          <View style={{ alignItems: 'center' }}>
+            <Text style={{ fontSize: 15, color: 'white' }}>현재 잔액</Text>
+            <Text style={{ fontSize: 35, color: 'white' }}>
+              <Icon name="server-outline" style={{ color: 'white' }}></Icon>{' '}
               {balance} 토큰
             </Text>
           </View>
@@ -119,15 +119,24 @@ const HomeTab = (props) => {
             {buildingState.map((data) =>
               data.state ? (
                 <Card style={styles.currentEvent}>
-                  <CardItem style={{height: 120}}>
-                    <Text style={{fontSize: 18}}>
+                  <CardItem style={{ height: 120 }}>
+                    <Text style={{ fontSize: 18 }}>
                       {data.id} 이벤트 완료! 😊
                     </Text>
+                    <Button
+                      onPress={() => {
+                        alert(data.id + " 방문 이벤트 완료!");
+                        dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단')); // dispatch 에 false 전달
+                      }}
+
+                      title="수령!"
+                    >
+                    </Button>
                   </CardItem>
                 </Card>
               ) : (
-                <Fragment></Fragment>
-              ),
+                  <Fragment></Fragment>
+                ),
             )}
           </ScrollView>
         </Card>
@@ -137,8 +146,8 @@ const HomeTab = (props) => {
 };
 
 HomeTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-home" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-home" style={{ color: tintColor }} />
   ),
 });
 
