@@ -22,40 +22,38 @@ import {handleUserInfo} from '../redux/action';
 const {width, height} = Dimensions.get('window');
 
 const MainScreen = (props) => {
+  var userState = {userId: '', userWalletAddress: '', userBalance: 'N/A'};
   const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://172.30.1.28:3000/routes/getUserId', {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        dispatch(handleUserInfo('UPDATE_id', res.userId));
+        userState.userId = res.userId;
       })
       .then(() => {
-        console.log(reduxState);
-        fetch('http://172.30.1.28:3000/routes/getWalletAddress', {
+        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({userId: reduxState.userInfo.userId}),
+          body: JSON.stringify({userId: userState.userId}),
         })
           .then((res) => {
             return res.json();
           })
           .then((res) => {
-            dispatch(handleUserInfo('UPDATE_address', res.userWalletAddress));
+            userState.userWalletAddress = res.userWalletAddress;
           })
           .then(() => {
-            console.log(reduxState);
-
-            fetch('http://172.30.1.28:3000/routes/getTokenBalance', {
+            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
-                address: reduxState.userInfo.userWalletAddress,
+                address: userState.userWalletAddress,
               }),
             })
               .then((res) => {
@@ -64,10 +62,15 @@ const MainScreen = (props) => {
               .then((res) => {
                 let balance = res.balance;
                 balance = balance.substr(0, balance.length - 18); // decimal 제거
-                dispatch(handleUserInfo('UPDATE_balacne', balance));
+                userState.userBalance = balance;
               })
               .then(() => {
-                console.log('MainScreen state', reduxState);
+                dispatch(handleUserInfo('UPDATE_id', userState.userId));
+                dispatch(
+                  handleUserInfo('UPDATE_address', userState.userWalletAddress),
+                );
+                dispatch(handleUserInfo('UPDATE_balacne', userState.userBalance));
+                
               });
           });
       });

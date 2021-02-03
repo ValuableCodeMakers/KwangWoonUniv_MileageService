@@ -86,17 +86,13 @@ export const holdingEventReducer = (
 
 // 유저 정보 관련 reducer
 export const userInfoReducer = (state = userData_initialState, action) => {
-  console.log("reducer",action)
   switch (action.type) {
     case 'UPDATE_id':
       return {...state, userId: action.userId};
-      break;
     case 'UPDATE_address':
       return {...state, userWalletAddress: action.userWalletAddress};
-      break;
     case 'UPDATE_balacne':
       return {...state, userBalance: action.userBalance};
-      break;
     default:
       console.log('기본')
       return state;

@@ -9,20 +9,14 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useEffect} from 'react';
 
 const {width, height} = Dimensions.get('window');
 
 const WalletTab = (props) => {
   const reduxState = useSelector((state) => state);
   let userInfo = reduxState.userInfo
-
-  // props => state 업데이트
-  useEffect(() => {
-    
-  });
 
   return (
     <Container>
@@ -60,7 +54,7 @@ const WalletTab = (props) => {
               style={styles.sendButton}
               activeOpacity={0.8}
               onPress={() => {
-                this.props.navigation.navigate('Send', userInfo.userWalletAddress);
+                props.navigation.navigate('Send', userInfo.userWalletAddress);
               }}>
               <Icon
                 name="exit-outline"
@@ -71,7 +65,7 @@ const WalletTab = (props) => {
               style={styles.receiveButton}
               activeOpacity={0.8}
               onPress={() => {
-                this.props.navigation.navigate('Receive', userInfo.userWalletAddress);
+                props.navigation.navigate('Receive', userInfo.userWalletAddress);
               }}>
               <Icon
                 name="enter-outline"
