@@ -16,16 +16,6 @@ import CardComponent from './CardComponent';
 
 var {width, height} = Dimensions.get('window');
 
-var imgs = [
-  require('../src/p1.jpg'),
-  require('../src/p2.jpg'),
-  require('../src/p3.jpg'),
-  require('../src/p4.jpg'),
-  require('../src/p5.jpg'),
-  require('../src/p6.jpg'),
-  require('../src/p7.jpg'),
-];
-
 class ProfileScreen extends Component {
   static navigationOptions = {
     headerShown: false,
@@ -49,7 +39,6 @@ class ProfileScreen extends Component {
       case 1: {
         return (
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            {this.loadPhotoSection()}
           </View>
         );
       }
@@ -67,17 +56,6 @@ class ProfileScreen extends Component {
     }
   };
 
-  loadPhotoSection = () => {
-    return imgs.map((image, index) => {
-      return (
-        <View key={index} style={[{width: width / 3}, {height: width / 3}]}>
-          <Image
-            source={image}
-            style={{flex: 1, width: undefined, height: undefined}}></Image>
-        </View>
-      );
-    });
-  };
 
   loadTagSection = () => {};
 
@@ -106,7 +84,6 @@ class ProfileScreen extends Component {
             <View style={{flexDirection: 'row'}}>
               <View style={{flex: 1.2, alignItems: 'center'}}>
                 <Thumbnail
-                  source={require('../src/p1.jpg')}
                   style={{
                     width: 100,
                     height: 100,

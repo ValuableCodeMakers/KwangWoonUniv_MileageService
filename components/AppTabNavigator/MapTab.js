@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Icon} from 'native-base';
+import React, { useState, useEffect } from 'react';
+import { Icon } from 'native-base';
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
@@ -8,7 +8,7 @@ import MapView, {
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-import {useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   Text,
@@ -31,7 +31,7 @@ import {
   Anni80,
   IceLink,
 } from './Coordinates/Coordinate';
-import {completeEvent} from '../../redux/action'
+import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 
 async function requestPermission() {
   try {
@@ -66,20 +66,80 @@ const MapTab = (props) => {
     Anni80,
     IceLink,
   ];
+  const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const dispatch = useDispatch();
+
+  // 건물 이벤트 상태
+  const buildingState = reduxState.buildingEvent.events;
+  //console.log(JSON.stringify(buildingState));
+
+  // 위치 이벤트 상태
+  const holdingState = reduxState.holdingEvent;
 
   // 현재 위치 변경시
   useEffect(() => {
-    if (location && !arriveLocation) {
+    if (location) {
       const locationResult = geolib.isPointInPolygon(
-        {latitude: location.latitude, longitude: location.longitude},
+        { latitude: location.latitude, longitude: location.longitude },
         KW_Area[0],
       );
-      if (locationResult) {
-        console.log('학교도착! 시간 이벤트 실행', locationResult);
-        setArriveLocation(true)
 
-        dispatch(completeEvent("학교도착")) // dispatch 에 true 전달
+      if (locationResult && !holdingState.state) {
+        console.log('학교도착! 시간 이벤트 실행', locationResult);
+
+        setTimeout(() => {
+          dispatch(handleHoldingEvent('학교도착, 이벤트 실행')); // dispatch 에 true 전달
+        }, 1000);
+      } else if (!locationResult && holdingState.state) {
+        console.log('학교 이탈! 시간 이벤트 중단', locationResult);
+
+        dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
+      }
+    }
+  }, [location]);
+
+  // 건물 방문 이벤트
+  useEffect(() => {
+    var locationBuilding = '';
+    var i;
+    if (location) {
+      for (i = 0; i < buildingList.length; i++) {
+        if (geolib.isPointInPolygon(
+          { latitude: location.latitude, longitude: location.longitude },
+          buildingList[i].coordinate,
+        )) {
+          console.log(buildingList[i].title);
+          locationBuilding = buildingList[i].title;
+        }
+      }
+
+
+      if (locationBuilding != '') {
+        console.log(locationBuilding + '도착! 시간 이벤트 실행');
+        setArriveLocation(true)
+        dispatch(handleBuildingEvent(locationBuilding)) // dispatch 에 true 전달
+      }
+    }
+  }, [location]);
+
+  // 학교 머물기 이벤트
+  useEffect(() => {
+    if (location) {
+      const locationResult = geolib.isPointInPolygon(
+        { latitude: location.latitude, longitude: location.longitude },
+        KW_Area[0],
+      );
+
+      if (locationResult && !holdingState.state) {
+        console.log('학교도착! 시간 이벤트 실행', locationResult);
+
+        setTimeout(() => {
+          dispatch(handleHoldingEvent('학교도착, 이벤트 실행')); // dispatch 에 true 전달
+        }, 1000);
+      } else if (!locationResult && holdingState.state) {
+        console.log('학교 이탈! 시간 이벤트 중단', locationResult);
+
+        dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
       }
     }
   }, [location]);
@@ -115,16 +175,16 @@ const MapTab = (props) => {
 
   if (!location) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );
   }
 
   return (
-    <View style={{flex: 1, width: '100%'}}>
+    <View style={{ flex: 1, width: '100%' }}>
       <MapView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         provider={PROVIDER_GOOGLE}
         showsMyLocationButton={true}
         showsCompass={true}
@@ -152,26 +212,31 @@ const MapTab = (props) => {
         <Polyline coordinates={KW_Area[1]} strokeColor="#000" strokeWidth={3} />
         <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,0,0.3)" />
 
-        {buildingList.map((building) => (
+        {buildingList.map((building,index) => (
           <Marker
             coordinate={building.point}
             title={building.title}
             description="1토큰"
+            key={index}
+
           />
         ))}
 
-        {buildingList.map((building) => (
+        {buildingList.map((building,index) => (
           <Polyline
             coordinates={building.coordinate}
             strokeColor="#000"
             strokeWidth={2}
+            key={index}
           />
         ))}
 
-        {buildingList.map((building) => (
+        {buildingList.map((building,index) => (
           <Polygon
             coordinates={building.coordinate}
             fillColor="rgba(100,100,0,0.5)"
+            key={index}
+
           />
         ))}
       </MapView>
@@ -180,8 +245,8 @@ const MapTab = (props) => {
 };
 
 MapTab.navigationOptions = (screenProps) => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-map" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-map" style={{ color: tintColor }} />
   ),
 });
 

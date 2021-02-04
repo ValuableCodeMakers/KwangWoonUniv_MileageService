@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {Platform, Dimensions} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createAppContainer} from 'react-navigation';
+import {useDispatch, useSelector} from 'react-redux';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
@@ -16,76 +17,73 @@ import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
 import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
 import CustomDrawerNavigator from './CustomDrawerNavigator';
 
+import {handleUserInfo} from '../redux/action';
+
 const {width, height} = Dimensions.get('window');
 
-export default class MainScreen extends Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+const MainScreen = (props) => {
+  var userState = {userId: '', userWalletAddress: '', userBalance: 'N/A'};
+  const reduxState = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: '',
-      userWalletAddress: '',
-      userBalance: 'N/A',
-    };
-  }
-
-  componentDidMount() {
-    fetch('http://172.30.1.52:3000/routes/getUserId', {
+  useEffect(() => {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        this.setState({userId: res.userId});
+        userState.userId = res.userId;
       })
       .then(() => {
-        fetch('http://172.30.1.52:3000/routes/getWalletAddress', {
+        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(this.state),
+          body: JSON.stringify({userId: userState.userId}),
         })
           .then((res) => {
             return res.json();
           })
           .then((res) => {
-            this.setState({userWalletAddress: res.userWalletAddress});
+            userState.userWalletAddress = res.userWalletAddress;
           })
           .then(() => {
-            fetch('http://172.30.1.52:3000/routes/getTokenBalance', {
+            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({address: this.state.userWalletAddress}),
+              body: JSON.stringify({
+                address: userState.userWalletAddress,
+              }),
             })
               .then((res) => {
                 return res.json();
               })
               .then((res) => {
                 let balance = res.balance;
-                balance = balance.substr(0, balance.length - 18);
-                this.setState({userBalance: balance});
+                balance = balance.substr(0, balance.length - 18); // decimal 제거
+                userState.userBalance = balance;
               })
               .then(() => {
-                console.log('MainScreen state', this.state);
+                dispatch(handleUserInfo('UPDATE_id', userState.userId));
+                dispatch(
+                  handleUserInfo('UPDATE_address', userState.userWalletAddress),
+                );
+                dispatch(handleUserInfo('UPDATE_balacne', userState.userBalance));
+                
               });
           });
       });
-  }
+  }, []);
 
-  render() {
-    return (
-      <AppTabContainer
-        screenProps={{
-          userId: this.state.userId,
-          userWalletAddress: this.state.userWalletAddress,
-          userBalance: this.state.userBalance,
-        }}></AppTabContainer>
-    );
-  }
-}
+  return <AppTabContainer></AppTabContainer>;
+};
+
+MainScreen.navigationOptions = () => ({
+  headerShown: false,
+});
+
+export default MainScreen;
 
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
 const AppTabNavigator = createMaterialTopTabNavigator(
@@ -112,7 +110,6 @@ const AppTabNavigator = createMaterialTopTabNavigator(
           android: {backgroundColor: '#ffffff'},
         }),
       },
-
       iconStyle: {height: 30, width: 30},
       activeTintColor: '#b33939',
       inactiveTintColor: 'black',
