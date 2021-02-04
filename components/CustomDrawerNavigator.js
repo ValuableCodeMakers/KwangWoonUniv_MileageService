@@ -7,20 +7,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {DrawerItems} from 'react-navigation';
+import {useSelector} from 'react-redux';
 
 const {width, height} = Dimensions.get('window');
 
 
 const CustomDrawerNavigator = (props) => {
-  // const id = props.navigation.getScreenProps().userId;
-  // const balance = props.navigation.getScreenProps().userBalance;
-  const id = 'test'
-  const balance = 'test'
+  const reduxState = useSelector((state) => state); // redux의 store 가져오기
+  
   return (
     <View style={styles.container}>
       <View style={styles.infoContainer}>
-        <Text style={{fontSize: 40, fontWeight: 'bold'}}>{id}</Text>
-        <Text style={{fontSize: 20}}>{balance} 토큰</Text>
+        <Text style={{fontSize: 40, fontWeight: 'bold'}}>{reduxState.userId}</Text>
+        <Text style={{fontSize: 20}}>{reduxState.userBalance} 토큰</Text>
       </View>
 
       <View style={styles.menuContainer}>

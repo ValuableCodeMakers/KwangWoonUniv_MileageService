@@ -38,7 +38,7 @@ const HomeTab = (props) => {
   const dispatch = useDispatch();
 
   // 유저 정보
-  const userInfoState = reduxState.userInfo
+  const userInfoState = reduxState.userInfo;
 
   // 건물 이벤트 상태
   const buildingState = reduxState.buildingEvent.events;
@@ -140,6 +140,14 @@ const HomeTab = (props) => {
                     <Text style={{fontSize: 18}}>
                       {data.id} 이벤트 완료! 😊
                     </Text>
+                    <Button
+                      onPress={() => {
+                        alert(data.id + ' 방문 이벤트 완료!');
+                        dispatch(
+                          handleBuildingEvent('방문 코인 수령, 이벤트 중단'),
+                        ); // dispatch 에 false 전달
+                      }}
+                      title="수령!"></Button>
                   </CardItem>
                 </Card>
               ) : (
