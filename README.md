@@ -17,12 +17,12 @@ react-native run-android
   
 ## 프로젝트 기술 Stack ⚙️
 
-### Front-End
+### Front-End  https://github.com/ValuableCodeMakers/KwangWoonUniv_MileageService
 ![react badge](http://img.shields.io/badge/JavaScript-yellow?style=flat-square&logo=JavaScript) ![react badge](http://img.shields.io/badge/react-v16.13.1-blue?style=flat-square&logo=react)
  
 
 
-### Back-End
+### Back-End  https://github.com/ValuableCodeMakers/KwangWoonUniv_MileageServiceServer
 ![node badge](http://img.shields.io/badge/node-v12.14.1-green?style=flat-square&logo=Node.js) ![node badge](http://img.shields.io/badge/Express-v4.17.1-lightgrey?style=flat-square&logo=Express)
 
 
