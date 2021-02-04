@@ -8,6 +8,7 @@ import {
   Header,
   Left,
   Container,
+  Button,
 } from 'native-base';
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
@@ -18,18 +19,18 @@ import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 
 const {width, height} = Dimensions.get('window');
 
-handleGetEventToken = () => {
+handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://192.168.0.5:3000/routes/getEventToken', {
+  fetch('http://172.30.1.1:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({}),
+    body: JSON.stringify({to: address}),
   })
     .then((res) => {
       return res.json();
     })
     .then((data) => {
-      console.log('converting', data.txhash);
+      console.log('이벤트 토큰 hash', data.txhash);
     });
 };
 
@@ -73,14 +74,15 @@ const HomeTab = (props) => {
               }}>
               <Text style={{fontSize: 18}}>남은 시간 </Text>
               <CountDown
-                until={60 * 10} // 45분 60 * 45
+                until={60*45} // 45분 60 * 45
                 size={20}
                 timeToShow={['M', 'S']}
                 timeLabels={{m: null, s: null}}
                 showSeparator={true}
                 digitStyle={{backgroundColor: '#ecf0f1'}}
                 onFinish={() => {
-                  alert(`이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`);
+                  alert(`'학교에서 있기' 이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`);
+                  //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
 
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
                 }}
@@ -143,11 +145,14 @@ const HomeTab = (props) => {
                     <Button
                       onPress={() => {
                         alert(data.id + ' 방문 이벤트 완료!');
+                        //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
+
                         dispatch(
                           handleBuildingEvent('방문 코인 수령, 이벤트 중단'),
                         ); // dispatch 에 false 전달
-                      }}
-                      title="수령!"></Button>
+                      }}>
+                      <Text>수령!</Text>
+                    </Button>
                   </CardItem>
                 </Card>
               ) : (

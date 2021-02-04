@@ -14,12 +14,13 @@ const {width, height} = Dimensions.get('window');
 
 const CustomDrawerNavigator = (props) => {
   const reduxState = useSelector((state) => state); // redux의 store 가져오기
+  const userInfoState = reduxState.userInfo;
   
   return (
     <View style={styles.container}>
       <View style={styles.infoContainer}>
-        <Text style={{fontSize: 40, fontWeight: 'bold'}}>{reduxState.userId}</Text>
-        <Text style={{fontSize: 20}}>{reduxState.userBalance} 토큰</Text>
+        <Text style={{fontSize: 40, fontWeight: 'bold'}}>{userInfoState.userId}</Text>
+        <Text style={{fontSize: 20}}>{userInfoState.userBalance} 토큰</Text>
       </View>
 
       <View style={styles.menuContainer}>
