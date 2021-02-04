@@ -21,7 +21,7 @@ const {width, height} = Dimensions.get('window');
 
 handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://172.30.1.1:3000/routes/getEventToken', {
+  fetch('http://192.168.0.5:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({to: address}),
@@ -74,14 +74,16 @@ const HomeTab = (props) => {
               }}>
               <Text style={{fontSize: 18}}>남은 시간 </Text>
               <CountDown
-                until={60*45} // 45분 60 * 45
+                until={60 * 45} // 45분 60 * 45
                 size={20}
                 timeToShow={['M', 'S']}
                 timeLabels={{m: null, s: null}}
                 showSeparator={true}
                 digitStyle={{backgroundColor: '#ecf0f1'}}
                 onFinish={() => {
-                  alert(`'학교에서 있기' 이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`);
+                  alert(
+                    `'학교에서 있기' 이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`,
+                  );
                   //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
 
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
@@ -137,7 +139,7 @@ const HomeTab = (props) => {
             {event_locationIn()}
             {buildingState.map((data) =>
               data.state ? (
-                <Card style={styles.currentEvent}>
+                <Card style={styles.currentEvent} key={data.id}>
                   <CardItem style={{height: 120}}>
                     <Text style={{fontSize: 18}}>
                       {data.id} 이벤트 완료! 😊
@@ -156,7 +158,7 @@ const HomeTab = (props) => {
                   </CardItem>
                 </Card>
               ) : (
-                <Fragment></Fragment>
+                <Fragment key={data.id}></Fragment>
               ),
             )}
           </ScrollView>

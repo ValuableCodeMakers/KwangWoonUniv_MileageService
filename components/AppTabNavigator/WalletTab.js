@@ -40,6 +40,7 @@ const WalletTab = (props) => {
         </Right>
       </Header>
 
+            
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <View style={{alignItems: 'center'}}>

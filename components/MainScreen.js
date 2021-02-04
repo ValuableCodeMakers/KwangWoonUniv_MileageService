@@ -27,7 +27,7 @@ const MainScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://172.30.1.1:3000/routes/getUserId', {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -37,7 +37,7 @@ const MainScreen = (props) => {
         userState.userId = res.userId;
       })
       .then(() => {
-        fetch('http://172.30.1.1:3000/routes/getWalletAddress', {
+        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({userId: userState.userId}),
@@ -49,7 +49,7 @@ const MainScreen = (props) => {
             userState.userWalletAddress = res.userWalletAddress;
           })
           .then(() => {
-            fetch('http://172.30.1.1:3000/routes/getTokenBalance', {
+            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
@@ -110,7 +110,6 @@ const AppTabNavigator = createMaterialTopTabNavigator(
           android: {backgroundColor: '#ffffff'},
         }),
       },
-
       iconStyle: {height: 30, width: 30},
       activeTintColor: '#b33939',
       inactiveTintColor: 'black',

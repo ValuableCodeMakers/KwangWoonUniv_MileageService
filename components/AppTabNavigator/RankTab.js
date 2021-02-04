@@ -15,7 +15,7 @@ import {useSelector} from 'react-redux';
 
 var {width, height} = Dimensions.get('window');
 
-function btnClickEventHandler(index) {
+function btnClickEventHandler(index,setActiveBtn) {
   setActiveBtn({
     activeBtn: index,
   });
@@ -36,7 +36,16 @@ function bottomSection(section) {
   }
 };
 
-const RankTab = () => {
+function getWeekend() {
+  let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
+  
+  let today = new Date().getDay();
+  let weekend = week[today];
+  
+  return weekend;
+}
+
+const RankTab = (props) => {
   const [activeBtn, setActiveBtn] = useState({
     activeBtn: 1,
   });
@@ -65,8 +74,12 @@ const RankTab = () => {
       </Header>
       <Content>
         <View style={{paddingTop: 10}}>
+          <View style={{justifyContent:'center',alignItems:'center'}}>
+            <Text style={{fontWeight:'bold',fontSize:25}}>오늘의 랭킹</Text>
+            <Text>{getWeekend()}</Text>
+          </View>
           <View style={{flexDirection: 'row'}}>
-            <View style={{flex: 1.2, alignItems: 'center'}}>
+            <View style={{flex: 0.5, alignItems: 'center'}}>
               <Thumbnail
                 style={{
                   width: 100,
@@ -76,36 +89,20 @@ const RankTab = () => {
                 }}
               />
             </View>
-          </View>
-          <View style={{paddingHorizontal: 20, paddingVertical: 15}}>
-            <Text style={{fontWeight: 'bold'}}>노 경진</Text>
-            <Text>KWU</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Button
-              bordered
-              dark
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                height: 30,
-                marginHorizontal: 10,
-                marginTop: 10,
-              }}>
-              <Text>프로필 수정</Text>
-            </Button>
+            <Text style={{fontWeight: 'bold'}}>{userInfo.userId}</Text>
+
           </View>
         </View>
         {/* 프로필 하단부 */}
         <View style={styles.bottomButton}>
-          <Button transparent onPress={() => btnClickEventHandler(1)}>
+          <Button transparent onPress={() => btnClickEventHandler(1,setActiveBtn)}>
             <Icon
               name="ios-apps-outline"
               style={[
                 activeBtn == 1 ? {color: 'black'} : {color: '#bdc3c7'},
               ]}></Icon>
           </Button>
-          <Button transparent onPress={() => btnClickEventHandler(2)}>
+          <Button transparent onPress={() => btnClickEventHandler(2,setActiveBtn)}>
             <Icon
               name="tag"
               type="SimpleLineIcons"
@@ -132,19 +129,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  profilePhoto: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginLeft: 20,
-  },
-  profileButton: {
-    flex: 1,
-    justifyContent: 'center',
-    height: 30,
-    marginHorizontal: 10,
-    marginTop: 10,
   },
   bottomButton: {
     flexDirection: 'row',
