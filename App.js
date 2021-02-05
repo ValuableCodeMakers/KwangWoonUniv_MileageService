@@ -10,6 +10,7 @@ import LoadingScreen from './components/LoadingScreen';
 import RegisterScreen from './components/RegisterScreen';
 
 import CreateProfileScreen from './components/CreateProfileScreen';
+import CreatePhotoScreen from './components/CreatePhotoScreen';
 import CreateWalletScreen from './components/CreateWalletScreen';
 
 import store from './redux/store' // redux store
@@ -31,6 +32,7 @@ const AuthStack = createStackNavigator(
 const NewRegisterStack = createStackNavigator(
   {
     Setting: CreateProfileScreen,
+    CreatePhoto: CreatePhotoScreen,
     CreateWallet: CreateWalletScreen,
   },
   {

@@ -12,7 +12,6 @@ import {
 } from 'native-base';
 
 import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
-import CardComponent from './CardComponent';
 
 var {width, height} = Dimensions.get('window');
 
@@ -46,9 +45,6 @@ class ProfileScreen extends Component {
         return (
           <View>
             <View>
-              <CardComponent imgSrc="1" likes="100" />
-              <CardComponent imgSrc="2" likes="36" />
-              <CardComponent imgSrc="3" likes="240" />
             </View>
           </View>
         );

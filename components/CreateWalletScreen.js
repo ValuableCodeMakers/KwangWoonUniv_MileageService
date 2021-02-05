@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -6,18 +6,17 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { Card, Textarea } from 'native-base';
+import {Card, Textarea} from 'native-base';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export default class CreateWalletScreen extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       mnemonic: '',
       address: '',
-      privateKey: ''
+      privateKey: '',
     };
   }
 
@@ -25,9 +24,9 @@ export default class CreateWalletScreen extends Component {
     const preState = this.props.navigation.getParam('preState');
     console.log('이전 state', preState);
 
-    fetch('http://192.168.0.4:3000/routes/createWallet', {
+    fetch('http://192.168.0.5:3000/routes/createWallet', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
     })
       .then((res) => {
         return res.json();
@@ -37,7 +36,7 @@ export default class CreateWalletScreen extends Component {
           ...preState,
           mnemonic: res.mnemonic,
           address: res.address,
-          privateKey: res.privateKey
+          privateKey: res.privateKey,
         });
 
         console.log('state 출력', this.state);
@@ -45,12 +44,15 @@ export default class CreateWalletScreen extends Component {
   }
 
   handleProfile = () => {
-    fetch('http://192.168.0.4:3000/routes/saveProfile', {
+    fetch('http://192.168.0.5:3000/routes/saveProfile', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(this.state),
     }).then((res) => {
-      this.props.navigation.navigate('Main');
+      this.props.navigation.navigate({
+        routeName: 'CreatePhoto',
+        params: {preState: this.state}, // 다음 화면으로 state 전달
+      });
     });
   };
 
@@ -61,7 +63,7 @@ export default class CreateWalletScreen extends Component {
         <View style={styles.inputContainer}>
           <Text style={styles.title}>Create Wallet</Text>
           <Card style={styles.card}>
-            <View style={{ marginTop: 30 }}>
+            <View style={{marginTop: 30}}>
               <Text style={styles.inputTitle}>니모닉 코드</Text>
               <View>
                 <Textarea
@@ -71,20 +73,27 @@ export default class CreateWalletScreen extends Component {
               </View>
             </View>
 
-            <View style={{ marginTop: 30 }}>
+            <View style={{marginTop: 30}}>
               <Text style={styles.inputTitle}>지갑의 주소</Text>
               <Textarea
-                style={{ ...styles.input, height: 50, fontSize: 13 }}
+                style={{...styles.input, height: 50, fontSize: 13}}
                 rowSpan={5}
                 value={this.state.address}></Textarea>
             </View>
-            <Text style={{ marginTop: 10 }}>
+            <Text style={{marginTop: 10}}>
               모든 니모닉, 지갑의 주소는 서버에 저장됩니다.
             </Text>
           </Card>
 
-          <TouchableOpacity style={styles.button} onPress={this.handleProfile}>
-            <Text style={{ fontSize: 20 }}>완료하기</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              this.props.navigation.navigate({
+                routeName: 'CreatePhoto',
+                params: {preState: this.state}, // 다음 화면으로 state 전달
+              })
+            }>
+            <Text style={{fontSize: 20}}>다음</Text>
           </TouchableOpacity>
         </View>
       </View>
