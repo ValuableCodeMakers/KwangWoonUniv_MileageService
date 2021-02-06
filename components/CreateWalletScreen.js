@@ -22,7 +22,6 @@ export default class CreateWalletScreen extends Component {
 
   componentDidMount() {
     const preState = this.props.navigation.getParam('preState');
-    console.log('이전 state', preState);
 
     fetch('http://192.168.0.5:3000/routes/createWallet', {
       method: 'POST',
@@ -43,7 +42,7 @@ export default class CreateWalletScreen extends Component {
       });
   }
 
-  handleProfile = () => {
+  handleSaveProfile = () => {
     fetch('http://192.168.0.5:3000/routes/saveProfile', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -85,14 +84,7 @@ export default class CreateWalletScreen extends Component {
             </Text>
           </Card>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              this.props.navigation.navigate({
-                routeName: 'CreatePhoto',
-                params: {preState: this.state}, // 다음 화면으로 state 전달
-              })
-            }>
+          <TouchableOpacity style={styles.button} onPress={this.handleSaveProfile}>
             <Text style={{fontSize: 20}}>다음</Text>
           </TouchableOpacity>
         </View>

@@ -3,12 +3,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Dimensions,
-  Image,
 } from 'react-native';
-import {Card, Thumbnail} from 'native-base';
+import {Card, CardItem, Thumbnail} from 'native-base';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import basicImage from '../src/profile/profile2.png'; // 기본 이미지
 
@@ -17,22 +15,57 @@ const {width, height} = Dimensions.get('window');
 export default class CreateProfileScreen extends Component {
   constructor(props) {
     super(props);
-    const userInfo = this.props.navigation.getParam('preState');
-    console.log('이전 state', userInfo);
+    this.userInfo = this.props.navigation.getParam('preState');
+    console.log('이전 state', this.userInfo);
 
     this.state = {
+      userId: '',
       image: '',
     };
   }
 
-  handleProfile = () => {
-    fetch('http://192.168.0.5:3000/routes/saveProfile', {
-      method: 'POST',
+  componentDidMount() {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
+      method: 'GET',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(userInfo),
-    }).then((res) => {
-      this.props.navigation.navigate('Main');
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        this.setState({userId: res.userId});
+      });
+  }
+
+  createFormData = (photo, body) => {
+    const data = new FormData();
+
+    data.append('userId',body.userId)
+    data.append('name', photo.fileName);
+    data.append('type', photo.type);
+    data.append('uri', photo.uri);
+
+    return data;
+  };
+
+  handleSavePhoto = () => {
+    const data = this.createFormData(this.state.image, {
+      userId: this.state.userId,
     });
+    console.log(data);
+    fetch('http://192.168.0.5:3000/routes/savePhoto', {
+      method: 'POST',
+      body: data,
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
+      });
+    // .then((res) => {
+    //   this.props.navigation.navigate('Main');
+    // });
   };
 
   handlePickImage = () => {
@@ -45,7 +78,7 @@ export default class CreateProfileScreen extends Component {
       if (res.error) {
         console.log('LaunchCamera Error: ', res.error);
       } else {
-        this.setState({image: res.uri});
+        this.setState({image: res});
       }
     });
 
@@ -63,7 +96,7 @@ export default class CreateProfileScreen extends Component {
       <View style={styles.container}>
         <View style={styles.background}></View>
         <View style={styles.inputContainer}>
-          <Text style={styles.title}>Photo</Text>
+          <Text style={styles.title}>Result</Text>
           <Card style={styles.card}>
             <View style={styles.photoContainer}>
               <TouchableOpacity onPress={this.handlePickImage}>
@@ -72,7 +105,7 @@ export default class CreateProfileScreen extends Component {
                     circular={true}
                     large
                     source={{
-                      uri: this.state.image,
+                      uri: this.state.image.uri,
                     }}></Thumbnail>
                 ) : (
                   <Thumbnail
@@ -81,13 +114,42 @@ export default class CreateProfileScreen extends Component {
                     source={basicImage}></Thumbnail>
                 )}
               </TouchableOpacity>
+              <Text style={{fontSize: 18, marginTop: 10}}>프로필 사진</Text>
             </View>
-            <View style={styles.textContainer}>
-              <Text>dd</Text>
-            </View>
+            <CardItem style={styles.textContainer}>
+              <View style={{width: '100%'}}>
+                <Text
+                  style={{fontSize: 25, fontWeight: 'bold', marginBottom: 10}}>
+                  유저 정보
+                </Text>
+                <Text style={{fontSize: 15}}>이름: {this.userInfo.name}</Text>
+                <Text style={{fontSize: 15}}>
+                  학과: {this.userInfo.department}
+                </Text>
+                <Text style={{fontSize: 15}}>
+                  닉네임: {this.userInfo.nickname}
+                </Text>
+              </View>
+
+              <View style={{width: '100%', marginTop: 40}}>
+                <Text
+                  style={{fontSize: 25, fontWeight: 'bold', marginBottom: 10}}>
+                  지갑 정보
+                </Text>
+
+                <Text style={{fontSize: 15}}>
+                  주소: {this.userInfo.address.substr(0, 10)} ...
+                </Text>
+                <Text style={{fontSize: 15}}>
+                  니모닉: {this.userInfo.mnemonic.substr(0, 15)} ...
+                </Text>
+              </View>
+            </CardItem>
           </Card>
 
-          <TouchableOpacity style={styles.button} onPress={this.handleProfile}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.handleSavePhoto}>
             <Text style={{fontSize: 20}}>다음</Text>
           </TouchableOpacity>
         </View>
@@ -98,7 +160,7 @@ export default class CreateProfileScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: 'flex',
     alignItems: 'center',
   },
   background: {
@@ -111,14 +173,29 @@ const styles = StyleSheet.create({
   card: {
     alignItems: 'center',
     height: height * 0.45,
+    flexDirection: 'row',
+    elevation: 5,
   },
   inputContainer: {
     marginTop: height * 0.3,
     width: width / 1.1,
     position: 'absolute',
   },
-  photoContainer: {width: width * 0.5},
-  textContainer: {width: width * 0.5},
+  photoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '40%',
+    height: '100%',
+    padding: 20,
+  },
+  textContainer: {
+    justifyContent: 'center',
+    flexDirection: 'column',
+    width: '58%',
+    height: '96%',
+    elevation: 5,
+    borderRadius: 10,
+  },
   title: {
     marginLeft: 10,
     color: 'white',

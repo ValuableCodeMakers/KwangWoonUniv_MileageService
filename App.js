@@ -31,11 +31,12 @@ const AuthStack = createStackNavigator(
 
 const NewRegisterStack = createStackNavigator(
   {
-    Setting: CreateProfileScreen,
+    CreateProfile: CreateProfileScreen,
     CreatePhoto: CreatePhotoScreen,
     CreateWallet: CreateWalletScreen,
   },
   {
+    initialRouteName: 'CreateProfile',
     headerMode: 'none',
   },
 );
