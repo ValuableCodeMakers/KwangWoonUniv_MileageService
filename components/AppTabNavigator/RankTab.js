@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {
   Icon,
@@ -15,42 +15,55 @@ import {useSelector} from 'react-redux';
 
 var {width, height} = Dimensions.get('window');
 
-function btnClickEventHandler(index,setActiveBtn) {
-  setActiveBtn({
-    activeBtn: index,
-  });
-};
-
-function bottomSection(section) {
-  switch (section) {
-    case 1: {
-      return <View style={{flexDirection: 'row', flexWrap: 'wrap'}}></View>;
-    }
-    case 2: {
-      return (
-        <View>
-          <View></View>
-        </View>
-      );
-    }
-  }
-};
+// function bottomSection(section) {
+//   switch (section) {
+//     case 1: {
+//       return <View style={{flexDirection: 'row', flexWrap: 'wrap'}}></View>;
+//     }
+//     case 2: {
+//       return (
+//         <View>
+//           <View></View>
+//         </View>
+//       );
+//     }
+//   }
+// };
 
 function getWeekend() {
-  let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
-  
+  let week = new Array(
+    '일요일',
+    '월요일',
+    '화요일',
+    '수요일',
+    '목요일',
+    '금요일',
+    '토요일',
+  );
+
   let today = new Date().getDay();
   let weekend = week[today];
-  
+
   return weekend;
 }
 
 const RankTab = (props) => {
-  const [activeBtn, setActiveBtn] = useState({
-    activeBtn: 1,
-  });
   const reduxState = useSelector((state) => state);
   const userInfo = reduxState.userInfo;
+
+  useEffect(() => {
+    fetch('http://192.168.0.5:3000/routes/getPhoto', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: userInfo.userId}),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }, []);
 
   return (
     <Container>
@@ -74,8 +87,8 @@ const RankTab = (props) => {
       </Header>
       <Content>
         <View style={{paddingTop: 10}}>
-          <View style={{justifyContent:'center',alignItems:'center'}}>
-            <Text style={{fontWeight:'bold',fontSize:25}}>오늘의 랭킹</Text>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontWeight: 'bold', fontSize: 25}}>오늘의 랭킹</Text>
             <Text>{getWeekend()}</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
@@ -89,29 +102,10 @@ const RankTab = (props) => {
                 }}
               />
             </View>
-            <Text style={{fontWeight: 'bold'}}>{userInfo.userId}</Text>
-
+            <Text style={{fontWeight: 'bold'}}>유저 ID: {userInfo.userId}</Text>
           </View>
         </View>
         {/* 프로필 하단부 */}
-        <View style={styles.bottomButton}>
-          <Button transparent onPress={() => btnClickEventHandler(1,setActiveBtn)}>
-            <Icon
-              name="ios-apps-outline"
-              style={[
-                activeBtn == 1 ? {color: 'black'} : {color: '#bdc3c7'},
-              ]}></Icon>
-          </Button>
-          <Button transparent onPress={() => btnClickEventHandler(2,setActiveBtn)}>
-            <Icon
-              name="tag"
-              type="SimpleLineIcons"
-              style={[
-                activeBtn == 2 ? {color: 'black'} : {color: '#bdc3c7'},
-              ]}></Icon>
-          </Button>
-        </View>
-        <View>{bottomSection(activeBtn)}</View>
       </Content>
     </Container>
   );
@@ -119,8 +113,8 @@ const RankTab = (props) => {
 RankTab.navigationOptions = () => ({
   tabBarIcon: ({tintColor}) => (
     <Icon name="ios-bar-chart" style={{color: tintColor}} />
-  )
-})
+  ),
+});
 
 export default RankTab;
 
