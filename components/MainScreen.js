@@ -10,7 +10,7 @@ import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
 import WalletTab from './AppTabNavigator/WalletTab';
 import RankTab from './AppTabNavigator/RankTab';
-import ProfileScreen from './ProfileScreen';
+import ProfileScreen from './ProfileScreen_new';
 import SendScreen from './AppTabNavigator/Wallet/SendScreen';
 import SendConfirmScreen from './AppTabNavigator/Wallet/SendConfirmScreen';
 import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
