@@ -16,11 +16,11 @@ const {width, height} = Dimensions.get('window');
 
 const WalletTab = (props) => {
   const reduxState = useSelector((state) => state);
-  let userInfo = reduxState.userInfo
+  let userInfo = reduxState.userInfo;
 
   return (
     <Container>
-      <Header style={{backgroundColor: '#fff'}}>
+      <Header style={{backgroundColor: '#fff', height: height * 0.1}}>
         <Left>
           <Icon
             name="person"
@@ -40,7 +40,6 @@ const WalletTab = (props) => {
         </Right>
       </Header>
 
-            
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <View style={{alignItems: 'center'}}>
@@ -66,7 +65,10 @@ const WalletTab = (props) => {
               style={styles.receiveButton}
               activeOpacity={0.8}
               onPress={() => {
-                props.navigation.navigate('Receive', userInfo.userWalletAddress);
+                props.navigation.navigate(
+                  'Receive',
+                  userInfo.userWalletAddress,
+                );
               }}>
               <Icon
                 name="enter-outline"
@@ -117,7 +119,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: width * 0.85,
     height: height * 0.25,
-    elevation: 10,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     borderBottomLeftRadius: 20,

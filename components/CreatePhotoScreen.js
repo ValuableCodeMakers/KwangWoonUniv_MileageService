@@ -37,24 +37,27 @@ export default class CreateProfileScreen extends Component {
       });
   }
 
-  createFormData = (photo, body) => {
+  createFormData = (photo) => {
     const data = new FormData();
 
-    data.append('userId',body.userId)
-    data.append('name', photo.fileName);
-    data.append('type', photo.type);
-    data.append('uri', photo.uri);
+    data.append('userId', this.state.userId);
+    data.append('image', {
+      uri: photo.uri,
+      name: photo.fileName,
+      type: photo.type,
+    });
 
     return data;
   };
 
   handleSavePhoto = () => {
-    const data = this.createFormData(this.state.image, {
-      userId: this.state.userId,
-    });
+    const data = this.createFormData(this.state.image);
     console.log(data);
     fetch('http://192.168.0.5:3000/routes/savePhoto', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
       body: data,
     })
       .then((res) => {
@@ -62,10 +65,10 @@ export default class CreateProfileScreen extends Component {
       })
       .then((res) => {
         console.log(res);
+      })
+      .then(() => {
+        this.props.navigation.navigate('Main');
       });
-    // .then((res) => {
-    //   this.props.navigation.navigate('Main');
-    // });
   };
 
   handlePickImage = () => {
@@ -73,6 +76,7 @@ export default class CreateProfileScreen extends Component {
       mediaType: 'photo',
     };
 
+    // 갤러리
     launchImageLibrary(options, (res) => {
       console.log(res);
       if (res.error) {
@@ -82,6 +86,7 @@ export default class CreateProfileScreen extends Component {
       }
     });
 
+    // 카메라
     // launchImageLibrary(options, (response) => {
     //   if (response.error) {
     //     console.log('LaunchImageLibrary Error: ', response.error);

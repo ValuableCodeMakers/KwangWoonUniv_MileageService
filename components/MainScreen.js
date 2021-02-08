@@ -69,8 +69,9 @@ const MainScreen = (props) => {
                 dispatch(
                   handleUserInfo('UPDATE_address', userState.userWalletAddress),
                 );
-                dispatch(handleUserInfo('UPDATE_balacne', userState.userBalance));
-                
+                dispatch(
+                  handleUserInfo('UPDATE_balacne', userState.userBalance),
+                );
               });
           });
       });
@@ -101,8 +102,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
     tabBarOptions: {
       labelStyle: {fontSize: 12},
       style: {
-        borderTopWidth: 0.12,
-        height: 70,
+        height: height * 0.1,
         ...Platform.select({
           ios: {
             backgroundColor: '#ffffff',
@@ -113,6 +113,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
       iconStyle: {height: 30, width: 30},
       activeTintColor: '#b33939',
       inactiveTintColor: 'black',
+      indicatorStyle: {backgroundColor: '#fff'},
       upperCaseLabel: false,
       showLabel: true,
       showIcon: true,

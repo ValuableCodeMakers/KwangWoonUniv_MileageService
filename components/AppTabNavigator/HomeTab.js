@@ -13,7 +13,6 @@ import {
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import CountDown from 'react-native-countdown-component';
-import BackgroundTimer from 'react-native-background-timer'; // 삭제
 
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 
@@ -102,7 +101,7 @@ const HomeTab = (props) => {
 
   return (
     <Container>
-      <Header style={{backgroundColor: '#c0392b'}}>
+      <Header style={{backgroundColor: '#c0392b', height: height * 0.1}}>
         <Left>
           <Icon
             name="person"
@@ -121,9 +120,8 @@ const HomeTab = (props) => {
         </Right>
       </Header>
 
-      <Container style={styles.container}>
-        <View style={styles.background}></View>
-        <View style={styles.cardContainer}>
+      <Container style={styles.mainContainer}>
+        <View style={styles.currentBalanceContainer}>
           <View style={{alignItems: 'center'}}>
             <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
             <Text style={{fontSize: 35, color: 'white'}}>
@@ -177,28 +175,23 @@ HomeTab.navigationOptions = () => ({
 export default HomeTab;
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     display: 'flex',
     alignItems: 'center',
-  },
-  background: {
-    marginTop: 0,
-    height: height,
-    width: width,
     backgroundColor: '#c0392b',
   },
-  cardContainer: {
+  currentBalanceContainer: {
     position: 'absolute',
     alignItems: 'center',
-    width: width,
-    marginTop: '12%',
+    height: '30%',
+    marginTop: '10%',
   },
   eventContainer: {
     position: 'absolute',
     alignItems: 'center',
     width: width * 0.98,
-    height: '70%',
-    marginTop: '40%',
+    height: height * 0.65,
+    marginTop: '35%',
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     backgroundColor: '#fff',
