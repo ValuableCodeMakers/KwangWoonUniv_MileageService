@@ -1,10 +1,15 @@
 import {createStore, combineReducers} from 'redux';
-import {buildingEventReducer, holdingEventReducer} from './reducers'; 
+import {
+  buildingEventReducer,
+  holdingEventReducer,
+  userInfoReducer,
+} from './reducers';
 
 const reducer = combineReducers({
   buildingEvent: buildingEventReducer,
   holdingEvent: holdingEventReducer,
-}); 
+  userInfo: userInfoReducer,
+});
 
 const store = createStore(reducer);
 
