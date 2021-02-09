@@ -16,21 +16,6 @@ import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
 
 var {width, height} = Dimensions.get('window');
 
-// function bottomSection(section) {
-//   switch (section) {
-//     case 1: {
-//       return <View style={{flexDirection: 'row', flexWrap: 'wrap'}}></View>;
-//     }
-//     case 2: {
-//       return (
-//         <View>
-//           <View></View>
-//         </View>
-//       );
-//     }
-//   }
-// };
-
 function getWeekend() {
   let week = new Array(
     '일요일',
@@ -51,10 +36,11 @@ function getWeekend() {
 function getRanking(photo, userInfo) {
   for (let i = 0; i < 5; i++) {}
 }
+
 const RankTab = (props) => {
   const reduxState = useSelector((state) => state);
   const userInfo = reduxState.userInfo;
-  const [photo, setPhoto] = useState();
+  const [photo, setPhoto] = useState("");
 
   useEffect(() => {
     fetch('http://192.168.0.5:3000/routes/getPhoto', {
@@ -92,7 +78,7 @@ const RankTab = (props) => {
       </Header>
       <Container style={styles.mainContainer}>
         <Card style={styles.textContainer}>
-          <Text style={{fontWeight: 'bold', fontSize: 25}}>오늘의 랭킹 🏆</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 25,fontFamily:'BMDOHYEON'}}>오늘의 랭킹 🏆</Text>
           <Text>{getWeekend()}</Text>
           <View style={styles.userInfoContainer}>
             {photo ? (

@@ -71,7 +71,7 @@ const HomeTab = (props) => {
                 flexDirection: 'row',
                 marginTop: 15,
               }}>
-              <Text style={{fontSize: 18}}>남은 시간 </Text>
+              <Text style={{fontSize: 18,fontWeight:'bold'}}>남은 시간 </Text>
               <CountDown
                 until={60 * 45} // 45분 60 * 45
                 size={20}
@@ -123,8 +123,8 @@ const HomeTab = (props) => {
       <Container style={styles.mainContainer}>
         <View style={styles.currentBalanceContainer}>
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontSize: 15, color: 'white'}}>현재 잔액</Text>
-            <Text style={{fontSize: 35, color: 'white'}}>
+            <Text style={{fontSize: 15, color: 'white',fontFamily:'BMDOHYEON',marginBottom:5}}>현재 잔액</Text>
+            <Text style={{fontSize: 35, color: 'white',fontFamily:'BMDOHYEON'}}>
               <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
               {userInfoState.userBalance} 토큰
             </Text>
@@ -132,7 +132,7 @@ const HomeTab = (props) => {
         </View>
 
         <Card style={styles.eventContainer}>
-          <Text style={styles.eventText}>Event</Text>
+          <Text style={styles.eventText}>이벤트 현황</Text>
           <ScrollView style={styles.eventScrollView}>
             {event_locationIn()}
             {buildingState.map((data) =>
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginTop: 10,
     marginBottom: 0,
+    fontFamily:'BMDOHYEON'
   },
   eventScrollView: {
     marginTop: 5,
