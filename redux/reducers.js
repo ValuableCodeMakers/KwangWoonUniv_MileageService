@@ -1,19 +1,19 @@
 // 이벤트 재발생 대기시간
-const TIME_LAPSE = 60000;
+const TIME_LAPSE = 900000;
 const buildingEvent_Reducer_initialState = {
   events: [
-    { id: '화도관', state: false, time: new Date() },
-    { id: '비마관', state: false, time: new Date() },
-    { id: '옥의관', state: false, time: new Date() },
-    { id: '복지관', state: false, time: new Date() },
-    { id: '연구관', state: false, time: new Date() },
-    { id: '동해문화예술관', state: false, time: new Date() },
-    { id: '참빛관', state: false, time: new Date() },
-    { id: '새빛관', state: false, time: new Date() },
-    { id: '한울관', state: false, time: new Date() },
-    { id: '누리관', state: false, time: new Date() },
-    { id: '80주년기념관', state: false, time: new Date() },
-    { id: '아이스링크', state: false, time: new Date() },
+    { id: '화도관', state: false, time: new Date(0) },
+    { id: '비마관', state: false, time: new Date(0) },
+    { id: '옥의관', state: false, time: new Date(0) },
+    { id: '복지관', state: false, time: new Date(0) },
+    { id: '연구관', state: false, time: new Date(0) },
+    { id: '동해문화예술관', state: false, time: new Date(0) },
+    { id: '참빛관', state: false, time: new Date(0) },
+    { id: '새빛관', state: false, time: new Date(0) },
+    { id: '한울관', state: false, time: new Date(0) },
+    { id: '누리관', state: false, time: new Date(0) },
+    { id: '80주년기념관', state: false, time: new Date(0) },
+    { id: '아이스링크', state: false, time: new Date(0) },
   ],
 };
 
@@ -234,11 +234,11 @@ export const holdingEventReducer = (
 export const userInfoReducer = (state = userData_initialState, action) => {
   switch (action.type) {
     case 'UPDATE_id':
-      return {...state, userId: action.userId};
+      return { ...state, userId: action.userId };
     case 'UPDATE_address':
-      return {...state, userWalletAddress: action.userWalletAddress};
+      return { ...state, userWalletAddress: action.userWalletAddress };
     case 'UPDATE_balacne':
-      return {...state, userBalance: action.userBalance};
+      return { ...state, userBalance: action.userBalance };
     default:
       console.log('기본')
       return state;

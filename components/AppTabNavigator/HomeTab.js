@@ -1,5 +1,5 @@
-import React, {Component, Fragment} from 'react';
-import {useState, useEffect} from 'react';
+import React, { Component, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Card,
   CardItem,
@@ -10,20 +10,20 @@ import {
   Container,
   Button,
 } from 'native-base';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import CountDown from 'react-native-countdown-component';
 
-import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
+import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://192.168.0.5:3000/routes/getEventToken', {
+  fetch('http://172.30.1.43:3000/routes/getEventToken', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({to: address}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ to: address }),
   })
     .then((res) => {
       return res.json();
@@ -60,8 +60,8 @@ const HomeTab = (props) => {
               justifyContent: 'center',
               flexDirection: 'column',
             }}>
-            <Text style={{fontSize: 18}}>
-              <Text style={{fontWeight: 'bold'}}>'학교에서 있기'</Text> 이벤트가
+            <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontWeight: 'bold' }}>'학교에서 있기'</Text> 이벤트가
               진행중입니다.😊
             </Text>
             <View
@@ -76,9 +76,9 @@ const HomeTab = (props) => {
                 until={60 * 45} // 45분 60 * 45
                 size={20}
                 timeToShow={['M', 'S']}
-                timeLabels={{m: null, s: null}}
+                timeLabels={{ m: null, s: null }}
                 showSeparator={true}
-                digitStyle={{backgroundColor: '#ecf0f1'}}
+                digitStyle={{ backgroundColor: '#ecf0f1' }}
                 onFinish={() => {
                   alert(
                     `'학교에서 있기' 이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`,
@@ -105,7 +105,7 @@ const HomeTab = (props) => {
         <Left>
           <Icon
             name="person"
-            style={{paddingLeft: 10, color: '#fff'}}
+            style={{ paddingLeft: 10, color: '#fff' }}
             onPress={() => {
               props.navigation.navigate('Profile');
             }}
@@ -115,7 +115,7 @@ const HomeTab = (props) => {
           <Icon
             name="menu"
             onPress={() => props.navigation.toggleDrawer()}
-            style={{paddingRight: 10, color: '#fff'}}
+            style={{ paddingRight: 10, color: '#fff' }}
           />
         </Right>
       </Header>
@@ -138,8 +138,8 @@ const HomeTab = (props) => {
             {buildingState.map((data) =>
               data.state ? (
                 <Card style={styles.currentEvent} key={data.id}>
-                  <CardItem style={{height: 120}}>
-                    <Text style={{fontSize: 18}}>
+                  <CardItem style={{ height: 120 }}>
+                    <Text style={{ fontSize: 18 }}>
                       {data.id} 이벤트 완료! 😊
                     </Text>
                     <Button
@@ -156,8 +156,8 @@ const HomeTab = (props) => {
                   </CardItem>
                 </Card>
               ) : (
-                <Fragment key={data.id}></Fragment>
-              ),
+                  <Fragment key={data.id}></Fragment>
+                ),
             )}
           </ScrollView>
         </Card>
@@ -167,8 +167,8 @@ const HomeTab = (props) => {
 };
 
 HomeTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-home" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-home" style={{ color: tintColor }} />
   ),
 });
 

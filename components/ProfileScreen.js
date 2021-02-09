@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Icon,
   Container,
@@ -11,15 +11,16 @@ import {
   Thumbnail,
 } from 'native-base';
 
-import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import CardComponent from './CardComponent';
 
-var {width, height} = Dimensions.get('window');
+var { width, height } = Dimensions.get('window');
 
 class ProfileScreen extends Component {
   static navigationOptions = {
     headerShown: false,
-    tabBarIcon: ({tintColor}) => (
-      <Icon name="person" style={{color: tintColor}} />
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="person" style={{ color: tintColor }} />
     ),
   };
 
@@ -37,7 +38,7 @@ class ProfileScreen extends Component {
     switch (section) {
       case 1: {
         return (
-          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           </View>
         );
       }
@@ -53,32 +54,32 @@ class ProfileScreen extends Component {
   };
 
 
-  loadTagSection = () => {};
+  loadTagSection = () => { };
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <Header style={{backgroundColor: 'white'}}>
-          <Left style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>kyoung_jnn</Text>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Header style={{ backgroundColor: 'white' }}>
+          <Left style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 17 }}>kyoung_jnn</Text>
             <Icon
               name="caret-down"
               type="FontAwesome"
-              style={{paddingLeft: 10, fontSize: 14}}
+              style={{ paddingLeft: 10, fontSize: 14 }}
             />
           </Left>
-          <Right style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Right style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon
               name="dots-vertical"
               type="MaterialCommunityIcons"
-              style={{fontSize: 23}}
+              style={{ fontSize: 23 }}
             />
           </Right>
         </Header>
         <Content>
-          <View style={{paddingTop: 10}}>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1.2, alignItems: 'center'}}>
+          <View style={{ paddingTop: 10 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 1.2, alignItems: 'center' }}>
                 <Thumbnail
                   style={{
                     width: 100,
@@ -88,33 +89,33 @@ class ProfileScreen extends Component {
                   }}
                 />
               </View>
-              <View style={{flex: 3}}>
+              <View style={{ flex: 3 }}>
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-around',
                     marginVertical: 25,
                   }}>
-                  <View style={{alignItems: 'center'}}>
-                    <Text style={{fontSize: 20, fontWeight: 'bold'}}>30</Text>
-                    <Text style={{fontSize: 12, color: 'gray'}}>게시물</Text>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>30</Text>
+                    <Text style={{ fontSize: 12, color: 'gray' }}>게시물</Text>
                   </View>
-                  <View style={{alignItems: 'center'}}>
-                    <Text style={{fontSize: 20, fontWeight: 'bold'}}>189</Text>
-                    <Text style={{fontSize: 12, color: 'gray'}}>팔로워</Text>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>189</Text>
+                    <Text style={{ fontSize: 12, color: 'gray' }}>팔로워</Text>
                   </View>
-                  <View style={{alignItems: 'center'}}>
-                    <Text style={{fontSize: 20, fontWeight: 'bold'}}>181</Text>
-                    <Text style={{fontSize: 12, color: 'gray'}}>팔로잉</Text>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>181</Text>
+                    <Text style={{ fontSize: 12, color: 'gray' }}>팔로잉</Text>
                   </View>
                 </View>
               </View>
             </View>
-            <View style={{paddingHorizontal: 20, paddingVertical: 15}}>
-              <Text style={{fontWeight: 'bold'}}>노 경진</Text>
+            <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
+              <Text style={{ fontWeight: 'bold' }}>노 경진</Text>
               <Text>KWU</Text>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Button
                 bordered
                 dark
@@ -136,8 +137,8 @@ class ProfileScreen extends Component {
                 name="ios-apps-outline"
                 style={[
                   this.state.activeBtn == 1
-                    ? {color: 'black'}
-                    : {color: '#bdc3c7'},
+                    ? { color: 'black' }
+                    : { color: '#bdc3c7' },
                 ]}></Icon>
             </Button>
             <Button transparent onPress={() => this.btnClickEventHandler(2)}>
@@ -146,8 +147,8 @@ class ProfileScreen extends Component {
                 type="SimpleLineIcons"
                 style={[
                   this.state.activeBtn == 2
-                    ? {color: 'black'}
-                    : {color: '#bdc3c7'},
+                    ? { color: 'black' }
+                    : { color: '#bdc3c7' },
                 ]}></Icon>
             </Button>
           </View>
