@@ -40,9 +40,12 @@ function getRanking(photo, userInfo) {
 const RankTab = (props) => {
   const reduxState = useSelector((state) => state);
   const userInfo = reduxState.userInfo;
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState({filename: 'default'});
+  const [usersPhoto, setUsersPhoto] = useState();
 
+  // userInfo 가 들어오면 프로필 사진 가져오기
   useEffect(() => {
+    console.log('프로필 사진 가져오기 요청');
     fetch('http://192.168.0.5:3000/routes/getPhoto', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -52,9 +55,10 @@ const RankTab = (props) => {
         return res.json();
       })
       .then((res) => {
-        setPhoto(res.photo);
+        console.log(res.photo);
+        if (res.photo.length != 0) setPhoto({filename: res.photo[0].filename});
       });
-  }, [userInfo]);
+  }, [userInfo.userId]);
 
   return (
     <Container>
@@ -78,15 +82,18 @@ const RankTab = (props) => {
       </Header>
       <Container style={styles.mainContainer}>
         <Card style={styles.textContainer}>
-          <Text style={{fontWeight: 'bold', fontSize: 25,fontFamily:'BMDOHYEON'}}>오늘의 랭킹 🏆</Text>
+          <Text
+            style={{fontWeight: 'bold', fontSize: 25, fontFamily: 'BMDOHYEON'}}>
+            오늘의 랭킹 🏆
+          </Text>
           <Text>{getWeekend()}</Text>
           <View style={styles.userInfoContainer}>
-            {photo ? (
+            {photo.filename != 'default' ? (
               <Thumbnail
                 circular={true}
                 large
                 source={{
-                  uri: `http://192.168.0.5:3000/${photo[0].filename}`,
+                  uri: `http://192.168.0.5:3000/${photo.filename}`,
                 }}></Thumbnail>
             ) : (
               <Thumbnail circular={true} large source={basicImage}></Thumbnail>
@@ -96,78 +103,50 @@ const RankTab = (props) => {
         </Card>
         <Card style={styles.rankContainer}>
           <ScrollView style={{width: '100%'}}>
-            {photo ? (
+            {photo.filename != 'default' ? (
               <Fragment>
                 <View style={styles.userRankContainer}>
                   <Text style={{fontSize: 30}}>🥇</Text>
-                  {photo ? (
-                    <Thumbnail
-                      circular={true}
-                      source={{
-                        uri: `http://192.168.0.5:3000/${photo[0].filename}`,
-                      }}></Thumbnail>
-                  ) : (
-                    <Thumbnail
-                      circular={true}
-                      large
-                      source={basicImage}></Thumbnail>
-                  )}
+                  <Thumbnail
+                    circular={true}
+                    source={{
+                      uri: `http://192.168.0.5:3000/${photo.filename}`,
+                    }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
                 <View style={styles.userRankContainer}>
                   <Text style={{fontSize: 30}}>🥈</Text>
-                  {photo ? (
-                    <Thumbnail
-                      circular={true}
-                      source={{
-                        uri: `http://192.168.0.5:3000/${photo[0].filename}`,
-                      }}></Thumbnail>
-                  ) : (
-                    <Thumbnail
-                      circular={true}
-                      large
-                      source={basicImage}></Thumbnail>
-                  )}
+                  <Thumbnail
+                    circular={true}
+                    source={{
+                      uri: `http://192.168.0.5:3000/${photo.filename}`,
+                    }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
                 <View style={styles.userRankContainer}>
                   <Text style={{fontSize: 30}}>🥉</Text>
-                  {photo ? (
-                    <Thumbnail
-                      circular={true}
-                      source={{
-                        uri: `http://192.168.0.5:3000/${photo[0].filename}`,
-                      }}></Thumbnail>
-                  ) : (
-                    <Thumbnail
-                      circular={true}
-                      large
-                      source={basicImage}></Thumbnail>
-                  )}
+
+                  <Thumbnail
+                    circular={true}
+                    source={{
+                      uri: `http://192.168.0.5:3000/${photo.filename}`,
+                    }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
                 <View style={styles.userRankContainer}>
-                  {photo ? (
-                    <Thumbnail
-                      circular={true}
-                      source={{
-                        uri: `http://192.168.0.5:3000/${photo[0].filename}`,
-                      }}></Thumbnail>
-                  ) : (
-                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
-                  )}
+                  <Thumbnail
+                    circular={true}
+                    source={{
+                      uri: `http://192.168.0.5:3000/${photo.filename}`,
+                    }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
                 <View style={styles.userRankContainer}>
-                  {photo ? (
-                    <Thumbnail
-                      circular={true}
-                      source={{
-                        uri: `http://192.168.0.5:3000/${photo[0].filename}`,
-                      }}></Thumbnail>
-                  ) : (
-                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
-                  )}
+                  <Thumbnail
+                    circular={true}
+                    source={{
+                      uri: `http://192.168.0.5:3000/${photo.filename}`,
+                    }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
               </Fragment>
@@ -201,7 +180,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '30%',
     borderRadius: 10,
-    marginTop:'5%',
+    marginTop: '5%',
     padding: 10,
     elevation: 10,
   },

@@ -15,7 +15,6 @@ import {
 } from 'native-base';
 
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
-import CardComponent from './CardComponent';
 import { useSelector, useDispatch } from 'react-redux';
 
 var { width, height } = Dimensions.get('window');
