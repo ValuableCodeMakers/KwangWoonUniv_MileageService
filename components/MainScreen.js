@@ -64,12 +64,15 @@ const MainScreen = (props) => {
                 balance = balance.substr(0, balance.length - 18); // decimal 제거
                 userState.userBalance = balance;
               })
+              .then(() => {})
               .then(() => {
                 dispatch(handleUserInfo('UPDATE_id', userState.userId));
                 dispatch(
                   handleUserInfo('UPDATE_address', userState.userWalletAddress),
                 );
-                dispatch(handleUserInfo('UPDATE_balacne',  userState.userBalance));
+                dispatch(
+                  handleUserInfo('UPDATE_balacne', userState.userBalance),
+                );
               });
           });
       });

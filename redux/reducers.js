@@ -28,6 +28,12 @@ const userData_initialState = {
   userBalance: 'N/A',
 };
 
+const userProfilePhoto_inititalState = {
+  userId: '',
+  filename: '',
+  filepath: '',
+};
+
 // 건물 도착 이벤트 관련 reducer
 var index = null;
 var newArray = null;
@@ -226,13 +232,27 @@ export const userInfoReducer = (state = userData_initialState, action) => {
     case 'UPDATE_address':
       return {...state, userWalletAddress: action.userWalletAddress};
     case 'UPDATE_balacne':
-      if (action.userBalance != "") {
+      if (action.userBalance != '') {
         return {...state, userBalance: action.userBalance};
       } else {
         return {...state, userBalance: 0};
       }
     default:
       console.log('기본');
+      return state;
+  }
+};
+
+export const profilePhotoReducer = (state = userProfilePhoto_inititalState, action) => {
+  
+  switch (action.type) {
+    case 'UPDATE_photo':
+      return {
+        userId: action.photo[0].id,
+        filename: action.photo[0].filename,
+        filepath: action.photo[0].path,
+      };
+    default:
       return state;
   }
 };
