@@ -20,6 +20,7 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import basicImage from '../src/profile/profile2.png'; // 기본 이미지
+import {handleProfilePhoto} from '../redux/action';
 
 var {width, height} = Dimensions.get('window');
 
@@ -31,7 +32,7 @@ function profile_Load_EventHandler(flag) {
   state.profile_Load_Flag = flag;
 }
 
-function createFormData(id,photo) {
+function createFormData(id, photo) {
   const data = new FormData();
 
   data.append('userId', id);
@@ -44,7 +45,7 @@ function createFormData(id,photo) {
   return data;
 }
 
-const handleChangePhoto = (id) => {
+const handleChangePhoto = (id, dispatch) => {
   const options = {
     mediaType: 'photo',
   };
@@ -55,7 +56,8 @@ const handleChangePhoto = (id) => {
     if (res.error) {
       console.log('LaunchCamera Error: ', res.error);
     } else if (!res.didCancel) {
-      const data = createFormData(id,res);
+      const data = createFormData(id, res);
+      const photo = res;
 
       fetch('http://192.168.0.5:3000/routes/changePhoto', {
         method: 'POST',
@@ -69,6 +71,15 @@ const handleChangePhoto = (id) => {
         })
         .then((res) => {
           console.log(res);
+          dispatch(
+            handleProfilePhoto('UPDATE_photo', [
+              {
+                id: id,
+                filename: id + photo.fileName,
+                path: 'profiles/' + id + photo.fileName,
+              },
+            ]),
+          );
         })
         .then(() => {
           alert('프로필 저장 완료');
@@ -91,7 +102,7 @@ const ProfileScreen = (props) => {
   const dispatch = useDispatch();
 
   // 유저 정보
-  const userInfoState = reduxState.userInfo;
+  const userInfo = reduxState.userInfo;
   const userPhoto = reduxState.userProfilePhoto;
 
   return (
@@ -131,7 +142,8 @@ const ProfileScreen = (props) => {
           <View style={{flex: 1.2, alignItems: 'center'}}>
             {userPhoto.fileName != '' ? (
               <View>
-                <TouchableOpacity onPress={() => handleChangePhoto(userInfoState.userId)}>
+                <TouchableOpacity
+                  onPress={() => handleChangePhoto(userInfo.userId, dispatch)}>
                   <Image
                     source={{
                       uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
@@ -216,7 +228,7 @@ const ProfileScreen = (props) => {
       <View style={styles.bottomTab}>
         <View>
           <Text style={styles.bottomText1}>성명</Text>
-          <Text style={styles.bottomText2}>{userInfoState.userId}</Text>
+          <Text style={styles.bottomText2}>{userInfo.userId}</Text>
         </View>
         <Right>
           <Icon
@@ -255,9 +267,7 @@ const ProfileScreen = (props) => {
       <View style={styles.bottomTab}>
         <View>
           <Text style={styles.bottomText1}>지갑정보</Text>
-          <Text style={styles.bottomText2}>
-            {userInfoState.userWalletAddress}
-          </Text>
+          <Text style={styles.bottomText2}>{userInfo.userWalletAddress}</Text>
         </View>
         <Right>
           <Icon

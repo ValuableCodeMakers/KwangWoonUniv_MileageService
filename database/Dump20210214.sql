@@ -36,7 +36,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('7kUlxGp7wuiBAEi1seiqu80FvNe3T394',1612890933,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":2}}'),('EYDeJ5th2QCWl9Vdd9yyuR0SpnWPG3sv',1612873861,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}'),('YX6cE0tYjHwLfB_eUcD35TmTRsx7DQ6i',1612875390,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}'),('mUjX73NwbbEY61AOdYnhSEdDi_DUxu0c',1612862604,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}');
+INSERT INTO `sessions` VALUES ('6bXeXdq3RPoje8fplgzOmdRao9wVNoTc',1613320848,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":1}}');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,8 +90,32 @@ CREATE TABLE `user_photo` (
 
 LOCK TABLES `user_photo` WRITE;
 /*!40000 ALTER TABLE `user_photo` DISABLE KEYS */;
-INSERT INTO `user_photo` VALUES (2,'image/jpeg','2rn_image_picker_lib_temp_955c22ed-6624-416e-9a27-4e5e1171d802.jpg','profiles\\2rn_image_picker_lib_temp_955c22ed-6624-416e-9a27-4e5e1171d802.jpg');
+INSERT INTO `user_photo` VALUES (1,'image/jpeg','1rn_image_picker_lib_temp_3c0ad3e0-c1c8-4d21-8743-becc3c89ee72.jpg','profiles\\1rn_image_picker_lib_temp_3c0ad3e0-c1c8-4d21-8743-becc3c89ee72.jpg'),(2,'image/jpeg','2rn_image_picker_lib_temp_753fc9af-f0c6-43c0-86b0-61ab04196d12.jpg','profiles\\2rn_image_picker_lib_temp_753fc9af-f0c6-43c0-86b0-61ab04196d12.jpg');
 /*!40000 ALTER TABLE `user_photo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_ranking`
+--
+
+DROP TABLE IF EXISTS `user_ranking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_ranking` (
+  `id` int NOT NULL,
+  `balance` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_ranking`
+--
+
+LOCK TABLES `user_ranking` WRITE;
+/*!40000 ALTER TABLE `user_ranking` DISABLE KEYS */;
+INSERT INTO `user_ranking` VALUES (1,100),(2,400),(3,5),(4,5),(5,3);
+/*!40000 ALTER TABLE `user_ranking` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -129,4 +153,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-09 16:25:16
+-- Dump completed on 2021-02-14  1:42:09

@@ -9,7 +9,7 @@ import {
   Thumbnail,
   Card,
 } from 'native-base';
-import {useSelector,useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
 import {handleProfilePhoto} from '../../redux/action';
 
@@ -36,11 +36,12 @@ const RankTab = (props) => {
   const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
   const userInfo = reduxState.userInfo;
-  const userPhoto = reduxState.userProfilePhoto
+  const userPhoto = reduxState.userProfilePhoto;
 
   // userInfo 가 들어오면 프로필 사진 가져오기
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
+
     fetch('http://192.168.0.5:3000/routes/getPhoto', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -50,10 +51,25 @@ const RankTab = (props) => {
         return res.json();
       })
       .then((res) => {
-        dispatch(handleProfilePhoto('UPDATE_photo', res.photo));
+        if (!res.photo) {
+          // 프로필 사진이 없을때
+          dispatch(
+            handleProfilePhoto('UPDATE_photo', [
+              {
+                id: userInfo.userId,
+                filename: 'default',
+                path: 'default',
+              },
+            ]),
+          );
+        } else {
+          // 프로필 사진이 있을때
+          dispatch(handleProfilePhoto('UPDATE_photo', res.photo));
+        }
       });
   }, [userInfo.userId]);
 
+  // 유저 랭크 가져오기
   // useEffect(() => {
   //   fetch('http://192.168.0.5:3000/routes/getUsersRank', {
   //     method: 'GET',
@@ -92,7 +108,7 @@ const RankTab = (props) => {
           </Text>
           <Text>{getWeekend()}</Text>
           <View style={styles.userInfoContainer}>
-            {userPhoto.filename != '' ? (
+            {userPhoto.filename != 'default' ? (
               <Thumbnail
                 circular={true}
                 large
@@ -107,14 +123,14 @@ const RankTab = (props) => {
         </Card>
         <Card style={styles.rankContainer}>
           <ScrollView style={{width: '100%'}}>
-            {userPhoto.filename != '' ? (
+            {userPhoto.filename == 'default' ? (
               <Fragment>
                 <View style={styles.userRankContainer}>
                   <Text style={{fontSize: 30}}>🥇</Text>
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`, // 여기서 ? : 사용해서 있으면 서버에서 가져오고 없으면 기본 이미지 사용
                     }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
