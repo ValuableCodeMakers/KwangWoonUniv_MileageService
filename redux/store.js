@@ -3,14 +3,16 @@ import {
   buildingEventReducer,
   holdingEventReducer,
   userInfoReducer,
-  profilePhotoReducer
+  profilePhotoReducer,
+  loadingStateReducer,
 } from './reducers';
 
 const reducer = combineReducers({
   buildingEvent: buildingEventReducer,
   holdingEvent: holdingEventReducer,
   userInfo: userInfoReducer,
-  userProfilePhoto: profilePhotoReducer
+  userProfilePhoto: profilePhotoReducer,
+  loadState: loadingStateReducer,
 });
 
 const store = createStore(reducer);

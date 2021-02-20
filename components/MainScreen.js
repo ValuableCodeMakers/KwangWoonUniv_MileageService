@@ -17,7 +17,7 @@ import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
 import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
 import CustomDrawerNavigator from './CustomDrawerNavigator';
 
-import {handleUserInfo} from '../redux/action';
+import {handleUserInfo, handleLoadingState} from '../redux/action';
 
 const {width, height} = Dimensions.get('window');
 
@@ -27,7 +27,7 @@ const MainScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getUserId', {
+    fetch('http://172.30.1.48:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -37,7 +37,7 @@ const MainScreen = (props) => {
         userState.userId = res.userId;
       })
       .then(() => {
-        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
+        fetch('http://172.30.1.48:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({userId: userState.userId}),
@@ -49,7 +49,7 @@ const MainScreen = (props) => {
             userState.userWalletAddress = res.userWalletAddress;
           })
           .then(() => {
-            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
+            fetch('http://172.30.1.48:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
@@ -73,6 +73,8 @@ const MainScreen = (props) => {
                 dispatch(
                   handleUserInfo('UPDATE_balacne', userState.userBalance),
                 );
+
+                dispatch(handleLoadingState('로딩완료', true));
               });
           });
       });

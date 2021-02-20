@@ -34,6 +34,10 @@ const userProfilePhoto_inititalState = {
   filepath: '',
 };
 
+const loadingStateData_initialState = {
+  loadState: false,
+};
+
 // 건물 도착 이벤트 관련 reducer
 var index = null;
 var newArray = null;
@@ -243,8 +247,10 @@ export const userInfoReducer = (state = userData_initialState, action) => {
   }
 };
 
-export const profilePhotoReducer = (state = userProfilePhoto_inititalState, action) => {
-  
+export const profilePhotoReducer = (
+  state = userProfilePhoto_inititalState,
+  action,
+) => {
   switch (action.type) {
     case 'UPDATE_photo':
       return {
@@ -252,6 +258,20 @@ export const profilePhotoReducer = (state = userProfilePhoto_inititalState, acti
         filename: action.photo[0].filename,
         filepath: action.photo[0].path,
       };
+    default:
+      return state;
+  }
+};
+
+export const loadingStateReducer = (
+  state = loadingStateData_initialState,
+  action,
+) => {
+  switch (action.type) {
+    case '로딩완료':
+      return {loadState: action.result};
+    case '로딩중':
+      return {loadState: action.result};
     default:
       return state;
   }

@@ -5,49 +5,85 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Image,
 } from 'react-native';
-import {DrawerItems} from 'react-navigation';
+import {Card, CardItem} from 'native-base';
 import {useSelector} from 'react-redux';
 
 const {width, height} = Dimensions.get('window');
 
-
 const CustomDrawerNavigator = (props) => {
   const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const userInfoState = reduxState.userInfo;
-  
+  const userPhoto = reduxState.userProfilePhoto;
+
   return (
     <View style={styles.container}>
-      <View style={styles.infoContainer}>
-        <Text style={{fontSize: 40, fontWeight: 'bold'}}>{userInfoState.userId}</Text>
-        <Text style={{fontSize: 20}}>{userInfoState.userBalance} 토큰</Text>
-      </View>
+      <Card style={styles.infoContainer}>
+          <Image
+            source={{
+              uri: `http://172.30.1.48:3000/${userPhoto.filename}`,
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 100,
+            }}></Image>
+          <View style={styles.infoTextContainer}>
+            <Text style={{fontSize: 40, fontWeight: 'bold'}}>
+              {userInfoState.userId}
+            </Text>
+            <Text style={{fontSize: 20}}>{userInfoState.userBalance} 토큰</Text>
+          </View>
+      </Card>
 
       <View style={styles.menuContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.closeDrawer();
-            props.navigation.navigate('AppTabNavigator');
-          }}>
-          <Text>소개</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.closeDrawer();
-            props.navigation.navigate('Profile');
-          }}>
-          <Text>내정보</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.closeDrawer();
-            props.navigation.navigate('HomeTab');
-          }}>
-          <Text>설정</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>로그아웃</Text>
-        </TouchableOpacity>
+        <View style={{...styles.menuButton, marginTop: 20}}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.closeDrawer();
+              props.navigation.navigate('AppTabNavigator');
+            }}>
+            <Text style={{fontSize: 20}}>소개</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.menuButton}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.closeDrawer();
+              props.navigation.navigate('AppTabNavigator', 'HomeTab');
+            }}>
+            <Text style={{fontSize: 20}}>홈</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.menuButton}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.closeDrawer();
+              props.navigation.navigate('Profile');
+            }}>
+            <Text style={{fontSize: 20}}>내정보</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.menuButton}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.closeDrawer();
+              props.navigation.navigate('HomeTab');
+            }}>
+            <Text style={{fontSize: 20}}>설정</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{...styles.menuButton, marginTop: '55%'}}>
+          <TouchableOpacity>
+            <Text style={{fontSize: 20}}>로그아웃</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.bottomTextContainer}>
+        <Text style={{fontWeight:'bold'}}>Team 벨코즈</Text>
       </View>
     </View>
   );
@@ -64,15 +100,34 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     justifyContent: 'center',
-    backgroundColor: '#dcdde1',
+    flexDirection: 'row',
     height: height * 0.3,
     borderTopLeftRadius: 40,
     padding: 50,
+    backgroundColor: '#f1f2f6',
+    elevation:5
+  },
+  infoTextContainer: {
+    justifyContent: 'center',
+    marginHorizontal: 10,
   },
   menuContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    height: height * 0.7,
+    height: height * 0.6,
     borderBottomLeftRadius: 40,
+  },
+  menuButton: {
+    width: '80%',
+    height: '10%',
+    alignItems: 'flex-end',
+    marginBottom: 10,
+  },
+  bottomTextContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height * 0.05,
+    borderBottomLeftRadius: 40,
+
+    backgroundColor: '#c0392b',
   },
 });

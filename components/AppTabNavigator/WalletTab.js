@@ -26,15 +26,14 @@ const WalletTab = (props) => {
             name="person"
             style={{paddingLeft: 10, color: 'black'}}
             onPress={() => {
-              console.log(this.props.navigation);
-              this.props.navigation.navigate('Profile');
+              props.navigation.navigate('Profile');
             }}
           />
         </Left>
         <Right>
           <Icon
             name="menu"
-            onPress={() => this.props.navigation.toggleDrawer()}
+            onPress={() => props.navigation.toggleDrawer()}
             style={{paddingRight: 10, color: 'black'}}
           />
         </Right>

@@ -109,3 +109,12 @@ export function handleUserInfo(type, input) {
 export function handleProfilePhoto(type, input) {
   return {type: 'UPDATE_photo', photo: input};
 }
+
+export function handleLoadingState(type) {
+  switch (type) {
+    case '로딩완료':
+      return {type: '로딩완료', result: true};
+    case '로딩중':
+      return {type: '로딩중', result: false};
+  }
+}
