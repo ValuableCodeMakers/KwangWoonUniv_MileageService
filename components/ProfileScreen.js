@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useEffect} from 'react';
+import React, {Component, Fragment, useState, useEffect} from 'react';
 import {
   Icon,
   Content,
@@ -19,18 +19,9 @@ import {
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import basicImage from '../src/profile/profile2.png'; // 기본 이미지
 import {handleProfilePhoto} from '../redux/action';
 
 var {width, height} = Dimensions.get('window');
-
-var state = {
-  profile_Load_Flag: false,
-};
-
-function profile_Load_EventHandler(flag) {
-  state.profile_Load_Flag = flag;
-}
 
 function createFormData(id, photo) {
   const data = new FormData();
@@ -104,6 +95,29 @@ const ProfileScreen = (props) => {
   // 유저 정보
   const userInfo = reduxState.userInfo;
   const userPhoto = reduxState.userProfilePhoto;
+  const [userEtc, setUserEtc] = useState({
+    userName: '',
+    userNickname: '',
+    userDepartment: '',
+  });
+
+  useEffect(() => {
+    fetch('http://172.30.1.48:3000/routes/getProfileEtc', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: userInfo.userId}),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        setUserEtc({
+          userName: res.userName,
+          userNickname: res.userNickname,
+          userDepartment: res.userDepartment,
+        });
+      });
+  }, []);
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -126,11 +140,7 @@ const ProfileScreen = (props) => {
           </Text>
         </Left>
         <Right style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon
-            name="settings-outline"
-            style={{color: 'white'}}
-            onPress={() => profile_Load_EventHandler(!state.profile_Load_Flag)}
-          />
+          <Icon name="settings-outline" style={{color: 'white'}} />
         </Right>
       </Header>
       <Container
@@ -213,21 +223,19 @@ const ProfileScreen = (props) => {
       <View
         style={{
           backgroundColor: 'black',
-          paddingLeft: 13,
-          paddingTop: 13,
-          paddingBottom: 13,
+          padding: 10,
         }}>
         <Text
           style={{
             color: '#bdc3c7',
             fontSize: 13,
           }}>
-          계정 설정
+          계정 정보
         </Text>
       </View>
       <View style={styles.bottomTab}>
         <View>
-          <Text style={styles.bottomText1}>성명</Text>
+          <Text style={styles.bottomText1}>학번</Text>
           <Text style={styles.bottomText2}>{userInfo.userId}</Text>
         </View>
         <Right>
@@ -238,10 +246,11 @@ const ProfileScreen = (props) => {
           />
         </Right>
       </View>
+
       <View style={styles.bottomTab}>
         <View>
-          <Text style={styles.bottomText1}>비밀번호</Text>
-          <Text style={styles.bottomText2}>dk</Text>
+          <Text style={styles.bottomText1}>성명</Text>
+          <Text style={styles.bottomText2}>{userEtc.userName}</Text>
         </View>
         <Right>
           <Icon
@@ -254,20 +263,7 @@ const ProfileScreen = (props) => {
       <View style={styles.bottomTab}>
         <View>
           <Text style={styles.bottomText1}>닉네임</Text>
-          <Text style={styles.bottomText2}>dk</Text>
-        </View>
-        <Right>
-          <Icon
-            name="chevron-forward"
-            type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
-          />
-        </Right>
-      </View>
-      <View style={styles.bottomTab}>
-        <View>
-          <Text style={styles.bottomText1}>지갑정보</Text>
-          <Text style={styles.bottomText2}>{userInfo.userWalletAddress}</Text>
+          <Text style={styles.bottomText2}>{userEtc.userNickname}</Text>
         </View>
         <Right>
           <Icon
@@ -281,7 +277,20 @@ const ProfileScreen = (props) => {
       <View style={styles.bottomTab}>
         <View>
           <Text style={styles.bottomText1}>학과</Text>
-          <Text style={styles.bottomText2}>dk</Text>
+          <Text style={styles.bottomText2}>{userEtc.userDepartment}</Text>
+        </View>
+        <Right>
+          <Icon
+            name="chevron-forward"
+            type="Ionicons"
+            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+          />
+        </Right>
+      </View>
+      <View style={styles.bottomTab}>
+        <View>
+          <Text style={styles.bottomText1}>지갑 정보</Text>
+          <Text style={styles.bottomText2}>{userInfo.userWalletAddress}</Text>
         </View>
         <Right>
           <Icon

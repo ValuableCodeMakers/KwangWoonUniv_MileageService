@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 
 import MainScreen from './components/MainScreen';
 import LoginScreen from './components/LoginScreen';
-import LoadingScreen from './components/LoadingScreen';
 import RegisterScreen from './components/RegisterScreen';
 
 import CreateProfileScreen from './components/CreateProfileScreen';
@@ -44,7 +43,6 @@ const NewRegisterStack = createStackNavigator(
 const MainContainer = createAppContainer(
   createSwitchNavigator(
     {
-      Loading: LoadingScreen,
       Main: MainStack,
       NewRegister: NewRegisterStack,
       Auth: AuthStack,

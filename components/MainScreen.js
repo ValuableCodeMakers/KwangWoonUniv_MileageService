@@ -10,7 +10,7 @@ import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
 import WalletTab from './AppTabNavigator/WalletTab';
 import RankTab from './AppTabNavigator/RankTab';
-import ProfileScreen from './ProfileScreen_new';
+import ProfileScreen from './ProfileScreen';
 import SendScreen from './AppTabNavigator/Wallet/SendScreen';
 import SendConfirmScreen from './AppTabNavigator/Wallet/SendConfirmScreen';
 import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
@@ -22,7 +22,7 @@ import {handleUserInfo, handleLoadingState} from '../redux/action';
 const {width, height} = Dimensions.get('window');
 
 const MainScreen = (props) => {
-  var userState = {userId: '', userWalletAddress: '', userBalance: 'N/A'};
+  var userState = {userId: '', userWalletAddress: '', userWalletBalance: 'N/A'};
   const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -62,7 +62,7 @@ const MainScreen = (props) => {
               .then((res) => {
                 let balance = res.balance;
                 balance = balance.substr(0, balance.length - 18); // decimal 제거
-                userState.userBalance = balance;
+                userState.userWalletBalance = balance;
               })
               .then(() => {})
               .then(() => {
@@ -71,7 +71,7 @@ const MainScreen = (props) => {
                   handleUserInfo('UPDATE_address', userState.userWalletAddress),
                 );
                 dispatch(
-                  handleUserInfo('UPDATE_balacne', userState.userBalance),
+                  handleUserInfo('UPDATE_balacne', userState.userWalletBalance),
                 );
 
                 dispatch(handleLoadingState('로딩완료', true));

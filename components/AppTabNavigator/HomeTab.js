@@ -37,15 +37,14 @@ const HomeTab = (props) => {
   const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const dispatch = useDispatch();
   const loadState = reduxState.loadState;
-  console.log(loadState);
-  // 유저 정보
+
+  // 유저 정보 State
   const userInfoState = reduxState.userInfo;
 
-  // 건물 이벤트 상태
+  // 건물 이벤트 State
   const buildingState = reduxState.buildingEvent.events;
-  //console.log(JSON.stringify(buildingState));
 
-  // 위치 이벤트 상태
+  // 위치 이벤트 State
   const holdingState = reduxState.holdingEvent;
 
   const event_locationIn = () => {
@@ -155,29 +154,42 @@ const HomeTab = (props) => {
             }}>
             현재 잔액
           </Text>
-          <View style={{}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon name="server-outline" style={{color: 'white'}} />
+            <Text> </Text>
+            {loadState.loadState ? (
+              <Text
+                style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
+                {' ' + userInfoState.userBalance}
+              </Text>
+            ) : (
+              <Spinner color="white" style={{height: 20}}></Spinner>
+            )}
             <Text
               style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
-              <Icon name="server-outline" style={{color: 'white'}} />
-              {/* {loadState.loadState ? (
-                userInfoState.userBalance
-              ) : (
-                <Spinner color='white'></Spinner>
-              )} */}
-              <Spinner color="white" style={{}}></Spinner> 토큰
+              {' '}
+              토큰
             </Text>
           </View>
         </View>
 
         <Card style={styles.eventContainer}>
           <Text style={styles.eventText}>이벤트 현황</Text>
-          <ScrollView style={styles.eventScrollView}>
-            {loadState.loadState ? (
-              event_locationIn()
-            ) : (
-              <Spinner color="red"></Spinner>
-            )}
-          </ScrollView>
+          {loadState.loadState ? (
+            <ScrollView style={styles.eventScrollView}>
+              {(event_BuildingIn(), event_locationIn())}
+            </ScrollView>
+          ) : (
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+              }}>
+              <Spinner color="red" height='10'></Spinner>
+            </View>
+          )}
         </Card>
       </Container>
     </Container>
@@ -201,7 +213,7 @@ const styles = StyleSheet.create({
   currentBalanceContainer: {
     position: 'absolute',
     alignItems: 'center',
-    width:'100%',
+    width: '100%',
     height: '30%',
     marginTop: '10%',
   },

@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   StatusBar,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
+import {Card} from 'native-base';
+
 import Icon from 'react-native-vector-icons/Ionicons';
+const {width, height} = Dimensions.get('window');
 
 class RegisterScreen extends Component {
   static navigationOptions = {
@@ -29,7 +35,7 @@ class RegisterScreen extends Component {
     if (userPwd === userPwdCheck) {
       fetch('http://172.30.1.48:3000/routes/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(this.state),
       }).then((res) => {
         console.log(res);
@@ -46,124 +52,131 @@ class RegisterScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content"></StatusBar>
+      <Fragment>
+        <KeyboardAvoidingView style={{flex: 1}}>
+          <View style={styles.mainContainer}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+                height: height * 0.1,
+                width: width,
+                marginVertical: 25,
+              }}>
+              <TouchableOpacity
+                style={styles.back}
+                onPress={() => this.props.navigation.navigate('Login')}>
+                <Icon name="arrow-back" color="white" size={40}></Icon>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 35,
+                  fontFamily: 'BMDOHYEON',
+                  color: 'white',
+                }}>
+                Sign Up
+              </Text>
+              <View></View>
+            </View>
+            <Card style={styles.textInputContainer}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="ID"
+                autoCapitalize="none"
+                onChangeText={(id) => this.setState({id})}
+                value={this.state.id}></TextInput>
 
-        <TouchableOpacity
-          style={styles.back}
-          onPress={() => this.props.navigation.navigate('Login')}>
-          <Icon name="arrow-undo-outline" size={32}></Icon>
-        </TouchableOpacity>
+              <TextInput
+                secureTextEntry={true}
+                placeholder="PASSWORD"
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(password) => this.setState({password})}
+                value={this.state.password}></TextInput>
 
-        <View
+              <TextInput
+                secureTextEntry={true}
+                placeholder="PASSWORD CONFRIM"
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(passwordCheck) => this.setState({passwordCheck})}
+                value={this.state.passwordCheck}></TextInput>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this.handleSignUp}>
+                <Text
+                  style={{
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                  }}>
+                  Register
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Register')}>
+                <Text style={{fontSize: 15, justifyContent: 'flex-end'}}>
+                  회원이신가요? 로그인
+                </Text>
+              </TouchableOpacity>
+            </Card>
+          </View>
+        </KeyboardAvoidingView>
+        <Image
+          source={require('../src/login.png')}
           style={{
             position: 'absolute',
-            top: 60,
+            height: '100%',
             width: '100%',
-            alignItems: 'center',
-          }}>
-          <Text style={styles.greeting}>{`회원가입`}</Text>
-        </View>
-
-        <View style={styles.errorMessage}>
-          {this.state.errorMessage && (
-            <Text style={styles.error}>{this.state.errorMessage}</Text>
-          )}
-        </View>
-
-        <View style={styles.form}>
-          <View>
-            <Text style={styles.inputTitle}>학번</Text>
-            <TextInput
-              style={styles.input}
-              autoCapitalize="none"
-              onChangeText={(id) => this.setState({ id })}
-              value={this.state.id}></TextInput>
-          </View>
-
-          <View style={{ marginTop: 30 }}>
-            <Text style={styles.inputTitle}>비밀번호</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.input}
-              autoCapitalize="none"
-              onChangeText={(password) => this.setState({ password })}
-              value={this.state.password}></TextInput>
-          </View>
-
-          <View style={{ marginTop: 30 }}>
-            <Text style={styles.inputTitle}>비밀번호 확인</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.input}
-              autoCapitalize="none"
-              onChangeText={(passwordCheck) => this.setState({ passwordCheck })}
-              value={this.state.passwordCheck}></TextInput>
-          </View>
-
-          <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-            <Text style={{ color: '#ffffff', fontWeight: 'bold', fontSize: 18 }}>
-              회원가입
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+            zIndex: -1,
+          }}></Image>
+      </Fragment>
     );
   }
 }
 
+{
+}
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     flex: 1,
   },
-  greeting: {
-    marginTop: 32,
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  errorMessage: {
-    height: 72,
-    justifyContent: 'center',
+  textInputContainer: {
     alignItems: 'center',
-    marginHorizontal: 30,
+    width: width,
+    height: height * 0.8,
+    borderTopLeftRadius: 80,
+    backgroundColor: '#fff',
+    padding: 50,
   },
-  error: {
-    color: '#c0392b',
-    fontSize: 15,
-    textAlign: 'center',
-  },
-  form: {
-    marginTop: 200,
-    marginBottom: 40,
-    marginHorizontal: 30,
-  },
-  inputTitle: {
-    color: '#7f8c8d',
-    fontSize: 15,
-    textTransform: 'uppercase',
-  },
-  input: {
-    borderBottomColor: '#7f8c8d',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    fontSize: 15,
-    height: 40,
+  textInput: {
+    height: 50,
+    width: width * 0.8,
+    paddingLeft: 10,
+    marginVertical: 20,
+    borderRadius: 0.1,
+    shadowRadius: 5,
+    elevation: 0.1,
   },
   button: {
-    marginTop: 20,
-    justifyContent: 'center',
+    width: width * 0.8,
+    height: 50,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 40,
     backgroundColor: '#c0392b',
-    borderRadius: 35,
-    height: 70,
-    elevation: 10,
+    borderRadius: 10,
+    borderTopRightRadius: 0,
+    elevation: 3,
   },
   back: {
     position: 'absolute',
-    top: 30,
     left: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

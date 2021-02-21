@@ -42,8 +42,17 @@ const WalletTab = (props) => {
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontSize: 15, color: 'white',fontFamily:'BMDOHYEON'}}>현재 잔액</Text>
-            <Text style={{fontSize: 35, color: 'white',fontFamily:'BMDOHYEON'}}>
+            <Text
+              style={{
+                fontSize: 15,
+                color: 'white',
+                fontFamily: 'BMDOHYEON',
+                marginBottom: 5,
+              }}>
+              현재 잔액
+            </Text>
+            <Text
+              style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
               <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
               {userInfo.userBalance} 토큰
             </Text>
