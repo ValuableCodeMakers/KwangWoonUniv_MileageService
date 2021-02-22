@@ -33,7 +33,7 @@ class RegisterScreen extends Component {
     const userPwdCheck = this.state.passwordCheck;
 
     if (userPwd === userPwdCheck) {
-      fetch('http://172.30.1.48:3000/routes/register', {
+      fetch('http://192.168.0.5:3000/routes/register', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(this.state),
@@ -83,7 +83,7 @@ class RegisterScreen extends Component {
             <Card style={styles.textInputContainer}>
               <TextInput
                 style={styles.textInput}
-                placeholder="ID"
+                placeholder="Univ. ID"
                 autoCapitalize="none"
                 onChangeText={(id) => this.setState({id})}
                 value={this.state.id}></TextInput>
@@ -126,7 +126,7 @@ class RegisterScreen extends Component {
           </View>
         </KeyboardAvoidingView>
         <Image
-          source={require('../src/login.png')}
+          source={require('../../src/login.png')}
           style={{
             position: 'absolute',
             height: '100%',
@@ -158,17 +158,19 @@ const styles = StyleSheet.create({
     height: 50,
     width: width * 0.8,
     paddingLeft: 10,
-    marginVertical: 20,
+    marginVertical: 10,
     borderRadius: 0.1,
     shadowRadius: 5,
-    elevation: 0.1,
+    elevation: 1,
+    borderRadius:10,
+    backgroundColor:'#fff'
   },
   button: {
     width: width * 0.8,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 40,
+    marginVertical: 60,
     backgroundColor: '#c0392b',
     borderRadius: 10,
     borderTopRightRadius: 0,

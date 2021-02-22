@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Icon } from 'native-base';
+import React, {useState, useEffect} from 'react';
+import {Icon} from 'native-base';
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
@@ -8,7 +8,7 @@ import MapView, {
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   Text,
@@ -31,7 +31,8 @@ import {
   Anni80,
   IceLink,
 } from './Coordinates/Coordinate';
-import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
+import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
+import pinImage from '../../src/pin.png';
 
 async function requestPermission() {
   try {
@@ -80,7 +81,7 @@ const MapTab = (props) => {
   useEffect(() => {
     if (location) {
       const locationResult = geolib.isPointInPolygon(
-        { latitude: location.latitude, longitude: location.longitude },
+        {latitude: location.latitude, longitude: location.longitude},
         KW_Area[0],
       );
 
@@ -104,20 +105,21 @@ const MapTab = (props) => {
     var i;
     if (location) {
       for (i = 0; i < buildingList.length; i++) {
-        if (geolib.isPointInPolygon(
-          { latitude: location.latitude, longitude: location.longitude },
-          buildingList[i].coordinate,
-        )) {
+        if (
+          geolib.isPointInPolygon(
+            {latitude: location.latitude, longitude: location.longitude},
+            buildingList[i].coordinate,
+          )
+        ) {
           console.log(buildingList[i].title);
           locationBuilding = buildingList[i].title;
         }
       }
 
-
       if (locationBuilding != '') {
         console.log(locationBuilding + '도착! 시간 이벤트 실행');
-        setArriveLocation(true)
-        dispatch(handleBuildingEvent(locationBuilding)) // dispatch 에 true 전달
+        setArriveLocation(true);
+        dispatch(handleBuildingEvent(locationBuilding)); // dispatch 에 true 전달
       }
     }
   }, [location]);
@@ -126,7 +128,7 @@ const MapTab = (props) => {
   useEffect(() => {
     if (location) {
       const locationResult = geolib.isPointInPolygon(
-        { latitude: location.latitude, longitude: location.longitude },
+        {latitude: location.latitude, longitude: location.longitude},
         KW_Area[0],
       );
 
@@ -175,24 +177,25 @@ const MapTab = (props) => {
 
   if (!location) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );
   }
 
   return (
-    <View style={{ flex: 1, width: '100%' }}>
+    <View style={{flex: 1, width: '100%'}}>
       <MapView
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         provider={PROVIDER_GOOGLE}
         showsMyLocationButton={true}
         showsCompass={true}
         zoomControlEnabled={true}
-        minZoomLevel={17}
+        minZoomLevel={14}
         showsUserLocation={true}
-        followsUserLocation={true}
         loadingEnabled={true}
+        userLocationUpdateInterval={2000}
+        moveOnMarkerPress={true}
         initialRegion={{
           latitude: 37.619484994520285,
           longitude: 127.05897358201273,
@@ -207,22 +210,24 @@ const MapTab = (props) => {
         }}>
         {/* 광운대학교 영역 동쪽*/}
         <Polyline coordinates={KW_Area[0]} strokeColor="#000" strokeWidth={3} />
-        <Polygon coordinates={KW_Area[0]} fillColor="rgba(100,100,0,0.3)" />
+        <Polygon coordinates={KW_Area[0]} fillColor="rgba(100,100,100,0.3)" />
         {/* 광운대학교 영역 서쪽*/}
         <Polyline coordinates={KW_Area[1]} strokeColor="#000" strokeWidth={3} />
-        <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,0,0.3)" />
+        <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,100,0.3)" />
 
-        {buildingList.map((building,index) => (
+        {buildingList.map((building, index) => (
           <Marker
             coordinate={building.point}
             title={building.title}
-            description="1토큰"
+            description="100 토큰"
             key={index}
-
-          />
+            image={pinImage}
+            style={{width: 5, height: 5}}
+          >
+          </Marker>
         ))}
 
-        {buildingList.map((building,index) => (
+        {buildingList.map((building, index) => (
           <Polyline
             coordinates={building.coordinate}
             strokeColor="#000"
@@ -231,12 +236,11 @@ const MapTab = (props) => {
           />
         ))}
 
-        {buildingList.map((building,index) => (
+        {buildingList.map((building, index) => (
           <Polygon
             coordinates={building.coordinate}
-            fillColor="rgba(100,100,0,0.5)"
+            fillColor="rgba(100,70,0,0.5)"
             key={index}
-
           />
         ))}
       </MapView>
@@ -245,8 +249,8 @@ const MapTab = (props) => {
 };
 
 MapTab.navigationOptions = (screenProps) => ({
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="ios-map" style={{ color: tintColor }} />
+  tabBarIcon: ({tintColor}) => (
+    <Icon name="ios-map" style={{color: tintColor}} />
   ),
 });
 

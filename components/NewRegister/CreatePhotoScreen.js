@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Card, CardItem, Thumbnail} from 'native-base';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import basicImage from '../src/profile/profile2.png'; // 기본 이미지
+import basicImage from '../../src/profile/profile2.png'; // 기본 이미지
 
 const {width, height} = Dimensions.get('window');
 
@@ -25,7 +25,7 @@ export default class CreateProfileScreen extends Component {
   }
 
   componentDidMount() {
-    fetch('http://172.30.1.48:3000/routes/getUserId', {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     })
@@ -53,7 +53,7 @@ export default class CreateProfileScreen extends Component {
   handleSavePhoto = () => {
     const data = this.createFormData(this.state.image);
     console.log(data);
-    fetch('http://172.30.1.48:3000/routes/savePhoto', {
+    fetch('http://192.168.0.5:3000/routes/savePhoto', {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',

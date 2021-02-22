@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Card} from 'native-base';
-import {ScrollView} from 'react-native-gesture-handler';
 const {width, height} = Dimensions.get('window');
 
 class LoginScreen extends Component {
@@ -29,9 +28,7 @@ class LoginScreen extends Component {
   }
 
   handleLogin = () => {
-    const {id, password} = this.state;
-
-    fetch('http://172.30.1.48:3000/routes/login', {
+    fetch('http://192.168.0.5:3000/routes/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(this.state),
@@ -62,7 +59,6 @@ class LoginScreen extends Component {
 
           this.props.navigation.navigate('Main', {
             screen: 'HomeTab',
-            params: {userId: res.userId},
           });
         }
       });
@@ -72,55 +68,55 @@ class LoginScreen extends Component {
     return (
       <Fragment>
         <KeyboardAvoidingView style={{flex: 1}}>
-            <View style={styles.mainContainer}>
-              <View style={{height: height * 0.4}}></View>
-              <Card style={styles.textInputContainer}>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: 35,
-                    fontFamily: 'BMDOHYEON',
-                    marginBottom: 30,
-                    marginVertical: 25,
-                  }}>
-                  Login
-                </Text>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder="ID"
-                  autoCapitalize="none"
-                  onChangeText={(id) => this.setState({id})}
-                  value={this.state.id}></TextInput>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder="PASSWORD"
-                  secureTextEntry={true}
-                  onChangeText={(password) => this.setState({password})}
-                  value={this.state.password}></TextInput>
+          <View style={styles.mainContainer}>
+            <View style={{height: height * 0.4}}></View>
+            <Card style={styles.textInputContainer}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 35,
+                  fontFamily: 'BMDOHYEON',
+                  marginBottom: 30,
+                  marginVertical: 25,
+                }}>
+                Login
+              </Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Univ. ID"
+                autoCapitalize="none"
+                onChangeText={(id) => this.setState({id})}
+                value={this.state.id}></TextInput>
+              <TextInput
+                style={styles.textInput}
+                placeholder="PASSWORD"
+                secureTextEntry={true}
+                onChangeText={(password) => this.setState({password})}
+                value={this.state.password}></TextInput>
 
-                <TouchableOpacity opacity={0.1} onPress={this.handleLogin}>
-                  <View style={styles.button}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        fontWeight: 'bold',
-                        color: 'white',
-                      }}>
-                      Login
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Register')}>
-                  <Text style={{fontSize: 15, justifyContent: 'flex-end'}}>
-                    회원이 아니신가요? 회원가입
+              <TouchableOpacity opacity={0.1} onPress={this.handleLogin}>
+                <View style={styles.button}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      color: 'white',
+                    }}>
+                    Login
                   </Text>
-                </TouchableOpacity>
-              </Card>
-            </View>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Register')}>
+                <Text style={{fontSize: 15, justifyContent: 'flex-end'}}>
+                  회원이 아니신가요? 회원가입
+                </Text>
+              </TouchableOpacity>
+            </Card>
+          </View>
         </KeyboardAvoidingView>
         <Image
-          source={require('../src/login.png')}
+          source={require('../../src/login.png')}
           style={{
             position: 'absolute',
             height: '100%',
@@ -155,9 +151,11 @@ const styles = StyleSheet.create({
     width: width * 0.8,
     paddingLeft: 10,
     marginVertical: 5,
-    borderRadius:0.1,
-    shadowRadius:5,
-    elevation:0.1
+    borderRadius: 0.1,
+    shadowRadius: 5,
+    elevation: 1,
+    borderRadius: 10,
+    backgroundColor: '#fff',
   },
   button: {
     width: width * 0.8,

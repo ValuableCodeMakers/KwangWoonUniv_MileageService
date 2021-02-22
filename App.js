@@ -5,28 +5,18 @@ import {Root} from 'native-base';
 import {Provider} from 'react-redux';
 
 import MainScreen from './components/MainScreen';
-import LoginScreen from './components/LoginScreen';
-import RegisterScreen from './components/RegisterScreen';
+import LoginScreen from './components/Auth/LoginScreen';
+import RegisterScreen from './components/Auth/RegisterScreen';
 
-import CreateProfileScreen from './components/CreateProfileScreen';
-import CreatePhotoScreen from './components/CreatePhotoScreen';
-import CreateWalletScreen from './components/CreateWalletScreen';
+import CreateProfileScreen from './components/NewRegister/CreateProfileScreen';
+import CreatePhotoScreen from './components/NewRegister/CreatePhotoScreen';
+import CreateWalletScreen from './components/NewRegister/CreateWalletScreen';
 
-import store from './redux/store' // redux store
+import store from './redux/store'; // redux store
 
 const MainStack = createStackNavigator({
   Main: MainScreen, //MainScreen 등록
 });
-
-const AuthStack = createStackNavigator(
-  {
-    Login: LoginScreen,
-    Register: RegisterScreen,
-  },
-  {
-    initialRouteName: 'Login',
-  },
-);
 
 const NewRegisterStack = createStackNavigator(
   {
@@ -40,6 +30,16 @@ const NewRegisterStack = createStackNavigator(
   },
 );
 
+const AuthStack = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Register: RegisterScreen,
+  },
+  {
+    initialRouteName: 'Login',
+  },
+);
+
 const MainContainer = createAppContainer(
   createSwitchNavigator(
     {
@@ -49,6 +49,7 @@ const MainContainer = createAppContainer(
     },
     {
       initialRouteName: 'Auth',
+      backBehavior: 'Auth',
     },
   ),
 );

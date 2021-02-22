@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Platform, Dimensions} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -10,12 +10,14 @@ import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
 import WalletTab from './AppTabNavigator/WalletTab';
 import RankTab from './AppTabNavigator/RankTab';
-import ProfileScreen from './ProfileScreen';
-import SendScreen from './AppTabNavigator/Wallet/SendScreen';
-import SendConfirmScreen from './AppTabNavigator/Wallet/SendConfirmScreen';
-import SendResultScreen from './AppTabNavigator/Wallet/SendResultScreen';
-import ReceiveScreen from './AppTabNavigator/Wallet/ReceiveScreen';
+
+import SendScreen from './AppTabNavigator/WalletTabSub/SendScreen.js';
+import SendConfirmScreen from './AppTabNavigator/WalletTabSub/SendConfirmScreen.js';
+import SendResultScreen from './AppTabNavigator/WalletTabSub/SendResultScreen.js';
+import ReceiveScreen from './AppTabNavigator/WalletTabSub/ReceiveScreen.js';
+
 import CustomDrawerNavigator from './CustomDrawerNavigator';
+import ProfileScreen from './ProfileScreen';
 
 import {handleUserInfo, handleLoadingState} from '../redux/action';
 
@@ -27,7 +29,7 @@ const MainScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://172.30.1.48:3000/routes/getUserId', {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -37,7 +39,7 @@ const MainScreen = (props) => {
         userState.userId = res.userId;
       })
       .then(() => {
-        fetch('http://172.30.1.48:3000/routes/getWalletAddress', {
+        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({userId: userState.userId}),
@@ -49,7 +51,7 @@ const MainScreen = (props) => {
             userState.userWalletAddress = res.userWalletAddress;
           })
           .then(() => {
-            fetch('http://172.30.1.48:3000/routes/getTokenBalance', {
+            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
@@ -90,7 +92,7 @@ MainScreen.navigationOptions = () => ({
 export default MainScreen;
 
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
-const AppTabNavigator = createMaterialTopTabNavigator(
+const AppMainNavigator = createMaterialTopTabNavigator(
   {
     홈: {screen: HomeTab},
     지도: {screen: MapTab},
@@ -127,7 +129,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
 // Side Menu
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    AppTabNavigator, // 사이드 메뉴에 AppTabNavigator 담기
+    AppMainNavigator, // 사이드 메뉴에 AppTabNavigator 담기
   },
   {
     contentComponent: CustomDrawerNavigator,
