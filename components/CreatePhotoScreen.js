@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {Card, CardItem, Thumbnail} from 'native-base';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { Card, CardItem, Thumbnail } from 'native-base';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import basicImage from '../src/profile/profile2.png'; // 기본 이미지
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class CreateProfileScreen extends Component {
   constructor(props) {
@@ -25,15 +25,15 @@ export default class CreateProfileScreen extends Component {
   }
 
   componentDidMount() {
-    fetch('http://192.168.0.5:3000/routes/getUserId', {
+    fetch('http://192.168.0.4:3000/routes/getUserId', {
       method: 'GET',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        this.setState({userId: res.userId});
+        this.setState({ userId: res.userId });
       });
   }
 
@@ -53,7 +53,7 @@ export default class CreateProfileScreen extends Component {
   handleSavePhoto = () => {
     const data = this.createFormData(this.state.image);
     console.log(data);
-    fetch('http://192.168.0.5:3000/routes/savePhoto', {
+    fetch('http://192.168.0.4:3000/routes/savePhoto', {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -82,7 +82,7 @@ export default class CreateProfileScreen extends Component {
       if (res.error) {
         console.log('LaunchCamera Error: ', res.error);
       } else {
-        this.setState({image: res});
+        this.setState({ image: res });
       }
     });
 
@@ -113,39 +113,39 @@ export default class CreateProfileScreen extends Component {
                       uri: this.state.image.uri,
                     }}></Thumbnail>
                 ) : (
-                  <Thumbnail
-                    circular={true}
-                    large
-                    source={basicImage}></Thumbnail>
-                )}
+                    <Thumbnail
+                      circular={true}
+                      large
+                      source={basicImage}></Thumbnail>
+                  )}
               </TouchableOpacity>
-              <Text style={{fontSize: 18, marginTop: 10}}>프로필 사진</Text>
+              <Text style={{ fontSize: 18, marginTop: 10 }}>프로필 사진</Text>
             </View>
             <CardItem style={styles.textContainer}>
-              <View style={{width: '100%'}}>
+              <View style={{ width: '100%' }}>
                 <Text
-                  style={{fontSize: 25, fontWeight: 'bold', marginBottom: 10}}>
+                  style={{ fontSize: 25, fontWeight: 'bold', marginBottom: 10 }}>
                   유저 정보
                 </Text>
-                <Text style={{fontSize: 15}}>이름: {this.userInfo.name}</Text>
-                <Text style={{fontSize: 15}}>
+                <Text style={{ fontSize: 15 }}>이름: {this.userInfo.name}</Text>
+                <Text style={{ fontSize: 15 }}>
                   학과: {this.userInfo.department}
                 </Text>
-                <Text style={{fontSize: 15}}>
+                <Text style={{ fontSize: 15 }}>
                   닉네임: {this.userInfo.nickname}
                 </Text>
               </View>
 
-              <View style={{width: '100%', marginTop: 40}}>
+              <View style={{ width: '100%', marginTop: 40 }}>
                 <Text
-                  style={{fontSize: 25, fontWeight: 'bold', marginBottom: 10}}>
+                  style={{ fontSize: 25, fontWeight: 'bold', marginBottom: 10 }}>
                   지갑 정보
                 </Text>
 
-                <Text style={{fontSize: 15}}>
+                <Text style={{ fontSize: 15 }}>
                   주소: {this.userInfo.address.substr(0, 10)} ...
                 </Text>
-                <Text style={{fontSize: 15}}>
+                <Text style={{ fontSize: 15 }}>
                   니모닉: {this.userInfo.mnemonic.substr(0, 15)} ...
                 </Text>
               </View>
@@ -155,7 +155,7 @@ export default class CreateProfileScreen extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={this.handleSavePhoto}>
-            <Text style={{fontSize: 20}}>다음</Text>
+            <Text style={{ fontSize: 20 }}>다음</Text>
           </TouchableOpacity>
         </View>
       </View>
