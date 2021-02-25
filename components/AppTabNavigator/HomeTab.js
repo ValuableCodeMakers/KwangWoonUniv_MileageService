@@ -1,19 +1,10 @@
-import React, {Fragment, useState} from 'react';
-import {
-  Card,
-  CardItem,
-  Icon,
-  Right,
-  Header,
-  Left,
-  Container,
-  Button,
-  Spinner,
-} from 'native-base';
+import React, {Fragment} from 'react';
+import {Card, CardItem, Icon, Container, Button, Spinner} from 'native-base';
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import CountDown from 'react-native-countdown-component';
 
+import CustomHeader from './CustomHeader';
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 
 const {width, height} = Dimensions.get('window');
@@ -50,7 +41,6 @@ const HomeTab = (props) => {
   const event_locationIn = () => {
     if (holdingState.state) {
       //console.log('위치 이벤트 카드 불러오기');
-      //console.log(JSON.stringify(holdingState));
 
       return (
         <Card style={styles.currentEvent}>
@@ -70,6 +60,9 @@ const HomeTab = (props) => {
                 alignItems: 'center',
                 flexDirection: 'row',
                 marginTop: 15,
+              }}
+              onPress={() => {
+                alert('이벤트 설명');
               }}>
               <Text style={{fontSize: 18, fontWeight: 'bold'}}>남은 시간 </Text>
               <CountDown
@@ -86,9 +79,6 @@ const HomeTab = (props) => {
                   //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
 
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
-                }}
-                onPress={() => {
-                  alert('이벤트 설명');
                 }}></CountDown>
             </View>
           </CardItem>
@@ -124,24 +114,10 @@ const HomeTab = (props) => {
 
   return (
     <Container>
-      <Header style={{backgroundColor: '#c0392b', height: height * 0.1}}>
-        <Left>
-          <Icon
-            name="person"
-            style={{paddingLeft: 10, color: '#fff'}}
-            onPress={() => {
-              props.navigation.navigate('Profile');
-            }}
-          />
-        </Left>
-        <Right>
-          <Icon
-            name="menu"
-            onPress={() => props.navigation.toggleDrawer()}
-            style={{paddingRight: 10, color: '#fff'}}
-          />
-        </Right>
-      </Header>
+      <CustomHeader
+        props={props}
+        menuColor={'#c0392b'}
+        iconColor={'#fff'}></CustomHeader>
 
       <Container style={styles.mainContainer}>
         <View style={styles.currentBalanceContainer}>
@@ -177,7 +153,7 @@ const HomeTab = (props) => {
           <Text style={styles.eventText}>이벤트 현황</Text>
           {loadState.loadState ? (
             <ScrollView style={styles.eventScrollView}>
-              {(event_BuildingIn(), event_locationIn())}
+              <Fragment>{(event_BuildingIn(), event_locationIn())}</Fragment>
             </ScrollView>
           ) : (
             <View
@@ -187,7 +163,7 @@ const HomeTab = (props) => {
                 width: '100%',
                 height: '100%',
               }}>
-              <Spinner color="red" height='10'></Spinner>
+              <Spinner color="red" height="10"></Spinner>
             </View>
           )}
         </Card>
@@ -214,14 +190,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     width: '100%',
-    height: '30%',
+    height: height * 0.3,
     marginTop: '10%',
   },
   eventContainer: {
     position: 'absolute',
     alignItems: 'center',
     width: width * 0.98,
-    height: height * 0.65,
+    height: height * 0.56,
     marginTop: '35%',
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,

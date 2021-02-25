@@ -13,6 +13,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
 import {handleProfilePhoto} from '../../redux/action';
 
+import CustomHeader from './CustomHeader';
+
 var {width, height} = Dimensions.get('window');
 
 function getWeekend() {
@@ -82,24 +84,11 @@ const RankTab = (props) => {
 
   return (
     <Container>
-      <Header style={{backgroundColor: '#c0392b', height: height * 0.1}}>
-        <Left>
-          <Icon
-            name="person"
-            style={{paddingLeft: 10, color: '#fff'}}
-            onPress={() => {
-              props.navigation.navigate('Profile');
-            }}
-          />
-        </Left>
-        <Right>
-          <Icon
-            name="menu"
-            onPress={() => props.navigation.toggleDrawer()}
-            style={{paddingRight: 10, color: '#fff'}}
-          />
-        </Right>
-      </Header>
+      <CustomHeader
+        props={props}
+        menuColor={'#c0392b'}
+        iconColor={'#fff'}></CustomHeader>
+
       <Container style={styles.mainContainer}>
         <Card style={styles.textContainer}>
           <Text

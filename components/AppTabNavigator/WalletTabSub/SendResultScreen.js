@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Container, Card, Button, Content, Icon} from 'native-base';
+import {Container, Card, Button } from 'native-base';
 
 const {width, height} = Dimensions.get('window');
 

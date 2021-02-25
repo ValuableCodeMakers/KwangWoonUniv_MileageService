@@ -23,7 +23,7 @@ import {handleUserInfo, handleLoadingState} from '../redux/action';
 
 const {width, height} = Dimensions.get('window');
 
-const MainScreen = (props) => {
+const MainScreen = () => {
   var userState = {userId: '', userWalletAddress: '', userWalletBalance: 'N/A'};
   const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -66,7 +66,6 @@ const MainScreen = (props) => {
                 balance = balance.substr(0, balance.length - 18); // decimal 제거
                 userState.userWalletBalance = balance;
               })
-              .then(() => {})
               .then(() => {
                 dispatch(handleUserInfo('UPDATE_id', userState.userId));
                 dispatch(

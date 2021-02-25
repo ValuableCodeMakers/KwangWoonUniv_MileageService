@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {
   Icon,
-  Right,
-  Header,
-  Left,
   Container,
   Card,
   CardItem,
 } from 'native-base';
 import {useSelector} from 'react-redux';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+
+import CustomHeader from './CustomHeader';
 
 const {width, height} = Dimensions.get('window');
 
@@ -20,24 +19,10 @@ const WalletTab = (props) => {
 
   return (
     <Container>
-      <Header style={{backgroundColor: '#fff', height: height * 0.1}}>
-        <Left>
-          <Icon
-            name="person"
-            style={{paddingLeft: 10, color: 'black'}}
-            onPress={() => {
-              props.navigation.navigate('Profile');
-            }}
-          />
-        </Left>
-        <Right>
-          <Icon
-            name="menu"
-            onPress={() => props.navigation.toggleDrawer()}
-            style={{paddingRight: 10, color: 'black'}}
-          />
-        </Right>
-      </Header>
+      <CustomHeader
+        props={props}
+        menuColor={'#fff'}
+        iconColor={'black'}></CustomHeader>
 
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>

@@ -14,6 +14,7 @@ class ReceiveScreen extends Component {
 
   render() {
     const qrValue = this.props.navigation.state.params;
+
     return (
       <Container style={styles.container}>
         <Card style={styles.qrContainer}>
