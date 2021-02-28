@@ -13,7 +13,7 @@ import {useSelector} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 
 function logout(props) {
-  fetch('http://192.168.0.5:3000/routes/logout', {
+  fetch('http://172.30.1.30:3000/routes/logout', {
     method: 'GET',
   })
     .then((res) => {
@@ -38,7 +38,7 @@ const CustomDrawerNavigator = (props) => {
       <Card style={styles.infoContainer}>
         <Image
           source={{
-            uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+            uri: `http://172.30.1.30:3000/${userPhoto.filename}`,
           }}
           style={{
             width: 100,
