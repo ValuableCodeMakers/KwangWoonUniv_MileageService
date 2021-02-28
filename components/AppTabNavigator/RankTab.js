@@ -12,6 +12,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
 import { handleProfilePhoto, handleUserInfo } from '../../redux/action';
+import BackgroundTimer from 'react-native-background-timer';
 
 var { width, height } = Dimensions.get('window');
 var rankers = {
@@ -42,22 +43,56 @@ var rankers = {
   },
 }
 
-function setRanking(str) {
-  ranking = new Array();
+function setRankingId(str) {
+  let ranking = new Array();
   ranking = str.split(":[{")[1].split("}]}")[0].split("},{");
 
   for (var i = 0; i < ranking.length; i++) {
     ranking[i] = ranking[i].split(",")[0].split(":")[1];
   }
+
   rankers.rank1.id = ranking[0];
   rankers.rank2.id = ranking[1];
   rankers.rank3.id = ranking[2];
   rankers.rank4.id = ranking[3];
   rankers.rank5.id = ranking[4];
-  //test
-  alert("rank1: " + rankers.rank1.id + "\nrank2: " + rankers.rank2.id + "\nrank3: " + rankers.rank3.id + "\nrank4: " + rankers.rank4.id + "\nrank5: " + rankers.rank5.id
-  );
 };
+
+function setRankingPhoto(str) {
+  let ranking = new Array();
+  let rankingId = new Array();
+  let rankingPhoto = new Array();
+
+  str = str.split("[{")[1].split("}]")[0];
+  ranking = str.split("},{");
+  for (let i = 0; i < ranking.length; i++) {
+    rankingId.push(ranking[i].split(":")[1].split(",")[0]);
+    rankingPhoto.push(ranking[i].split(":")[2].split("\"")[1]);
+  }
+
+  for (let i = 0; i < ranking.length; i++) {
+    if (rankers.rank1.id == rankingId[i]) {
+      rankers.rank1.filename = rankingPhoto[i];
+      rankers.rank1.photoState = true;
+    }
+    else if (rankers.rank2.id == rankingId[i]) {
+      rankers.rank2.filename = rankingPhoto[i];
+      rankers.rank2.photoState = true;
+    }
+    else if (rankers.rank3.id == rankingId[i]) {
+      rankers.rank3.filename = rankingPhoto[i];
+      rankers.rank3.photoState = true;
+    }
+    else if (rankers.rank4.id == rankingId[i]) {
+      rankers.rank4.filename = rankingPhoto[i];
+      rankers.rank4.photoState = true;
+    }
+    else if (rankers.rank5.id == rankingId[i]) {
+      rankers.rank5.filename = rankingPhoto[i];
+      rankers.rank5.photoState = true;
+    }
+  }
+}
 
 function getWeekend() {
   let week = new Array(
@@ -78,23 +113,21 @@ function getWeekend() {
 
 //사람들 사진 개별로 가져오기
 function getPhotoFile() {
-  alert("test");  //test 이 부분은 경고가 뜸
-  fetch('http://192.168.0.4:3000/routes/getPhotos', {
+  fetch('http://172.30.1.7:3000/routes/getPhotos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      user1: rankingPhoto.rank1.id,
-      user2: rankingPhoto.rank2.id,
-      user3: rankingPhoto.rank3.id,
-      user4: rankingPhoto.rank4.id,
-      user5: rankingPhoto.rank5.id,
+      user1: rankers.rank1.id,
+      user2: rankers.rank2.id,
+      user3: rankers.rank3.id,
+      user4: rankers.rank4.id,
+      user5: rankers.rank5.id,
     }),
   }).then((res) => {
-    alert("test2");//test 이 부분은 안뜸
     return res.json();
   }).then((res) => {
-    if (res.photo) {
-      alert("test3");//test
+    if (res.photos) {
+      setRankingPhoto(JSON.stringify(res.photos));
     }
     else {
       return 'default';
@@ -102,17 +135,36 @@ function getPhotoFile() {
   })
 }
 
+const interValId = BackgroundTimer.setInterval(() => {
+
+  // 랭킹 갱신
+  fetch('http://172.30.1.7:3000/routes/getUsersRank', {
+    method: 'GET',
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      setRankingId(JSON.stringify(res));
+    });
+
+  // 탑5 랭커 사진 갱신
+  getPhotoFile();
+}, 10000);
+
 const RankTab = (props) => {
   const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
   const userInfo = reduxState.userInfo;
   const userPhoto = reduxState.userProfilePhoto;
 
+  // 10초마다 랭킹 갱신
+  interValId;
   // userInfo 가 들어오면 프로필 사진 가져오기
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
 
-    fetch('http://192.168.0.4:3000/routes/getPhoto', {
+    fetch('http://172.30.1.7:3000/routes/getPhoto', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userInfo.userId }),
@@ -141,19 +193,23 @@ const RankTab = (props) => {
 
   // 유저 랭크 가져오기
   useEffect(() => {
-    fetch('http://192.168.0.4:3000/routes/getUsersRank', {
+    fetch('http://172.30.1.7:3000/routes/getUsersRank', {
       method: 'GET',
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        setRanking(JSON.stringify(res));
-        getPhotoFile();
+        setRankingId(JSON.stringify(res));
       });
   }, [userInfo.userId]);
-  //test
-  //alert(userPhoto.filename);
+
+  // 탑5 랭커 사진파일 가져오기
+  useEffect(() => {
+    getPhotoFile();
+  }, [rankers.rank5.id]);
+
+
   return (
     <Container>
       <Header style={{ backgroundColor: '#c0392b', height: height * 0.1 }}>
@@ -187,7 +243,7 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://192.168.0.4:3000/${userPhoto.filename}`,
+                  uri: `http://172.30.1.7:3000/${userPhoto.filename}`,
                 }}></Thumbnail>
             ) : (
                 <Thumbnail circular={true} large source={basicImage}></Thumbnail>
@@ -204,7 +260,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.4:3000/${rankers.rank1.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank1.filename}`,
                     }}></Thumbnail>
                 ) : (
                     <Thumbnail circular={true} source={basicImage}></Thumbnail>
@@ -219,7 +275,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.4:3000/${rankers.rank2.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank2.filename}`,
                     }}></Thumbnail>
                 ) : (
                     <Thumbnail circular={true} source={basicImage}></Thumbnail>
@@ -233,7 +289,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.4:3000/${rankers.rank3.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank3.filename}`,
                     }}></Thumbnail>
                 ) : (
                     <Thumbnail circular={true} source={basicImage}></Thumbnail>
@@ -245,7 +301,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.4:3000/${rankers.rank4.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank4.filename}`,
                     }}></Thumbnail>
                 ) : (
                     <Thumbnail circular={true} source={basicImage}></Thumbnail>
@@ -257,7 +313,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.4:3000/${rankers.rank5.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank5.filename}`,
                     }}></Thumbnail>
                 ) : (
                     <Thumbnail circular={true} source={basicImage}></Thumbnail>
