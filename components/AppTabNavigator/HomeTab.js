@@ -11,7 +11,7 @@ const {width, height} = Dimensions.get('window');
 
 handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://172.30.1.30:3000/routes/getEventToken', {
+  fetch('http://192.168.0.5:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({to: address}),

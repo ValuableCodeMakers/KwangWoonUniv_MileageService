@@ -44,7 +44,7 @@ const RankTab = (props) => {
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
 
-    fetch('http://172.30.1.30:3000/routes/getPhoto', {
+    fetch('http://192.168.0.5:3000/routes/getPhoto', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({userId: userInfo.userId}),
@@ -73,7 +73,7 @@ const RankTab = (props) => {
 
   // 유저 랭크 가져오기
   // useEffect(() => {
-  //   fetch('http://172.30.1.30:3000/routes/getUsersRank', {
+  //   fetch('http://192.168.0.5:3000/routes/getUsersRank', {
   //     method: 'GET',
   //   })
   //     .then((res) => {
@@ -102,7 +102,7 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://172.30.1.30:3000/${userPhoto.filename}`,
+                  uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
                 }}></Thumbnail>
             ) : (
               <Thumbnail circular={true} large source={basicImage}></Thumbnail>
@@ -119,7 +119,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://172.30.1.30:3000/${userPhoto.filename}`, // 여기서 ? : 사용해서 있으면 서버에서 가져오고 없으면 기본 이미지 사용
+                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`, // 여기서 ? : 사용해서 있으면 서버에서 가져오고 없으면 기본 이미지 사용
                     }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
@@ -129,7 +129,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://172.30.1.30:3000/${userPhoto.filename}`,
+                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
                     }}></Thumbnail>
 
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
@@ -140,7 +140,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://172.30.1.30:3000/${userPhoto.filename}`,
+                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
                     }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
@@ -148,7 +148,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://172.30.1.30:3000/${userPhoto.filename}`,
+                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
                     }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>
@@ -156,7 +156,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://172.30.1.30:3000/${userPhoto.filename}`,
+                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
                     }}></Thumbnail>
                   <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
                 </View>

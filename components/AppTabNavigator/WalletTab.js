@@ -1,8 +1,9 @@
 import React, {Component, Fragment} from 'react';
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {Icon, Container, Card, CardItem, Row} from 'native-base';
+import {Icon, Container, Card, CardItem} from 'native-base';
 import {useSelector} from 'react-redux';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import QRCode from 'react-native-qrcode-svg';
 
 import CustomHeader from './CustomHeader';
 import {useState} from 'react';
@@ -10,23 +11,47 @@ import {useEffect} from 'react';
 
 const {width, height} = Dimensions.get('window');
 
-function bottomSection(activeBtn, historyState) {
+function bottomSection(activeBtn, address, historyState) {
   switch (activeBtn) {
     case 1: {
-      return <View></View>;
+      return (
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: '5%',
+          }}>
+          <QRCode value={address} size={200}></QRCode>
+        </View>
+      );
     }
     case 2: {
-      return historyState.map((data, index) => {
-        return (
-          <CardItem
-            key={index}
-            style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Text>{data[index].date}</Text>
-            <Text>{data[index].detail}</Text>
-            <Text>{data[index].amount} UMT</Text>
-          </CardItem>
-        );
-      });
+      // historyState.map((data, index) => {
+      //   console.log(data[1]);
+      // });
+
+      // return historyState.map((data, index) => {
+      //   return (
+      //     <CardItem key={index} style={{flexDirection: 'row'}}>
+      //       <View style={{width: '20%', marginLeft: 0}}>
+      //         <Text style={{fontSize: 16}}>{data[index].date}</Text>
+      //       </View>
+      //       <View style={{width: '50%'}}>
+      //         <Text>{data[index].detail}</Text>
+      //       </View>
+      //       <View style={{width: '30%'}}>
+      //         <Text
+      //           style={{
+      //             fontSize: 16,
+      //             fontWeight: 'bold',
+      //             textAlign: 'right',
+      //             fontFamily: 'BMDOHYEON',
+      //           }}>
+      //           {data[index].amount} UMT
+      //         </Text>
+      //       </View>
+      //     </CardItem>
+      //   );
+      // });
     }
   }
 }
@@ -35,20 +60,23 @@ const WalletTab = (props) => {
   const reduxState = useSelector((state) => state);
   let userInfo = reduxState.userInfo;
   const [activeBtn, setActiveBtn] = useState({active: 2});
-  const [historyState, setHistoryState] = useState([
-    {'0': {date: '01-01', amount: '100', detail: '전송 받음'}},
-    {'1': {date: '01-14', amount: '1000', detail: '도착 이벤트'}},
-    {'2': {date: '01-21', amount: '10', detail: '도착 이벤트'}},
-    {'3': {date: '01-28', amount: '100', detail: '학교 이벤트'}},
-    {'4': {date: '02-03', amount: '1000', detail: '학교 이벤트'}},
-    {'5': {date: '02-11', amount: '200', detail: '학교 이벤트'}},
-    {'6': {date: '02-15', amount: '300', detail: '학교 이벤트'}},
-    {'7': {date: '02-17', amount: '100', detail: '학교 이벤트'}},
-    {'8': {date: '02-28', amount: '400', detail: '학교 이벤트'}},
-  ]);
+  const [historyState, setHistoryState] = useState([]);
 
   useEffect(() => {
     console.log('지갑 총량 변화로 "내역" 업데이트');
+    fetch('http://192.168.0.5:3000/routes/getSpecification', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data[0]);
+        setHistoryState(JSON.parse(data[0]));
+      }).then(()=>{
+        console.log(historyState)
+      })
   }, [userInfo.userBalance]);
 
   return (
@@ -110,23 +138,25 @@ const WalletTab = (props) => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                setActiveBtn(1);
+                setActiveBtn({active: 1});
               }}>
               <Text style={{fontSize: 15}}>바코드</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                setActiveBtn(2);
+                setActiveBtn({active: 2});
               }}>
               <Text style={{fontSize: 15}}>내역</Text>
             </TouchableOpacity>
           </CardItem>
-          <CardItem style={styles.detailContainer}>
-            <ScrollView style={styles.detailScrollView}>
-              {bottomSection(activeBtn, historyState)}
-            </ScrollView>
-          </CardItem>
+          <ScrollView style={styles.detailScrollView}>
+            {bottomSection(
+              activeBtn.active,
+              userInfo.userWalletAddress,
+              historyState,
+            )}
+          </ScrollView>
         </Card>
       </Container>
     </Container>
@@ -188,13 +218,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderBottomWidth: 1,
-  },
-  detailContainer: {
-    width: '100%',
-    height: '85%',
   },
   detailScrollView: {
+    height: '100%',
     width: '100%',
   },
 });
