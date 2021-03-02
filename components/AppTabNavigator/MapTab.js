@@ -67,38 +67,17 @@ const MapTab = (props) => {
     Anni80,
     IceLink,
   ];
-  const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const dispatch = useDispatch();
 
   // 건물 이벤트 상태
-  const buildingState = reduxState.buildingEvent.events;
+  const buildingState = useSelector((state) => state.buildingEvent.events);
   //console.log(JSON.stringify(buildingState));
 
   // 위치 이벤트 상태
-  const holdingState = reduxState.holdingEvent;
+  const holdingState = useSelector((state) => state.holdingEvent);
 
-  // 현재 위치 변경시
-  useEffect(() => {
-    if (location) {
-      const locationResult = geolib.isPointInPolygon(
-        {latitude: location.latitude, longitude: location.longitude},
-        KW_Area[0],
-      );
 
-      if (locationResult && !holdingState.state) {
-        console.log('학교도착! 시간 이벤트 실행', locationResult);
-
-        setTimeout(() => {
-          dispatch(handleHoldingEvent('학교도착, 이벤트 실행')); // dispatch 에 true 전달
-        }, 1000);
-      } else if (!locationResult && holdingState.state) {
-        console.log('학교 이탈! 시간 이벤트 중단', locationResult);
-
-        dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
-      }
-    }
-  }, [location]);
-
+  // 이벤트 1
   // 건물 방문 이벤트
   useEffect(() => {
     var locationBuilding = '';
@@ -124,6 +103,7 @@ const MapTab = (props) => {
     }
   }, [location]);
 
+  // 이벤트 2
   // 학교 머물기 이벤트
   useEffect(() => {
     if (location) {
@@ -145,6 +125,28 @@ const MapTab = (props) => {
       }
     }
   }, [location]);
+
+  //  // 현재 위치 변경 추적
+  //  useEffect(() => {
+  //   if (location) {
+  //     const locationResult = geolib.isPointInPolygon(
+  //       {latitude: location.latitude, longitude: location.longitude},
+  //       KW_Area[0],
+  //     );
+
+  //     if (locationResult && !holdingState.state) {
+  //       console.log('학교도착! 시간 이벤트 실행', locationResult);
+
+  //       setTimeout(() => {
+  //         dispatch(handleHoldingEvent('학교도착, 이벤트 실행')); // dispatch 에 true 전달
+  //       }, 1000);
+  //     } else if (!locationResult && holdingState.state) {
+  //       console.log('학교 이탈! 시간 이벤트 중단', locationResult);
+
+  //       dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
+  //     }
+  //   }
+  // }, [location]);
 
   // componentdidmount
   useEffect(() => {
@@ -222,9 +224,7 @@ const MapTab = (props) => {
             description="100 토큰"
             key={index}
             image={pinImage}
-            style={{width: 5, height: 5}}
-          >
-          </Marker>
+            style={{width: 5, height: 5}}></Marker>
         ))}
 
         {buildingList.map((building, index) => (

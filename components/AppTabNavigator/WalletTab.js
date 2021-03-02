@@ -25,42 +25,42 @@ function bottomSection(activeBtn, address, historyState) {
       );
     }
     case 2: {
-      // historyState.map((data, index) => {
-      //   console.log(data[1]);
-      // });
-
-      // return historyState.map((data, index) => {
-      //   return (
-      //     <CardItem key={index} style={{flexDirection: 'row'}}>
-      //       <View style={{width: '20%', marginLeft: 0}}>
-      //         <Text style={{fontSize: 16}}>{data[index].date}</Text>
-      //       </View>
-      //       <View style={{width: '50%'}}>
-      //         <Text>{data[index].detail}</Text>
-      //       </View>
-      //       <View style={{width: '30%'}}>
-      //         <Text
-      //           style={{
-      //             fontSize: 16,
-      //             fontWeight: 'bold',
-      //             textAlign: 'right',
-      //             fontFamily: 'BMDOHYEON',
-      //           }}>
-      //           {data[index].amount} UMT
-      //         </Text>
-      //       </View>
-      //     </CardItem>
-      //   );
-      // });
+      if (historyState.length != 0) {
+        console.log('내역 출력');
+        return historyState.map((data, index) => {
+          return (
+            <CardItem key={index} style={{flexDirection: 'row'}}>
+              <View style={{width: '20%', marginLeft: 0}}>
+                <Text style={{fontSize: 16}}>{data[index].date}</Text>
+              </View>
+              <View style={{width: '50%'}}>
+                <Text>{data[index].detail}</Text>
+              </View>
+              <View style={{width: '30%'}}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    textAlign: 'right',
+                    fontFamily: 'BMDOHYEON',
+                  }}>
+                  {data[index].amount} UMT
+                </Text>
+              </View>
+            </CardItem>
+          );
+        });
+      }
     }
   }
 }
 
 const WalletTab = (props) => {
   const reduxState = useSelector((state) => state);
-  let userInfo = reduxState.userInfo;
   const [activeBtn, setActiveBtn] = useState({active: 2});
   const [historyState, setHistoryState] = useState([]);
+  const loadState = reduxState.loadState;
+  let userInfo = reduxState.userInfo;
 
   useEffect(() => {
     console.log('지갑 총량 변화로 "내역" 업데이트');
@@ -72,11 +72,8 @@ const WalletTab = (props) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data[0]);
-        setHistoryState(JSON.parse(data[0]));
-      }).then(()=>{
-        console.log(historyState)
-      })
+        setHistoryState(data);
+      });
   }, [userInfo.userBalance]);
 
   return (
@@ -151,10 +148,14 @@ const WalletTab = (props) => {
             </TouchableOpacity>
           </CardItem>
           <ScrollView style={styles.detailScrollView}>
-            {bottomSection(
-              activeBtn.active,
-              userInfo.userWalletAddress,
-              historyState,
+            {loadState ? (
+              bottomSection(
+                activeBtn.active,
+                userInfo.userWalletAddress,
+                historyState,
+              )
+            ) : (
+              <Fragment></Fragment>
             )}
           </ScrollView>
         </Card>

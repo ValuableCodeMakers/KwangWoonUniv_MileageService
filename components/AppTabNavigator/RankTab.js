@@ -35,10 +35,9 @@ function getWeekend() {
 }
 
 const RankTab = (props) => {
-  const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
-  const userInfo = reduxState.userInfo;
-  const userPhoto = reduxState.userProfilePhoto;
+  const userInfo = useSelector((state) => state.userInfo);
+  const userPhoto = useSelector((state) => state.userProfilePhoto);
 
   // userInfo 가 들어오면 프로필 사진 가져오기
   useEffect(() => {

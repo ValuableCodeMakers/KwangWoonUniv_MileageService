@@ -25,7 +25,6 @@ const {width, height} = Dimensions.get('window');
 
 const MainScreen = () => {
   var userState = {userId: '', userWalletAddress: '', userWalletBalance: 'N/A'};
-  const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,6 +36,7 @@ const MainScreen = () => {
       })
       .then((res) => {
         userState.userId = res.userId;
+        dispatch(handleUserInfo('UPDATE_id', userState.userId));
       })
       .then(() => {
         fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
@@ -49,6 +49,9 @@ const MainScreen = () => {
           })
           .then((res) => {
             userState.userWalletAddress = res.userWalletAddress;
+            dispatch(
+              handleUserInfo('UPDATE_address', userState.userWalletAddress),
+            );
           })
           .then(() => {
             fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
@@ -67,10 +70,6 @@ const MainScreen = () => {
                 userState.userWalletBalance = balance;
               })
               .then(() => {
-                dispatch(handleUserInfo('UPDATE_id', userState.userId));
-                dispatch(
-                  handleUserInfo('UPDATE_address', userState.userWalletAddress),
-                );
                 dispatch(
                   handleUserInfo('UPDATE_balacne', userState.userWalletBalance),
                 );

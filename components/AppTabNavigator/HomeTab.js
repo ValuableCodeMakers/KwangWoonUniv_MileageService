@@ -25,18 +25,17 @@ handleGetEventToken = (address) => {
 };
 
 const HomeTab = (props) => {
-  const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const dispatch = useDispatch();
-  const loadState = reduxState.loadState;
+  const loadState = useSelector((state) => state.loadState);
 
   // 유저 정보 State
-  const userInfoState = reduxState.userInfo;
+  const userInfoState = useSelector((state) => state.userInfo);
 
   // 건물 이벤트 State
-  const buildingState = reduxState.buildingEvent.events;
+  const buildingState = useSelector((state) => state.buildingEvent.events);
 
   // 위치 이벤트 State
-  const holdingState = reduxState.holdingEvent;
+  const holdingState = useSelector((state) => state.holdingEvent);
 
   const event_locationIn = () => {
     if (holdingState.state) {
