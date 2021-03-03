@@ -37,6 +37,7 @@ const MainScreen = () => {
       .then((res) => {
         userState.userId = res.userId;
         dispatch(handleUserInfo('UPDATE_id', userState.userId));
+        console.log('MainScreen: id 불러오기 성공');
       })
       .then(() => {
         fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
@@ -52,6 +53,7 @@ const MainScreen = () => {
             dispatch(
               handleUserInfo('UPDATE_address', userState.userWalletAddress),
             );
+            console.log('MainScreen: address 불러오기 성공');
           })
           .then(() => {
             fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
@@ -73,8 +75,10 @@ const MainScreen = () => {
                 dispatch(
                   handleUserInfo('UPDATE_balacne', userState.userWalletBalance),
                 );
+                console.log('MainScreen: 지갑 용량 불러오기 성공');
 
                 dispatch(handleLoadingState('로딩완료', true));
+                console.log('로딩 완료');
               });
           });
       });

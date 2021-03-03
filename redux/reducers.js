@@ -230,6 +230,7 @@ export const holdingEventReducer = (
 
 // 유저 정보 관련 reducer
 export const userInfoReducer = (state = userData_initialState, action) => {
+  console.log(action)
   switch (action.type) {
     case 'UPDATE_id':
       return {...state, userId: action.userId};
@@ -242,7 +243,6 @@ export const userInfoReducer = (state = userData_initialState, action) => {
         return {...state, userBalance: 0};
       }
     default:
-      console.log('기본');
       return state;
   }
 };

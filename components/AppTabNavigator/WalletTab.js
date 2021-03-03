@@ -56,11 +56,10 @@ function bottomSection(activeBtn, address, historyState) {
 }
 
 const WalletTab = (props) => {
-  const reduxState = useSelector((state) => state);
   const [activeBtn, setActiveBtn] = useState({active: 2});
   const [historyState, setHistoryState] = useState([]);
-  const loadState = reduxState.loadState;
-  let userInfo = reduxState.userInfo;
+  const loadState = useSelector((state) => state.loadState);
+  const userInfoState = useSelector((state) => state.userInfo);
 
   useEffect(() => {
     console.log('지갑 총량 변화로 "내역" 업데이트');
@@ -74,7 +73,7 @@ const WalletTab = (props) => {
       .then((data) => {
         setHistoryState(data);
       });
-  }, [userInfo.userBalance]);
+  }, [userInfoState.userBalance]);
 
   return (
     <Container>
@@ -98,7 +97,7 @@ const WalletTab = (props) => {
             <Text
               style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
               <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-              {userInfo.userBalance} 토큰
+              {userInfoState.userBalance} 토큰
             </Text>
           </View>
           <View style={styles.buttonContainer}>
@@ -106,7 +105,7 @@ const WalletTab = (props) => {
               style={styles.sendButton}
               activeOpacity={0.8}
               onPress={() => {
-                props.navigation.navigate('Send', userInfo.userWalletAddress);
+                props.navigation.navigate('Send', userInfoState.userWalletAddress);
               }}>
               <Icon
                 name="exit-outline"
@@ -119,7 +118,7 @@ const WalletTab = (props) => {
               onPress={() => {
                 props.navigation.navigate(
                   'Receive',
-                  userInfo.userWalletAddress,
+                  userInfoState.userWalletAddress,
                 );
               }}>
               <Icon
@@ -151,7 +150,7 @@ const WalletTab = (props) => {
             {loadState ? (
               bottomSection(
                 activeBtn.active,
-                userInfo.userWalletAddress,
+                userInfoState.userWalletAddress,
                 historyState,
               )
             ) : (

@@ -42,7 +42,6 @@ const RankTab = (props) => {
   // userInfo 가 들어오면 프로필 사진 가져오기
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
-
     fetch('http://192.168.0.5:3000/routes/getPhoto', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -52,6 +51,7 @@ const RankTab = (props) => {
         return res.json();
       })
       .then((res) => {
+        console.log("RankTab: 프로필 사진 불러오기 성공")
         if (!res.photo) {
           // 프로필 사진이 없을때
           dispatch(
