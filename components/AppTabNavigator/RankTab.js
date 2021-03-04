@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect} from 'react';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import React, { Fragment, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import {
   Icon,
   Container,
@@ -9,13 +9,90 @@ import {
   Thumbnail,
   Card,
 } from 'native-base';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
-import {handleProfilePhoto} from '../../redux/action';
+import { handleProfilePhoto, handleUserInfo } from '../../redux/action';
+import BackgroundTimer from 'react-native-background-timer';
 
-import CustomHeader from './CustomHeader';
+var { width, height } = Dimensions.get('window');
+var rankers = {
+  rank1: {
+    id: '',
+    filename: basicImage,
+    photoState: false,
+  },
+  rank2: {
+    id: '',
+    filename: basicImage,
+    photoState: false,
+  },
+  rank3: {
+    id: '',
+    filename: basicImage,
+    photoState: false,
+  },
+  rank4: {
+    id: '',
+    filename: basicImage,
+    photoState: false,
+  },
+  rank5: {
+    id: '',
+    filename: basicImage,
+    photoState: false,
+  },
+}
 
-var {width, height} = Dimensions.get('window');
+function setRankingId(str) {
+  let ranking = new Array();
+  ranking = str.split(":[{")[1].split("}]}")[0].split("},{");
+
+  for (var i = 0; i < ranking.length; i++) {
+    ranking[i] = ranking[i].split(",")[0].split(":")[1];
+  }
+
+  rankers.rank1.id = ranking[0];
+  rankers.rank2.id = ranking[1];
+  rankers.rank3.id = ranking[2];
+  rankers.rank4.id = ranking[3];
+  rankers.rank5.id = ranking[4];
+};
+
+function setRankingPhoto(str) {
+  let ranking = new Array();
+  let rankingId = new Array();
+  let rankingPhoto = new Array();
+
+  str = str.split("[{")[1].split("}]")[0];
+  ranking = str.split("},{");
+  for (let i = 0; i < ranking.length; i++) {
+    rankingId.push(ranking[i].split(":")[1].split(",")[0]);
+    rankingPhoto.push(ranking[i].split(":")[2].split("\"")[1]);
+  }
+
+  for (let i = 0; i < ranking.length; i++) {
+    if (rankers.rank1.id == rankingId[i]) {
+      rankers.rank1.filename = rankingPhoto[i];
+      rankers.rank1.photoState = true;
+    }
+    else if (rankers.rank2.id == rankingId[i]) {
+      rankers.rank2.filename = rankingPhoto[i];
+      rankers.rank2.photoState = true;
+    }
+    else if (rankers.rank3.id == rankingId[i]) {
+      rankers.rank3.filename = rankingPhoto[i];
+      rankers.rank3.photoState = true;
+    }
+    else if (rankers.rank4.id == rankingId[i]) {
+      rankers.rank4.filename = rankingPhoto[i];
+      rankers.rank4.photoState = true;
+    }
+    else if (rankers.rank5.id == rankingId[i]) {
+      rankers.rank5.filename = rankingPhoto[i];
+      rankers.rank5.photoState = true;
+    }
+  }
+}
 
 function getWeekend() {
   let week = new Array(
@@ -34,24 +111,68 @@ function getWeekend() {
   return weekend;
 }
 
-const RankTab = (props) => {
-  const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.userInfo);
-  const userPhoto = useSelector((state) => state.userProfilePhoto);
+//사람들 사진 개별로 가져오기
+function getPhotoFile() {
+  fetch('http://172.30.1.7:3000/routes/getPhotos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      user1: rankers.rank1.id,
+      user2: rankers.rank2.id,
+      user3: rankers.rank3.id,
+      user4: rankers.rank4.id,
+      user5: rankers.rank5.id,
+    }),
+  }).then((res) => {
+    return res.json();
+  }).then((res) => {
+    if (res.photos) {
+      setRankingPhoto(JSON.stringify(res.photos));
+    }
+    else {
+      return 'default';
+    }
+  })
+}
 
+const interValId = BackgroundTimer.setInterval(() => {
+
+  // 랭킹 갱신
+  fetch('http://172.30.1.7:3000/routes/getUsersRank', {
+    method: 'GET',
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      setRankingId(JSON.stringify(res));
+    });
+
+  // 탑5 랭커 사진 갱신
+  getPhotoFile();
+}, 10000);
+
+const RankTab = (props) => {
+  const reduxState = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const userInfo = reduxState.userInfo;
+  const userPhoto = reduxState.userProfilePhoto;
+
+  // 10초마다 랭킹 갱신
+  interValId;
   // userInfo 가 들어오면 프로필 사진 가져오기
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
-    fetch('http://192.168.0.5:3000/routes/getPhoto', {
+
+    fetch('http://172.30.1.7:3000/routes/getPhoto', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId: userInfo.userId}),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: userInfo.userId }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        console.log("RankTab: 프로필 사진 불러오기 성공")
         if (!res.photo) {
           // 프로필 사진이 없을때
           dispatch(
@@ -71,27 +192,48 @@ const RankTab = (props) => {
   }, [userInfo.userId]);
 
   // 유저 랭크 가져오기
-  // useEffect(() => {
-  //   fetch('http://192.168.0.5:3000/routes/getUsersRank', {
-  //     method: 'GET',
-  //   })
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((res) => console.log(res));
-  // }, []);
+  useEffect(() => {
+    fetch('http://172.30.1.7:3000/routes/getUsersRank', {
+      method: 'GET',
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        setRankingId(JSON.stringify(res));
+      });
+  }, [userInfo.userId]);
+
+  // 탑5 랭커 사진파일 가져오기
+  useEffect(() => {
+    getPhotoFile();
+  }, [rankers.rank5.id]);
+
 
   return (
     <Container>
-      <CustomHeader
-        props={props}
-        menuColor={'#c0392b'}
-        iconColor={'#fff'}></CustomHeader>
-
+      <Header style={{ backgroundColor: '#c0392b', height: height * 0.1 }}>
+        <Left>
+          <Icon
+            name="person"
+            style={{ paddingLeft: 10, color: '#fff' }}
+            onPress={() => {
+              props.navigation.navigate('Profile');
+            }}
+          />
+        </Left>
+        <Right>
+          <Icon
+            name="menu"
+            onPress={() => props.navigation.toggleDrawer()}
+            style={{ paddingRight: 10, color: '#fff' }}
+          />
+        </Right>
+      </Header>
       <Container style={styles.mainContainer}>
         <Card style={styles.textContainer}>
           <Text
-            style={{fontWeight: 'bold', fontSize: 25, fontFamily: 'BMDOHYEON'}}>
+            style={{ fontWeight: 'bold', fontSize: 25, fontFamily: 'BMDOHYEON' }}>
             오늘의 랭킹 🏆
           </Text>
           <Text>{getWeekend()}</Text>
@@ -101,78 +243,94 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                  uri: `http://172.30.1.7:3000/${userPhoto.filename}`,
                 }}></Thumbnail>
             ) : (
-              <Thumbnail circular={true} large source={basicImage}></Thumbnail>
-            )}
-            <Text style={{fontWeight: 'bold'}}>유저 ID: {userInfo.userId}</Text>
+                <Thumbnail circular={true} large source={basicImage}></Thumbnail>
+              )}
+            <Text style={{ fontWeight: 'bold' }}>유저 ID: {userInfo.userId}</Text>
           </View>
         </Card>
         <Card style={styles.rankContainer}>
-          <ScrollView style={{width: '100%'}}>
-            {userPhoto.filename == 'default' ? (
-              <Fragment>
-                <View style={styles.userRankContainer}>
-                  <Text style={{fontSize: 30}}>🥇</Text>
+          <ScrollView style={{ width: '100%' }}>
+            <Fragment>
+              <View style={styles.userRankContainer}>
+                <Text style={{ fontSize: 30 }}>🥇</Text>
+                {rankers.rank1.photoState ? (
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`, // 여기서 ? : 사용해서 있으면 서버에서 가져오고 없으면 기본 이미지 사용
+                      uri: `http://172.30.1.7:3000/${rankers.rank1.filename}`,
                     }}></Thumbnail>
-                  <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
-                </View>
-                <View style={styles.userRankContainer}>
-                  <Text style={{fontSize: 30}}>🥈</Text>
+                ) : (
+                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
+                  )}
+                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank1.id}</Text>
+              </View>
 
-                  <Thumbnail
-                    circular={true}
-                    source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
-                    }}></Thumbnail>
 
-                  <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
-                </View>
-                <View style={styles.userRankContainer}>
-                  <Text style={{fontSize: 30}}>🥉</Text>
+              <View style={styles.userRankContainer}>
+                <Text style={{ fontSize: 30 }}>🥈</Text>
+                {rankers.rank2.photoState ? (
+                  <Thumbnail
+                    circular={true}
+                    source={{
+                      uri: `http://172.30.1.7:3000/${rankers.rank2.filename}`,
+                    }}></Thumbnail>
+                ) : (
+                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
+                  )}
+                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank2.id}</Text>
 
+              </View>
+              <View style={styles.userRankContainer}>
+                <Text style={{ fontSize: 30 }}>🥉</Text>
+                {rankers.rank3.photoState ? (
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank3.filename}`,
                     }}></Thumbnail>
-                  <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
-                </View>
-                <View style={styles.userRankContainer}>
+                ) : (
+                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
+                  )}
+                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank3.id}</Text>
+              </View>
+              <View style={styles.userRankContainer}>
+                {rankers.rank4.photoState ? (
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank4.filename}`,
                     }}></Thumbnail>
-                  <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
-                </View>
-                <View style={styles.userRankContainer}>
+                ) : (
+                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
+                  )}
+                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank4.id}</Text>
+              </View>
+              <View style={styles.userRankContainer}>
+                {rankers.rank5.photoState ? (
                   <Thumbnail
                     circular={true}
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                      uri: `http://172.30.1.7:3000/${rankers.rank5.filename}`,
                     }}></Thumbnail>
-                  <Text style={{fontWeight: 'bold'}}>유저아이디 or 닉네임</Text>
-                </View>
-              </Fragment>
-            ) : (
-              <Fragment></Fragment>
-            )}
+                ) : (
+                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
+                  )}
+                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank5.id}</Text>
+              </View>
+            </Fragment>
           </ScrollView>
         </Card>
       </Container>
-    </Container>
+    </Container >
   );
 };
 
 RankTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-bar-chart" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-bar-chart" style={{ color: tintColor }} />
   ),
 });
 

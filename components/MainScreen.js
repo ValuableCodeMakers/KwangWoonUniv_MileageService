@@ -21,14 +21,14 @@ import ProfileScreen from './ProfileScreen';
 
 import {handleUserInfo, handleLoadingState} from '../redux/action';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const MainScreen = () => {
   var userState = {userId: '', userWalletAddress: '', userWalletBalance: 'N/A'};
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getUserId', {
+    fetch('http://172.30.1.7:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -40,10 +40,10 @@ const MainScreen = () => {
         console.log('MainScreen: id 불러오기 성공');
       })
       .then(() => {
-        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
+        fetch('http://172.30.1.7:3000/routes/getWalletAddress', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({userId: userState.userId}),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: userState.userId }),
         })
           .then((res) => {
             return res.json();
@@ -56,9 +56,9 @@ const MainScreen = () => {
             console.log('MainScreen: address 불러오기 성공');
           })
           .then(() => {
-            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
+            fetch('http://172.30.1.7:3000/routes/getTokenBalance', {
               method: 'POST',
-              headers: {'Content-Type': 'application/json'},
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 address: userState.userWalletAddress,
               }),
@@ -96,10 +96,10 @@ export default MainScreen;
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
 const AppMainNavigator = createMaterialTopTabNavigator(
   {
-    홈: {screen: HomeTab},
-    지도: {screen: MapTab},
-    결제: {screen: WalletTab},
-    랭킹: {screen: RankTab},
+    홈: { screen: HomeTab },
+    지도: { screen: MapTab },
+    결제: { screen: WalletTab },
+    랭킹: { screen: RankTab },
   },
   {
     bounces: true,
@@ -107,20 +107,20 @@ const AppMainNavigator = createMaterialTopTabNavigator(
     swipeEnabled: true,
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      labelStyle: {fontSize: 12},
+      labelStyle: { fontSize: 12 },
       style: {
         height: height * 0.1,
         ...Platform.select({
           ios: {
             backgroundColor: '#ffffff',
           },
-          android: {backgroundColor: '#ffffff'},
+          android: { backgroundColor: '#ffffff' },
         }),
       },
-      iconStyle: {height: 30, width: 30},
+      iconStyle: { height: 30, width: 30 },
       activeTintColor: '#b33939',
       inactiveTintColor: 'black',
-      indicatorStyle: {backgroundColor: '#fff'},
+      indicatorStyle: { backgroundColor: '#fff' },
       upperCaseLabel: false,
       showLabel: true,
       showIcon: true,
