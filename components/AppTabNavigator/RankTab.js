@@ -113,7 +113,7 @@ function getWeekend() {
 
 //사람들 사진 개별로 가져오기
 function getPhotoFile() {
-  fetch('http://172.30.1.7:3000/routes/getPhotos', {
+  fetch('http://192.168.0.4:3000/routes/getPhotos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -138,7 +138,7 @@ function getPhotoFile() {
 const interValId = BackgroundTimer.setInterval(() => {
 
   // 랭킹 갱신
-  fetch('http://172.30.1.7:3000/routes/getUsersRank', {
+  fetch('http://192.168.0.4:3000/routes/getUsersRank', {
     method: 'GET',
   })
     .then((res) => {
@@ -150,13 +150,20 @@ const interValId = BackgroundTimer.setInterval(() => {
 
   // 탑5 랭커 사진 갱신
   getPhotoFile();
-}, 10000);
+}, 300000);
 
 const RankTab = (props) => {
   const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
   const userInfo = reduxState.userInfo;
   const userPhoto = reduxState.userProfilePhoto;
+  const rankerList = [
+    rankers.rank1,
+    rankers.rank2,
+    rankers.rank3,
+    rankers.rank4,
+    rankers.rank5
+  ];
 
   // 10초마다 랭킹 갱신
   interValId;
@@ -164,7 +171,7 @@ const RankTab = (props) => {
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
 
-    fetch('http://172.30.1.7:3000/routes/getPhoto', {
+    fetch('http://192.168.0.4:3000/routes/getPhoto', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userInfo.userId }),
@@ -193,7 +200,7 @@ const RankTab = (props) => {
 
   // 유저 랭크 가져오기
   useEffect(() => {
-    fetch('http://172.30.1.7:3000/routes/getUsersRank', {
+    fetch('http://192.168.0.4:3000/routes/getUsersRank', {
       method: 'GET',
     })
       .then((res) => {
@@ -243,7 +250,7 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://172.30.1.7:3000/${userPhoto.filename}`,
+                  uri: `http://192.168.0.4:3000/${userPhoto.filename}`,
                 }}></Thumbnail>
             ) : (
                 <Thumbnail circular={true} large source={basicImage}></Thumbnail>
@@ -254,72 +261,41 @@ const RankTab = (props) => {
         <Card style={styles.rankContainer}>
           <ScrollView style={{ width: '100%' }}>
             <Fragment>
-              <View style={styles.userRankContainer}>
-                <Text style={{ fontSize: 30 }}>🥇</Text>
-                {rankers.rank1.photoState ? (
-                  <Thumbnail
-                    circular={true}
-                    source={{
-                      uri: `http://172.30.1.7:3000/${rankers.rank1.filename}`,
-                    }}></Thumbnail>
-                ) : (
-                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
-                  )}
-                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank1.id}</Text>
-              </View>
+              {rankerList.map((ranker, index) => (
+                <View style={styles.userRankContainer}>
+                  {index == 0 ? (
+                    <Text style={{ fontSize: 30 }}>🥇</Text>
+                  ) : (
+                      <Fragment></Fragment>
+                    )}
+                  {index == 1 ? (
+                    <Text style={{ fontSize: 30 }}>🥈</Text>
+                  ) : (
+                      <Fragment></Fragment>
+                    )}
+                  {index == 2 ? (
+                    <Text style={{ fontSize: 30 }}>🥉</Text>
+                  ) : (
+                      <Fragment></Fragment>
+                    )}
+                  {index > 2 ? (
+                    <Text style={{ fontSize: 30 }}>     </Text>
+                  ) : (
+                      <Fragment></Fragment>
+                    )}
 
-
-              <View style={styles.userRankContainer}>
-                <Text style={{ fontSize: 30 }}>🥈</Text>
-                {rankers.rank2.photoState ? (
-                  <Thumbnail
-                    circular={true}
-                    source={{
-                      uri: `http://172.30.1.7:3000/${rankers.rank2.filename}`,
-                    }}></Thumbnail>
-                ) : (
-                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
-                  )}
-                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank2.id}</Text>
-
-              </View>
-              <View style={styles.userRankContainer}>
-                <Text style={{ fontSize: 30 }}>🥉</Text>
-                {rankers.rank3.photoState ? (
-                  <Thumbnail
-                    circular={true}
-                    source={{
-                      uri: `http://172.30.1.7:3000/${rankers.rank3.filename}`,
-                    }}></Thumbnail>
-                ) : (
-                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
-                  )}
-                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank3.id}</Text>
-              </View>
-              <View style={styles.userRankContainer}>
-                {rankers.rank4.photoState ? (
-                  <Thumbnail
-                    circular={true}
-                    source={{
-                      uri: `http://172.30.1.7:3000/${rankers.rank4.filename}`,
-                    }}></Thumbnail>
-                ) : (
-                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
-                  )}
-                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank4.id}</Text>
-              </View>
-              <View style={styles.userRankContainer}>
-                {rankers.rank5.photoState ? (
-                  <Thumbnail
-                    circular={true}
-                    source={{
-                      uri: `http://172.30.1.7:3000/${rankers.rank5.filename}`,
-                    }}></Thumbnail>
-                ) : (
-                    <Thumbnail circular={true} source={basicImage}></Thumbnail>
-                  )}
-                <Text style={{ fontWeight: 'bold' }}>유저 ID: {rankers.rank5.id}</Text>
-              </View>
+                  {ranker.photoState ? (
+                    <Thumbnail
+                      circular={true}
+                      source={{
+                        uri: `http://192.168.0.4:3000/${ranker.filename}`,
+                      }}></Thumbnail>
+                  ) : (
+                      <Thumbnail circular={true} source={basicImage}></Thumbnail>
+                    )}
+                  <Text style={{ fontWeight: 'bold' }}>유저 ID: {ranker.id}</Text>
+                </View>
+              ))}
             </Fragment>
           </ScrollView>
         </Card>
