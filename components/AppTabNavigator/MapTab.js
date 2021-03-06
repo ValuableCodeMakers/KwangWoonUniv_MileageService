@@ -5,6 +5,7 @@ import MapView, {
   Marker,
   Polyline,
   Polygon,
+  Callout,
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
@@ -33,6 +34,7 @@ import {
 } from './Coordinates/Coordinate';
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 import pinImage from '../../src/pin.png';
+import Animated from 'react-native-reanimated';
 
 async function requestPermission() {
   try {
@@ -75,7 +77,6 @@ const MapTab = (props) => {
 
   // 위치 이벤트 상태
   const holdingState = useSelector((state) => state.holdingEvent);
-
 
   // 이벤트 1
   // 건물 방문 이벤트
@@ -183,69 +184,93 @@ const MapTab = (props) => {
         <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );
-  }
-
-  return (
-    <View style={{flex: 1, width: '100%'}}>
-      <MapView
-        style={{flex: 1}}
-        provider={PROVIDER_GOOGLE}
-        showsMyLocationButton={true}
-        showsCompass={true}
-        zoomControlEnabled={true}
-        minZoomLevel={14}
-        showsUserLocation={true}
-        loadingEnabled={true}
-        userLocationUpdateInterval={2000}
-        moveOnMarkerPress={true}
-        initialRegion={{
-          latitude: 37.619484994520285,
-          longitude: 127.05897358201273,
-          latitudeDelta: 0.004,
-          longitudeDelta: 0.002,
-        }}
-        region={{
-          latitude: location.latitude,
-          longitude: location.longitude,
-          latitudeDelta: 0.004,
-          longitudeDelta: 0.002,
-        }}>
-        {/* 광운대학교 영역 동쪽*/}
-        <Polyline coordinates={KW_Area[0]} strokeColor="#000" strokeWidth={3} />
-        <Polygon coordinates={KW_Area[0]} fillColor="rgba(100,100,100,0.3)" />
-        {/* 광운대학교 영역 서쪽*/}
-        <Polyline coordinates={KW_Area[1]} strokeColor="#000" strokeWidth={3} />
-        <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,100,0.3)" />
-
-        {buildingList.map((building, index) => (
-          <Marker
-            coordinate={building.point}
-            title={building.title}
-            description="100 토큰"
-            key={index}
-            image={pinImage}
-            style={{width: 5, height: 5}}></Marker>
-        ))}
-
-        {buildingList.map((building, index) => (
+  } else {
+    return (
+      <View style={{flex: 1, width: '100%'}}>
+        <MapView
+          style={{flex: 1}}
+          provider={PROVIDER_GOOGLE}
+          showsMyLocationButton={true}
+          showsCompass={true}
+          zoomControlEnabled={true}
+          minZoomLevel={14}
+          showsUserLocation={true}
+          loadingEnabled={true}
+          userLocationUpdateInterval={2000}
+          moveOnMarkerPress={true}
+          initialRegion={{
+            latitude: 37.619484994520285,
+            longitude: 127.05897358201273,
+            latitudeDelta: 0.004,
+            longitudeDelta: 0.002,
+          }}
+          region={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.004,
+            longitudeDelta: 0.002,
+          }}>
+          {/* 광운대학교 영역 동쪽*/}
           <Polyline
-            coordinates={building.coordinate}
+            coordinates={KW_Area[0]}
             strokeColor="#000"
-            strokeWidth={2}
-            key={index}
+            strokeWidth={3}
           />
-        ))}
+          <Polygon coordinates={KW_Area[0]} fillColor="rgba(100,100,100,0.3)" />
+          {/* 광운대학교 영역 서쪽*/}
+          <Polyline
+            coordinates={KW_Area[1]}
+            strokeColor="#000"
+            strokeWidth={3}
+          />
+          <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,100,0.3)" />
 
-        {buildingList.map((building, index) => (
-          <Polygon
-            coordinates={building.coordinate}
-            fillColor="rgba(100,70,0,0.5)"
-            key={index}
-          />
-        ))}
-      </MapView>
-    </View>
-  );
+          {buildingList.map((building, index) => (
+            <Marker
+              coordinate={building.point}
+              title={building.title}
+              description="500 토큰"
+              key={index}
+              image={pinImage}
+              style={{width: 5, height: 5}}>
+              <Callout>
+                <View style={{height: 150, width: 150}}>
+                  <Text>testing</Text>
+                </View>
+              </Callout>
+            </Marker>
+          ))}
+
+          {buildingList.map((building, index) => (
+            <Polyline
+              coordinates={building.coordinate}
+              strokeColor="#000"
+              strokeWidth={2}
+              key={index}
+            />
+          ))}
+
+          {buildingList.map((building, index) => (
+            <Polygon
+              coordinates={building.coordinate}
+              fillColor="rgba(100,70,0,0.5)"
+              key={index}
+            />
+          ))}
+        </MapView>
+        <Animated.ScrollView
+          horizontal
+          scrollEventThrottle={1}
+          >
+          {buildingList.map((building, index) => (
+            <View style={{width: 100, height: 100}}>
+              <Text>testing</Text>
+            </View>
+          ))}
+        </Animated.ScrollView>
+      </View>
+    );
+  }
 };
 
 MapTab.navigationOptions = (screenProps) => ({

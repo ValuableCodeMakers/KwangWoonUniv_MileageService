@@ -25,7 +25,7 @@ export default class CreateProfileScreen extends Component {
   }
 
   componentDidMount() {
-    fetch('http://192.168.0.4:3000/routes/getUserId', {
+    fetch('http://192.168.53.192:3000/routes/getUserId', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -53,7 +53,7 @@ export default class CreateProfileScreen extends Component {
   handleSavePhoto = () => {
     const data = this.createFormData(this.state.image);
     console.log(data);
-    fetch('http://192.168.0.4:3000/routes/savePhoto', {
+    fetch('http://192.168.53.192:3000/routes/savePhoto', {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',

@@ -1,6 +1,13 @@
 import React, {Fragment} from 'react';
-import {Card, CardItem, Icon, Container, Button, Spinner} from 'native-base';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {Card, CardItem, Icon, Container, Spinner} from 'native-base';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import CountDown from 'react-native-countdown-component';
 
@@ -9,9 +16,9 @@ import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 
 const {width, height} = Dimensions.get('window');
 
-handleGetEventToken = (address) => {
+const handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://192.168.0.5:3000/routes/getEventToken', {
+  fetch('http://192.168.53.192:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({to: address}),
@@ -21,6 +28,20 @@ handleGetEventToken = (address) => {
     })
     .then((data) => {
       console.log('이벤트 토큰 hash', data.txhash);
+    });
+};
+
+const handleSaveSpecification = (detail, amount) => {
+  fetch('http://192.168.53.192:3000/routes/saveSpecification', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
     });
 };
 
@@ -37,12 +58,12 @@ const HomeTab = (props) => {
   // 위치 이벤트 State
   const holdingState = useSelector((state) => state.holdingEvent);
 
-  const event_locationIn = () => {
+  const event_LocationIn = () => {
     if (holdingState.state) {
       //console.log('위치 이벤트 카드 불러오기');
 
       return (
-        <Card style={styles.currentEvent}>
+        <Card style={styles.currentEvent} key={'event_LocationIn'}>
           <CardItem
             style={{
               height: 120,
@@ -76,8 +97,10 @@ const HomeTab = (props) => {
                     `'학교에서 있기' 이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`,
                   );
                   //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
+                  handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
 
-                  dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
+                  // 이벤트 중단
+                  dispatch(handleHoldingEvent('학교도착, 이벤트 중단'));
                 }}></CountDown>
             </View>
           </CardItem>
@@ -92,17 +115,27 @@ const HomeTab = (props) => {
     return buildingState.map((data) =>
       data.state ? (
         <Card style={styles.currentEvent} key={data.id}>
-          <CardItem style={{height: 120}}>
-            <Text style={{fontSize: 18}}>{data.id} 이벤트 완료! 😊</Text>
-            <Button
+          <CardItem
+            style={{
+              height: 100,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            key={data.id}>
+            <Text style={{fontSize: 20}}>{data.id} 이벤트 완료! 😊</Text>
+            <TouchableOpacity
+              style={styles.completeButton}
               onPress={() => {
                 alert(data.id + ' 방문 이벤트 완료!');
                 //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
+                handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
 
-                dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단')); // dispatch 에 false 전달
+                // 이벤트 중단
+                dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
-              <Text>수령!</Text>
-            </Button>
+              <Text style={{fontSize:15,fontWeight:'bold'}}>수령</Text>
+            </TouchableOpacity>
           </CardItem>
         </Card>
       ) : (
@@ -152,7 +185,8 @@ const HomeTab = (props) => {
           <Text style={styles.eventText}>이벤트 현황</Text>
           {loadState.loadState ? (
             <ScrollView style={styles.eventScrollView}>
-              <Fragment>{(event_BuildingIn(), event_locationIn())}</Fragment>
+              <Fragment>{event_LocationIn()}</Fragment>
+              <Fragment>{event_BuildingIn()}</Fragment>
             </ScrollView>
           ) : (
             <View
@@ -214,6 +248,17 @@ const styles = StyleSheet.create({
   },
   currentEvent: {
     width: width * 0.95,
-    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  completeButton: {
+    justifyContent:'center',
+    alignItems:'center',
+    width: '15%',
+    height: '50%',
+    marginLeft: 20,
+    backgroundColor: '#ecf0f1',
+    elevation: 6,
   },
 });

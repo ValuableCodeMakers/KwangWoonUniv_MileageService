@@ -11,7 +11,7 @@ import {useEffect} from 'react';
 
 const {width, height} = Dimensions.get('window');
 
-function bottomSection(activeBtn, address, historyState) {
+const bottomSection = (activeBtn, address, historyState) => {
   switch (activeBtn) {
     case 1: {
       return (
@@ -26,12 +26,14 @@ function bottomSection(activeBtn, address, historyState) {
     }
     case 2: {
       if (historyState.length != 0) {
-        console.log('내역 출력');
         return historyState.map((data, index) => {
           return (
             <CardItem key={index} style={{flexDirection: 'row'}}>
               <View style={{width: '20%', marginLeft: 0}}>
-                <Text style={{fontSize: 16}}>{data[index].date}</Text>
+                <Text style={{fontSize: 16}}>
+                  {data[index].date.split('-')[1]}.
+                  {data[index].date.split('-')[2]}
+                </Text>
               </View>
               <View style={{width: '50%'}}>
                 <Text>{data[index].detail}</Text>
@@ -53,7 +55,7 @@ function bottomSection(activeBtn, address, historyState) {
       }
     }
   }
-}
+};
 
 const WalletTab = (props) => {
   const [activeBtn, setActiveBtn] = useState({active: 2});
@@ -63,7 +65,7 @@ const WalletTab = (props) => {
 
   useEffect(() => {
     console.log('지갑 총량 변화로 "내역" 업데이트');
-    fetch('http://192.168.0.5:3000/routes/getSpecification', {
+    fetch('http://192.168.53.192:3000/routes/getSpecification', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     })
@@ -105,7 +107,10 @@ const WalletTab = (props) => {
               style={styles.sendButton}
               activeOpacity={0.8}
               onPress={() => {
-                props.navigation.navigate('Send', userInfoState.userWalletAddress);
+                props.navigation.navigate(
+                  'Send',
+                  userInfoState.userWalletAddress,
+                );
               }}>
               <Icon
                 name="exit-outline"

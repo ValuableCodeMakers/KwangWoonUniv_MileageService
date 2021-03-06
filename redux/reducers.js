@@ -1,5 +1,5 @@
 // 이벤트 재발생 대기시간
-const TIME_LAPSE = 900000;
+const TIME_LAPSE = 1000; // 900000 
 const buildingEvent_Reducer_initialState = {
   events: [
     {id: '화도관', state: false, time: new Date(0)},
@@ -230,7 +230,6 @@ export const holdingEventReducer = (
 
 // 유저 정보 관련 reducer
 export const userInfoReducer = (state = userData_initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case 'UPDATE_id':
       return {...state, userId: action.userId};
