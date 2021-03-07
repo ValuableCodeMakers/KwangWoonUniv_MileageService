@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import {
   Icon,
   Container,
@@ -12,7 +12,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
 import { handleProfilePhoto, handleUserInfo } from '../../redux/action';
-import BackgroundTimer from 'react-native-background-timer';
 
 var { width, height } = Dimensions.get('window');
 var rankers = {
@@ -113,7 +112,7 @@ function getWeekend() {
 
 //사람들 사진 개별로 가져오기
 function getPhotoFile() {
-  fetch('http://172.30.1.28:3000/routes/getPhotos', {
+  fetch('http://192.168.0.4:3000/routes/getPhotos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -135,21 +134,22 @@ function getPhotoFile() {
   })
 }
 
-// const interValId = BackgroundTimer.setInterval(() => {
-//   // 랭킹 갱신
-//   fetch('http://172.30.1.28:3000/routes/getUsersRank', {
-//     method: 'GET',
-//   })
-//     .then((res) => {
-//       return res.json();
-//     })
-//     .then((res) => {
-//       setRankingId(JSON.stringify(res));
-//     });
 
-//   // 탑5 랭커 사진 갱신
-//   getPhotoFile();
-// }, 300000);
+function _onRefresh() {
+  // 랭킹 갱신
+  fetch('http://192.168.0.4:3000/routes/getUsersRank', {
+    method: 'GET',
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      setRankingId(JSON.stringify(res));
+    });
+
+  // 탑5 랭커 사진 갱신
+  getPhotoFile();;
+}
 
 const RankTab = (props) => {
   const reduxState = useSelector((state) => state);
@@ -168,7 +168,7 @@ const RankTab = (props) => {
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
 
-    fetch('http://172.30.1.28:3000/routes/getPhoto', {
+    fetch('http://192.168.0.4:3000/routes/getPhoto', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userInfo.userId }),
@@ -197,7 +197,7 @@ const RankTab = (props) => {
 
   // 유저 랭크 가져오기
   useEffect(() => {
-    fetch('http://172.30.1.28:3000/routes/getUsersRank', {
+    fetch('http://192.168.0.4:3000/routes/getUsersRank', {
       method: 'GET',
     })
       .then((res) => {
@@ -247,7 +247,7 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://172.30.1.28:3000/${userPhoto.filename}`,
+                  uri: `http://192.168.0.4:3000/${userPhoto.filename}`,
                 }}></Thumbnail>
             ) : (
                 <Thumbnail circular={true} large source={basicImage}></Thumbnail>
@@ -256,7 +256,13 @@ const RankTab = (props) => {
           </View>
         </Card>
         <Card style={styles.rankContainer}>
-          <ScrollView style={{ width: '100%' }}>
+          <ScrollView style={{ width: '100%' }}
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={_onRefresh}
+              />
+            }>
             <Fragment>
               {rankerList.map((ranker, index) => (
                 <View style={styles.userRankContainer}>
@@ -285,7 +291,7 @@ const RankTab = (props) => {
                     <Thumbnail
                       circular={true}
                       source={{
-                        uri: `http://172.30.1.28:3000/${ranker.filename}`,
+                        uri: `http://192.168.0.4:3000/${ranker.filename}`,
                       }}></Thumbnail>
                   ) : (
                       <Thumbnail circular={true} source={basicImage}></Thumbnail>
