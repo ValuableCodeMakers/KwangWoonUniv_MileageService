@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   View,
   Text,
@@ -10,10 +10,10 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import {Card} from 'native-base';
+import { Card } from 'native-base';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class RegisterScreen extends Component {
   static navigationOptions = {
@@ -33,9 +33,9 @@ class RegisterScreen extends Component {
     const userPwdCheck = this.state.passwordCheck;
 
     if (userPwd === userPwdCheck) {
-      fetch('http://192.168.0.5:3000/routes/register', {
+      fetch('http://192.168.0.4:3000/routes/register', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state),
       }).then((res) => {
         console.log(res);
@@ -53,7 +53,7 @@ class RegisterScreen extends Component {
   render() {
     return (
       <Fragment>
-        <KeyboardAvoidingView style={{flex: 1}}>
+        <KeyboardAvoidingView style={{ flex: 1 }}>
           <View style={styles.mainContainer}>
             <View
               style={{
@@ -85,7 +85,7 @@ class RegisterScreen extends Component {
                 style={styles.textInput}
                 placeholder="Univ. ID"
                 autoCapitalize="none"
-                onChangeText={(id) => this.setState({id})}
+                onChangeText={(id) => this.setState({ id })}
                 value={this.state.id}></TextInput>
 
               <TextInput
@@ -93,7 +93,7 @@ class RegisterScreen extends Component {
                 placeholder="PASSWORD"
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(password) => this.setState({password})}
+                onChangeText={(password) => this.setState({ password })}
                 value={this.state.password}></TextInput>
 
               <TextInput
@@ -101,7 +101,7 @@ class RegisterScreen extends Component {
                 placeholder="PASSWORD CONFRIM"
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(passwordCheck) => this.setState({passwordCheck})}
+                onChangeText={(passwordCheck) => this.setState({ passwordCheck })}
                 value={this.state.passwordCheck}></TextInput>
 
               <TouchableOpacity
@@ -118,7 +118,7 @@ class RegisterScreen extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Register')}>
-                <Text style={{fontSize: 15, justifyContent: 'flex-end'}}>
+                <Text style={{ fontSize: 15, justifyContent: 'flex-end' }}>
                   회원이신가요? 로그인
                 </Text>
               </TouchableOpacity>
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
     borderRadius: 0.1,
     shadowRadius: 5,
     elevation: 1,
-    borderRadius:10,
-    backgroundColor:'#fff'
+    borderRadius: 10,
+    backgroundColor: '#fff'
   },
   button: {
     width: width * 0.8,

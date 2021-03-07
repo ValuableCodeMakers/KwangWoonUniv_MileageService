@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useState, useEffect} from 'react';
+import React, { Component, Fragment, useState, useEffect } from 'react';
 import {
   Icon,
   Content,
@@ -17,11 +17,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {handleProfilePhoto} from '../redux/action';
+import { useSelector, useDispatch } from 'react-redux';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { handleProfilePhoto } from '../redux/action';
 
-var {width, height} = Dimensions.get('window');
+var { width, height } = Dimensions.get('window');
 
 function createFormData(id, photo) {
   const data = new FormData();
@@ -50,7 +50,7 @@ const handleChangePhoto = (id, dispatch) => {
       const data = createFormData(id, res);
       const photo = res;
 
-      fetch('http://192.168.0.5:3000/routes/changePhoto', {
+      fetch('http://192.168.0.4:3000/routes/changePhoto', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -102,10 +102,10 @@ const ProfileScreen = (props) => {
   });
 
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getProfileEtc', {
+    fetch('http://192.168.0.4:3000/routes/getProfileEtc', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId: userInfo.userId}),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: userInfo.userId }),
     })
       .then((res) => {
         return res.json();
@@ -120,13 +120,13 @@ const ProfileScreen = (props) => {
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#c0392b', height: height * 0.1}}>
-        <Left style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Header style={{ backgroundColor: '#c0392b', height: height * 0.1 }}>
+        <Left style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Icon
             name="chevron-back"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
             onPress={() => props.navigation.goBack()}
           />
           <Text
@@ -139,10 +139,10 @@ const ProfileScreen = (props) => {
             내 프로필
           </Text>
         </Left>
-        <Right style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Right style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Icon
             name="settings-outline"
-            style={{color: 'white'}}
+            style={{ color: 'white' }}
           />
         </Right>
       </Header>
@@ -151,15 +151,15 @@ const ProfileScreen = (props) => {
           paddingTop: 30,
           paddingBottom: 40,
         }}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1.2, alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex: 1.2, alignItems: 'center' }}>
             {userPhoto.fileName != '' ? (
               <View>
                 <TouchableOpacity
                   onPress={() => handleChangePhoto(userInfo.userId, dispatch)}>
                   <Image
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                      uri: `http://192.168.0.4:3000/${userPhoto.filename}`,
                     }}
                     style={{
                       width: 120,
@@ -181,43 +181,43 @@ const ProfileScreen = (props) => {
                 </TouchableOpacity>
               </View>
             ) : (
-              <View>
-                <Thumbnail
-                  circular={true}
-                  large
-                  style={{
-                    borderRadius: 70,
-                    borderWidth: 5,
-                    borderColor: 'pink',
-                    backgroundColor: 'snow',
-                  }}
-                />
-                <Icon
-                  name="camera"
-                  type="Ionicons"
-                  style={{
-                    position: 'absolute',
-                    paddingRight: 10,
-                    fontSize: 70,
-                    color: '#ff5050',
-                    left: 35,
-                    top: 30,
-                  }}
-                />
-                <Icon
-                  name="ios-add-circle"
-                  type="Ionicons"
-                  style={{
-                    position: 'absolute',
-                    paddingRight: 10,
-                    fontSize: 30,
-                    color: '#ff5050',
-                    left: 100,
-                    top: 100,
-                  }}
-                />
-              </View>
-            )}
+                <View>
+                  <Thumbnail
+                    circular={true}
+                    large
+                    style={{
+                      borderRadius: 70,
+                      borderWidth: 5,
+                      borderColor: 'pink',
+                      backgroundColor: 'snow',
+                    }}
+                  />
+                  <Icon
+                    name="camera"
+                    type="Ionicons"
+                    style={{
+                      position: 'absolute',
+                      paddingRight: 10,
+                      fontSize: 70,
+                      color: '#ff5050',
+                      left: 35,
+                      top: 30,
+                    }}
+                  />
+                  <Icon
+                    name="ios-add-circle"
+                    type="Ionicons"
+                    style={{
+                      position: 'absolute',
+                      paddingRight: 10,
+                      fontSize: 30,
+                      color: '#ff5050',
+                      left: 100,
+                      top: 100,
+                    }}
+                  />
+                </View>
+              )}
           </View>
         </View>
       </Container>
@@ -245,7 +245,7 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
           />
         </Right>
       </View>
@@ -259,7 +259,7 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
           />
         </Right>
       </View>
@@ -272,7 +272,7 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
           />
         </Right>
       </View>
@@ -286,7 +286,7 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
           />
         </Right>
       </View>
@@ -299,7 +299,7 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
           />
         </Right>
       </View>
@@ -309,8 +309,8 @@ const ProfileScreen = (props) => {
 
 ProfileScreen.navigationOptions = () => ({
   headerShown: false,
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="chevron-back" type="Ionicons" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="chevron-back" type="Ionicons" style={{ color: tintColor }} />
   ),
 });
 

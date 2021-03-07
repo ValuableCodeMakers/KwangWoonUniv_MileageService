@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import {Platform, Dimensions} from 'react-native';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-import {createAppContainer} from 'react-navigation';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import { Platform, Dimensions } from 'react-native';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createAppContainer } from 'react-navigation';
+import { useDispatch, useSelector } from 'react-redux';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
@@ -19,12 +19,12 @@ import ReceiveScreen from './AppTabNavigator/WalletTabSub/ReceiveScreen.js';
 import CustomDrawerNavigator from './CustomDrawerNavigator';
 import ProfileScreen from './ProfileScreen';
 
-import {handleUserInfo, handleLoadingState} from '../redux/action';
+import { handleUserInfo, handleLoadingState } from '../redux/action';
 
 const { width, height } = Dimensions.get('window');
 
 const MainScreen = () => {
-  var userState = {userId: '', userWalletAddress: '', userWalletBalance: 'N/A'};
+  var userState = { userId: '', userWalletAddress: '', userWalletBalance: 'N/A' };
   const dispatch = useDispatch();
 
   useEffect(() => {

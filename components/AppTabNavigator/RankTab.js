@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import {
   Icon,
   Container,
@@ -12,7 +12,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
 import { handleProfilePhoto, handleUserInfo } from '../../redux/action';
-import BackgroundTimer from 'react-native-background-timer';
 
 var { width, height } = Dimensions.get('window');
 var rankers = {
@@ -135,8 +134,8 @@ function getPhotoFile() {
   })
 }
 
-const interValId = BackgroundTimer.setInterval(() => {
 
+function _onRefresh() {
   // 랭킹 갱신
   fetch('http://192.168.0.4:3000/routes/getUsersRank', {
     method: 'GET',
@@ -149,8 +148,8 @@ const interValId = BackgroundTimer.setInterval(() => {
     });
 
   // 탑5 랭커 사진 갱신
-  getPhotoFile();
-}, 300000);
+  getPhotoFile();;
+}
 
 const RankTab = (props) => {
   const reduxState = useSelector((state) => state);
@@ -165,8 +164,6 @@ const RankTab = (props) => {
     rankers.rank5
   ];
 
-  // 10초마다 랭킹 갱신
-  interValId;
   // userInfo 가 들어오면 프로필 사진 가져오기
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
@@ -259,7 +256,13 @@ const RankTab = (props) => {
           </View>
         </Card>
         <Card style={styles.rankContainer}>
-          <ScrollView style={{ width: '100%' }}>
+          <ScrollView style={{ width: '100%' }}
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={_onRefresh}
+              />
+            }>
             <Fragment>
               {rankerList.map((ranker, index) => (
                 <View style={styles.userRankContainer}>

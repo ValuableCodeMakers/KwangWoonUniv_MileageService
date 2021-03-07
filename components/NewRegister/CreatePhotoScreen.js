@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {Card, CardItem, Thumbnail} from 'native-base';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { Card, CardItem, Thumbnail } from 'native-base';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import basicImage from '../../src/profile/profile2.png'; // 기본 이미지
 
 const { width, height } = Dimensions.get('window');

@@ -1,15 +1,15 @@
-import React, {Component, Fragment} from 'react';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {Icon, Container, Card, CardItem} from 'native-base';
-import {useSelector} from 'react-redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, { Component, Fragment } from 'react';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { Icon, Container, Card, CardItem } from 'native-base';
+import { useSelector } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import QRCode from 'react-native-qrcode-svg';
 
 import CustomHeader from './CustomHeader';
-import {useState} from 'react';
-import {useEffect} from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 function bottomSection(activeBtn, address, historyState) {
   switch (activeBtn) {
@@ -29,14 +29,14 @@ function bottomSection(activeBtn, address, historyState) {
         console.log('내역 출력');
         return historyState.map((data, index) => {
           return (
-            <CardItem key={index} style={{flexDirection: 'row'}}>
-              <View style={{width: '20%', marginLeft: 0}}>
-                <Text style={{fontSize: 16}}>{data[index].date}</Text>
+            <CardItem key={index} style={{ flexDirection: 'row' }}>
+              <View style={{ width: '20%', marginLeft: 0 }}>
+                <Text style={{ fontSize: 16 }}>{data[index].date}</Text>
               </View>
-              <View style={{width: '50%'}}>
+              <View style={{ width: '50%' }}>
                 <Text>{data[index].detail}</Text>
               </View>
-              <View style={{width: '30%'}}>
+              <View style={{ width: '30%' }}>
                 <Text
                   style={{
                     fontSize: 16,
@@ -56,16 +56,16 @@ function bottomSection(activeBtn, address, historyState) {
 }
 
 const WalletTab = (props) => {
-  const [activeBtn, setActiveBtn] = useState({active: 2});
+  const [activeBtn, setActiveBtn] = useState({ active: 2 });
   const [historyState, setHistoryState] = useState([]);
   const loadState = useSelector((state) => state.loadState);
   const userInfoState = useSelector((state) => state.userInfo);
 
   useEffect(() => {
     console.log('지갑 총량 변화로 "내역" 업데이트');
-    fetch('http://192.168.0.5:3000/routes/getSpecification', {
+    fetch('http://192.168.0.4:3000/routes/getSpecification', {
       method: 'GET',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => {
         return res.json();
@@ -84,7 +84,7 @@ const WalletTab = (props) => {
 
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: 'center' }}>
             <Text
               style={{
                 fontSize: 15,
@@ -95,8 +95,8 @@ const WalletTab = (props) => {
               현재 잔액
             </Text>
             <Text
-              style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
-              <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
+              style={{ fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON' }}>
+              <Icon name="server-outline" style={{ color: 'white' }}></Icon>{' '}
               {userInfoState.userBalance} 토큰
             </Text>
           </View>
@@ -109,8 +109,8 @@ const WalletTab = (props) => {
               }}>
               <Icon
                 name="exit-outline"
-                style={{fontSize: 20, color: 'white'}}></Icon>
-              <Text style={{fontSize: 15, color: 'white'}}>보내기</Text>
+                style={{ fontSize: 20, color: 'white' }}></Icon>
+              <Text style={{ fontSize: 15, color: 'white' }}>보내기</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.receiveButton}
@@ -123,8 +123,8 @@ const WalletTab = (props) => {
               }}>
               <Icon
                 name="enter-outline"
-                style={{fontSize: 20, color: 'white'}}></Icon>
-              <Text style={{fontSize: 15, color: 'white'}}> 받기</Text>
+                style={{ fontSize: 20, color: 'white' }}></Icon>
+              <Text style={{ fontSize: 15, color: 'white' }}> 받기</Text>
             </TouchableOpacity>
           </View>
         </Card>
@@ -134,16 +134,16 @@ const WalletTab = (props) => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                setActiveBtn({active: 1});
+                setActiveBtn({ active: 1 });
               }}>
-              <Text style={{fontSize: 15}}>바코드</Text>
+              <Text style={{ fontSize: 15 }}>바코드</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                setActiveBtn({active: 2});
+                setActiveBtn({ active: 2 });
               }}>
-              <Text style={{fontSize: 15}}>내역</Text>
+              <Text style={{ fontSize: 15 }}>내역</Text>
             </TouchableOpacity>
           </CardItem>
           <ScrollView style={styles.detailScrollView}>
@@ -154,8 +154,8 @@ const WalletTab = (props) => {
                 historyState,
               )
             ) : (
-              <Fragment></Fragment>
-            )}
+                <Fragment></Fragment>
+              )}
           </ScrollView>
         </Card>
       </Container>
@@ -164,8 +164,8 @@ const WalletTab = (props) => {
 };
 
 WalletTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-wallet-sharp" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-wallet-sharp" style={{ color: tintColor }} />
   ),
 });
 
