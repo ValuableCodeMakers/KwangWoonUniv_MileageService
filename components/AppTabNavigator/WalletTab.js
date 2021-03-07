@@ -84,87 +84,84 @@ const WalletTab = (props) => {
         menuColor={'#fff'}
         iconColor={'black'}></CustomHeader>
 
-      <Container style={styles.container}>
-        <View style={{borderWidth: 3}}>
-          <Card style={styles.mainContainer}>
-            <View style={{alignItems: 'center'}}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: 'white',
-                  fontFamily: 'BMDOHYEON',
-                  marginBottom: 5,
-                }}>
-                현재 잔액
-              </Text>
-              <Text
-                style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
-                <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
-                {userInfoState.userBalance} 토큰
-              </Text>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.sendButton}
-                activeOpacity={0.8}
-                onPress={() => {
-                  props.navigation.navigate(
-                    'Send',
-                    userInfoState.userWalletAddress,
-                  );
-                }}>
-                <Icon
-                  name="exit-outline"
-                  style={{fontSize: 20, color: 'white'}}></Icon>
-                <Text style={{fontSize: 15, color: 'white'}}>보내기</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.receiveButton}
-                activeOpacity={0.8}
-                onPress={() => {
-                  props.navigation.navigate(
-                    'Receive',
-                    userInfoState.userWalletAddress,
-                  );
-                }}>
-                <Icon
-                  name="enter-outline"
-                  style={{fontSize: 20, color: 'white'}}></Icon>
-                <Text style={{fontSize: 15, color: 'white'}}> 받기</Text>
-              </TouchableOpacity>
-            </View>
-          </Card>
-        </View>
-        <View style={{borderWidth: 3}}>
-          <Card style={styles.subContainer}>
-            <CardItem style={styles.detailButtonContainer}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => {
-                  setActiveBtn({active: 1});
-                }}>
-                <Text style={{fontSize: 15}}>바코드</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => {
-                  setActiveBtn({active: 2});
-                }}>
-                <Text style={{fontSize: 15}}>내역</Text>
-              </TouchableOpacity>
-            </CardItem>
-            <ScrollView style={styles.detailScrollView}>
-              {loadState ? (
-                bottomSection(
-                  activeBtn.active,
+      <Container style={styles.mainContainer}>
+        <Card style={styles.currentBalanceContainer}>
+          <View style={{alignItems: 'center'}}>
+            <Text
+              style={{
+                fontSize: 15,
+                color: 'white',
+                fontFamily: 'BMDOHYEON',
+                marginBottom: 5,
+              }}>
+              현재 잔액
+            </Text>
+            <Text
+              style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
+              <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
+              {userInfoState.userBalance} 토큰
+            </Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.sendButton}
+              activeOpacity={0.8}
+              onPress={() => {
+                props.navigation.navigate(
+                  'Send',
                   userInfoState.userWalletAddress,
-                  historyState,
-                )
-              ) : (
-                <Fragment></Fragment>
-              )}
-            </ScrollView>
-          </Card>
+                );
+              }}>
+              <Icon
+                name="exit-outline"
+                style={{fontSize: 20, color: 'white'}}></Icon>
+              <Text style={{fontSize: 15, color: 'white'}}>보내기</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.receiveButton}
+              activeOpacity={0.8}
+              onPress={() => {
+                props.navigation.navigate(
+                  'Receive',
+                  userInfoState.userWalletAddress,
+                );
+              }}>
+              <Icon
+                name="enter-outline"
+                style={{fontSize: 20, color: 'white'}}></Icon>
+              <Text style={{fontSize: 15, color: 'white'}}> 받기</Text>
+            </TouchableOpacity>
+          </View>
+        </Card>
+
+        <View style={styles.subContainer}>
+          <CardItem style={styles.detailButtonContainer}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                setActiveBtn({active: 1});
+              }}>
+              <Text style={{fontSize: 15}}>바코드</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                setActiveBtn({active: 2});
+              }}>
+              <Text style={{fontSize: 15}}>내역</Text>
+            </TouchableOpacity>
+          </CardItem>
+          <ScrollView style={styles.detailScrollView}>
+            {loadState ? (
+              bottomSection(
+                activeBtn.active,
+                userInfoState.userWalletAddress,
+                historyState,
+              )
+            ) : (
+              <Fragment></Fragment>
+            )}
+          </ScrollView>
         </View>
       </Container>
     </Container>
@@ -180,16 +177,16 @@ WalletTab.navigationOptions = () => ({
 export default WalletTab;
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     display: 'flex',
     alignItems: 'center',
   },
-  mainContainer: {
+  currentBalanceContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.85,
     height: height * 0.23,
-    marginTop: height * 0.2,
+    marginTop: height * 0.1,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     borderBottomLeftRadius: 20,
@@ -212,8 +209,10 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     alignItems: 'center',
-    width: width * 0.85,
-    height: height * 0.56,
+    width: width * 0.8,
+    height: height * 0.58,
+    marginTop: height * 0.02,
+
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     elevation: 10,

@@ -28,7 +28,7 @@ class LoginScreen extends Component {
   }
 
   handleLogin = () => {
-    fetch('http://172.30.1.28:3000/routes/login', {
+    fetch('http://192.168.0.5:3000/routes/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(this.state),
@@ -94,18 +94,19 @@ class LoginScreen extends Component {
                 onChangeText={(password) => this.setState({password})}
                 value={this.state.password}></TextInput>
 
-              <TouchableOpacity opacity={0.1} onPress={this.handleLogin}>
-                <View style={styles.button}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: 'white',
-                    }}>
-                    Login
-                  </Text>
-                </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this.handleLogin}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}>
+                  Login
+                </Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Register')}>
                 <Text style={{fontSize: 15, justifyContent: 'flex-end'}}>
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 40,
+    marginVertical: 30,
     backgroundColor: '#c0392b',
     borderRadius: 10,
     borderTopRightRadius: 0,
