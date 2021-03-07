@@ -18,7 +18,7 @@ const {width, height} = Dimensions.get('window');
 
 const handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://192.168.53.192:3000/routes/getEventToken', {
+  fetch('http://172.30.1.28:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({to: address}),
@@ -32,7 +32,7 @@ const handleGetEventToken = (address) => {
 };
 
 const handleSaveSpecification = (detail, amount) => {
-  fetch('http://192.168.53.192:3000/routes/saveSpecification', {
+  fetch('http://172.30.1.28:3000/routes/saveSpecification', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
@@ -181,7 +181,7 @@ const HomeTab = (props) => {
           </View>
         </View>
 
-        <Card style={styles.eventContainer}>
+        <View style={styles.eventContainer}>
           <Text style={styles.eventText}>이벤트 현황</Text>
           {loadState.loadState ? (
             <ScrollView style={styles.eventScrollView}>
@@ -199,7 +199,7 @@ const HomeTab = (props) => {
               <Spinner color="red" height="10"></Spinner>
             </View>
           )}
-        </Card>
+        </View>
       </Container>
     </Container>
   );
@@ -220,18 +220,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#c0392b',
   },
   currentBalanceContainer: {
-    position: 'absolute',
     alignItems: 'center',
+    justifyContent:'center',
     width: '100%',
-    height: height * 0.3,
-    marginTop: '10%',
+    height: height * 0.23,
   },
   eventContainer: {
-    position: 'absolute',
     alignItems: 'center',
     width: width * 0.98,
-    height: height * 0.56,
-    marginTop: '35%',
+    height: height * 0.6,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     backgroundColor: '#fff',

@@ -9,7 +9,7 @@ const {width, height} = Dimensions.get('window');
 
 function handleTransfer(sendState, dispatch, props) {
   console.log('토큰 전송 메소드');
-  fetch('http://192.168.53.192:3000/routes/transferToken', {
+  fetch('http://172.30.1.28:3000/routes/transferToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(sendState),
@@ -30,7 +30,7 @@ function handleTransfer(sendState, dispatch, props) {
     .then(() => {
       // 잔액 업데이트
       setTimeout(() => {
-        fetch('http://192.168.53.192:3000/routes/getTokenBalance', {
+        fetch('http://172.30.1.28:3000/routes/getTokenBalance', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({

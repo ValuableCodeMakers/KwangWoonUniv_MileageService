@@ -5,7 +5,6 @@ import MapView, {
   Marker,
   Polyline,
   Polygon,
-  Callout,
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
@@ -16,7 +15,11 @@ import {
   StyleSheet,
   Platform,
   PermissionsAndroid,
+  Dimensions,
+  Image,
 } from 'react-native';
+import Animated from 'react-native-reanimated';
+
 import {
   KW_Area,
   HwaDo,
@@ -33,8 +36,11 @@ import {
   IceLink,
 } from './Coordinates/Coordinate';
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
+
 import pinImage from '../../src/pin.png';
-import Animated from 'react-native-reanimated';
+import HwaDoImage from '../../src/building/HwaDo.jpg';
+
+const {width, height} = Dimensions.get('window');
 
 async function requestPermission() {
   try {
@@ -127,28 +133,6 @@ const MapTab = (props) => {
     }
   }, [location]);
 
-  //  // 현재 위치 변경 추적
-  //  useEffect(() => {
-  //   if (location) {
-  //     const locationResult = geolib.isPointInPolygon(
-  //       {latitude: location.latitude, longitude: location.longitude},
-  //       KW_Area[0],
-  //     );
-
-  //     if (locationResult && !holdingState.state) {
-  //       console.log('학교도착! 시간 이벤트 실행', locationResult);
-
-  //       setTimeout(() => {
-  //         dispatch(handleHoldingEvent('학교도착, 이벤트 실행')); // dispatch 에 true 전달
-  //       }, 1000);
-  //     } else if (!locationResult && holdingState.state) {
-  //       console.log('학교 이탈! 시간 이벤트 중단', locationResult);
-
-  //       dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
-  //     }
-  //   }
-  // }, [location]);
-
   // componentdidmount
   useEffect(() => {
     requestPermission().then((result) => {
@@ -164,7 +148,7 @@ const MapTab = (props) => {
           {
             enableHighAccuracy: true,
             distanceFilter: 0,
-            interval: 5000,
+            interval: 2000,
             fastestInterval: 2000,
           },
         );
@@ -177,6 +161,27 @@ const MapTab = (props) => {
       }
     });
   }, []);
+
+  let mapIndex = 0;
+  let mapAnimation = new Animated.Value(0);
+
+  // useEffect(()=>{
+  //   mapAnimation.addListener(({value})=>{
+  //     let index = Math.floor(value / 100);
+
+  //   })
+  // })
+
+  const onMarkerPress = (mapEventData) => {
+    const markerId = mapEventData._targetInst.return.key;
+
+    let x = markerId * width;
+    console.log(markerId);
+
+    _scrollView.current.getNode().scrollTo({x: x, y: 0, animated: true});
+  };
+
+  const _scrollView = React.useRef(null);
 
   if (!location) {
     return (
@@ -196,8 +201,8 @@ const MapTab = (props) => {
           minZoomLevel={14}
           showsUserLocation={true}
           loadingEnabled={true}
-          userLocationUpdateInterval={2000}
           moveOnMarkerPress={true}
+          userLocationUpdateInterval={1000}
           initialRegion={{
             latitude: 37.619484994520285,
             longitude: 127.05897358201273,
@@ -226,22 +231,6 @@ const MapTab = (props) => {
           <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,100,0.3)" />
 
           {buildingList.map((building, index) => (
-            <Marker
-              coordinate={building.point}
-              title={building.title}
-              description="500 토큰"
-              key={index}
-              image={pinImage}
-              style={{width: 5, height: 5}}>
-              <Callout>
-                <View style={{height: 150, width: 150}}>
-                  <Text>testing</Text>
-                </View>
-              </Callout>
-            </Marker>
-          ))}
-
-          {buildingList.map((building, index) => (
             <Polyline
               coordinates={building.coordinate}
               strokeColor="#000"
@@ -257,14 +246,77 @@ const MapTab = (props) => {
               key={index}
             />
           ))}
-        </MapView>
-        <Animated.ScrollView
-          horizontal
-          scrollEventThrottle={1}
-          >
+
+          {/* 마커 */}
           {buildingList.map((building, index) => (
-            <View style={{width: 100, height: 100}}>
-              <Text>testing</Text>
+            <Marker
+              coordinate={building.point}
+              title={building.title}
+              description="500 토큰"
+              key={index}
+              image={pinImage}
+              onPress={(e) => onMarkerPress(e)}
+              style={{width: 5, height: 5}}></Marker>
+          ))}
+        </MapView>
+
+        <Animated.ScrollView
+          ref={_scrollView}
+          horizontal
+          pagingEnabled
+          scrollEventThrottle={1}
+          showsHorizontalScrollIndicator={false}
+          style={styles.scrollView}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: mapAnimation,
+                },
+              },
+            },
+          ])}>
+          {buildingList.map((building, index) => (
+            <View style={styles.buildingCard} key={index}>
+              <View style={{width: '100%', height: '50%'}}>
+                <Image
+                  source={HwaDoImage}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                  }}
+                  resizeMode="cover"></Image>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'flex-start',
+                  width: '100%',
+                  height: '50%',
+                }}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    overflow: 'hidden',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 25,
+                      fontWeight: 'bold',
+                      fontFamily: 'BMDOHYEON',
+                    }}>
+                    {building.title}
+                  </Text>
+                  <Text style={{fontSize: 15, marginLeft: 10}}>500 토큰</Text>
+                </View>
+                <View>
+                  <Text style={{fontSize: 15}}>화도관 설명</Text>
+                </View>
+              </View>
             </View>
           ))}
         </Animated.ScrollView>
@@ -281,10 +333,28 @@ MapTab.navigationOptions = (screenProps) => ({
 
 export default MapTab;
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scrollView: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingVertical: 10,
+  },
+  buildingCard: {
+    display: 'flex',
+    width: width * 0.85,
+    height: height / 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: width * 0.075,
+    backgroundColor: '#fff',
+    borderBottomEndRadius: 35,
+    elevation: 6,
   },
 });

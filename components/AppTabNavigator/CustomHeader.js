@@ -6,7 +6,7 @@ const {height} = Dimensions.get('window');
 
 const CustomHeader = (props) => {
   return (
-    <Header style={{backgroundColor: props.menuColor, height: height * 0.1}}>
+    <Header style={{backgroundColor: props.menuColor, height: height * 0.07}}>
       <Left>
         <Icon
           name="person"
