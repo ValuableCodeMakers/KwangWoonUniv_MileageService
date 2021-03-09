@@ -95,7 +95,7 @@ class LoginScreen extends Component {
                 value={this.state.password}></TextInput>
 
               <TouchableOpacity
-                style={styles.button}
+                style={styles.loginButton}
                 onPress={this.handleLogin}>
                 <Text
                   style={{
@@ -116,14 +116,6 @@ class LoginScreen extends Component {
             </Card>
           </View>
         </KeyboardAvoidingView>
-        <Image
-          source={require('../../src/login.png')}
-          style={{
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            zIndex: -1,
-          }}></Image>
       </Fragment>
     );
   }
@@ -134,6 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    backgroundColor:'#c0392b'
   },
   textInputContainer: {
     alignItems: 'center',
@@ -158,7 +151,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#fff',
   },
-  button: {
+  loginButton: {
     width: width * 0.8,
     height: 50,
     alignItems: 'center',
@@ -167,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#c0392b',
     borderRadius: 10,
     borderTopRightRadius: 0,
-    elevation: 3,
+    elevation: 5,
   },
 });
 

@@ -3,6 +3,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {Root} from 'native-base';
 import {Provider} from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 
 import MainScreen from './components/MainScreen';
 import LoginScreen from './components/Auth/LoginScreen';
@@ -55,6 +56,10 @@ const MainContainer = createAppContainer(
 );
 
 export default class App extends Component {
+  componentDidMount() {
+    SplashScreen.hide();
+  }
+
   render() {
     return (
       <Provider store={store}>

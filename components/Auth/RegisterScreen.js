@@ -125,14 +125,6 @@ class RegisterScreen extends Component {
             </Card>
           </View>
         </KeyboardAvoidingView>
-        <Image
-          source={require('../../src/login.png')}
-          style={{
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            zIndex: -1,
-          }}></Image>
       </Fragment>
     );
   }
@@ -145,6 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    backgroundColor: '#c0392b',
   },
   textInputContainer: {
     alignItems: 'center',
@@ -162,8 +155,8 @@ const styles = StyleSheet.create({
     borderRadius: 0.1,
     shadowRadius: 5,
     elevation: 1,
-    borderRadius:10,
-    backgroundColor:'#fff'
+    borderRadius: 10,
+    backgroundColor: '#fff',
   },
   button: {
     width: width * 0.8,

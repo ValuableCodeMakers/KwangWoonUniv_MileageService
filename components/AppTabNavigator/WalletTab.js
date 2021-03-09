@@ -65,7 +65,7 @@ const WalletTab = (props) => {
 
   useEffect(() => {
     console.log('지갑 총량 변화로 "내역" 업데이트');
-    fetch('http://172.30.1.28:3000/routes/getSpecification', {
+    fetch('http://192.168.0.5:3000/routes/getSpecification', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     })
@@ -109,7 +109,7 @@ const WalletTab = (props) => {
               onPress={() => {
                 props.navigation.navigate(
                   'Send',
-                  userInfoState.userWalletAddress,
+                  userInfoStateuserWalletAddress,
                 );
               }}>
               <Icon
