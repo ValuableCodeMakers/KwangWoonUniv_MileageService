@@ -63,7 +63,7 @@ const WalletTab = (props) => {
 
   useEffect(() => {
     console.log('지갑 총량 변화로 "내역" 업데이트');
-    fetch('http://192.168.0.4:3000/routes/getSpecification', {
+    fetch('http://192.168.0.3:3000/routes/getSpecification', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })

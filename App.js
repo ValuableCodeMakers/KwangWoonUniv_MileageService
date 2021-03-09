@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {Root} from 'native-base';
-import {Provider} from 'react-redux';
+import React, { Component } from 'react';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { Root } from 'native-base';
+import { Provider } from 'react-redux';
 
 import MainScreen from './components/MainScreen';
 import LoginScreen from './components/Auth/LoginScreen';

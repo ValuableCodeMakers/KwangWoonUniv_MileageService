@@ -33,7 +33,7 @@ class RegisterScreen extends Component {
     const userPwdCheck = this.state.passwordCheck;
 
     if (userPwd === userPwdCheck) {
-      fetch('http://192.168.0.4:3000/routes/register', {
+      fetch('http://192.168.0.3:3000/routes/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state),
@@ -117,7 +117,7 @@ class RegisterScreen extends Component {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Register')}>
+                onPress={() => this.props.navigation.goBack()}>
                 <Text style={{ fontSize: 15, justifyContent: 'flex-end' }}>
                   회원이신가요? 로그인
                 </Text>

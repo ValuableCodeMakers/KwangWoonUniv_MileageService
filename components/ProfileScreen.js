@@ -50,7 +50,7 @@ const handleChangePhoto = (id, dispatch) => {
       const data = createFormData(id, res);
       const photo = res;
 
-      fetch('http://192.168.0.4:3000/routes/changePhoto', {
+      fetch('http://192.168.0.3:3000/routes/changePhoto', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -102,7 +102,7 @@ const ProfileScreen = (props) => {
   });
 
   useEffect(() => {
-    fetch('http://192.168.0.4:3000/routes/getProfileEtc', {
+    fetch('http://192.168.0.3:3000/routes/getProfileEtc', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userInfo.userId }),
@@ -143,6 +143,12 @@ const ProfileScreen = (props) => {
           <Icon
             name="settings-outline"
             style={{ color: 'white' }}
+            onPress={() => props.navigation.navigate('ChangeProfile', {
+              Id: userInfo.userId,
+              Name: userEtc.userName,
+              Nickname: userEtc.userNickname,
+              Department: userEtc.userDepartment,
+            })}
           />
         </Right>
       </Header>
@@ -159,7 +165,7 @@ const ProfileScreen = (props) => {
                   onPress={() => handleChangePhoto(userInfo.userId, dispatch)}>
                   <Image
                     source={{
-                      uri: `http://192.168.0.4:3000/${userPhoto.filename}`,
+                      uri: `http://192.168.0.3:3000/${userPhoto.filename}`,
                     }}
                     style={{
                       width: 120,
@@ -246,13 +252,14 @@ const ProfileScreen = (props) => {
             name="chevron-forward"
             type="Ionicons"
             style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+
           />
         </Right>
       </View>
 
       <View style={styles.bottomTab}>
         <View>
-          <Text style={styles.bottomText1}>성명</Text>
+          <Text style={styles.bottomText1}>이름</Text>
           <Text style={styles.bottomText2}>{userEtc.userName}</Text>
         </View>
         <Right>
@@ -260,12 +267,13 @@ const ProfileScreen = (props) => {
             name="chevron-forward"
             type="Ionicons"
             style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            onPress={() => { alert(2) }}
           />
         </Right>
       </View>
       <View style={styles.bottomTab}>
         <View>
-          <Text style={styles.bottomText1}>닉네임</Text>
+          <Text style={styles.bottomText1}>별명</Text>
           <Text style={styles.bottomText2}>{userEtc.userNickname}</Text>
         </View>
         <Right>
@@ -273,6 +281,7 @@ const ProfileScreen = (props) => {
             name="chevron-forward"
             type="Ionicons"
             style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            onPress={() => { alert(3) }}
           />
         </Right>
       </View>
@@ -287,6 +296,7 @@ const ProfileScreen = (props) => {
             name="chevron-forward"
             type="Ionicons"
             style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            onPress={() => { alert(4) }}
           />
         </Right>
       </View>

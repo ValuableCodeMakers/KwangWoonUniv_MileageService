@@ -18,6 +18,7 @@ import ReceiveScreen from './AppTabNavigator/WalletTabSub/ReceiveScreen.js';
 
 import CustomDrawerNavigator from './CustomDrawerNavigator';
 import ProfileScreen from './ProfileScreen';
+import ChangeProfileScreen from './Changing/ChangeProfileScreen';
 
 import { handleUserInfo, handleLoadingState } from '../redux/action';
 
@@ -28,7 +29,7 @@ const MainScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://192.168.0.4:3000/routes/getUserId', {
+    fetch('http://192.168.0.3:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -40,7 +41,7 @@ const MainScreen = () => {
         console.log('MainScreen: id 불러오기 성공');
       })
       .then(() => {
-        fetch('http://192.168.0.4:3000/routes/getWalletAddress', {
+        fetch('http://192.168.0.3:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId: userState.userId }),
@@ -56,7 +57,7 @@ const MainScreen = () => {
             console.log('MainScreen: address 불러오기 성공');
           })
           .then(() => {
-            fetch('http://192.168.0.4:3000/routes/getTokenBalance', {
+            fetch('http://192.168.0.3:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -154,6 +155,7 @@ const AppTabContainer = createAppContainer(
       SendConfirm: SendConfirmScreen,
       SendResult: SendResultScreen,
       Receive: ReceiveScreen,
+      ChangeProfile: ChangeProfileScreen,
     },
     {
       initialRouteName: 'AppTabNavigator',
