@@ -142,7 +142,13 @@ const ProfileScreen = (props) => {
         <Right style={{flexDirection: 'row', alignItems: 'center'}}>
           <Icon
             name="settings-outline"
-            style={{color: 'white'}}
+            style={{ color: 'white' }}
+            onPress={() => props.navigation.navigate('ChangeProfile', {
+              Id: userInfo.userId,
+              Name: userEtc.userName,
+              Nickname: userEtc.userNickname,
+              Department: userEtc.userDepartment,
+            })}
           />
         </Right>
       </Header>
@@ -252,27 +258,29 @@ const ProfileScreen = (props) => {
 
       <View style={styles.bottomTab}>
         <View>
-          <Text style={styles.bottomText1}>성명</Text>
+          <Text style={styles.bottomText1}>이름</Text>
           <Text style={styles.bottomText2}>{userEtc.userName}</Text>
         </View>
         <Right>
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            onPress={() => { alert(2) }}
           />
         </Right>
       </View>
       <View style={styles.bottomTab}>
         <View>
-          <Text style={styles.bottomText1}>닉네임</Text>
+          <Text style={styles.bottomText1}>별명</Text>
           <Text style={styles.bottomText2}>{userEtc.userNickname}</Text>
         </View>
         <Right>
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            onPress={() => { alert(3) }}
           />
         </Right>
       </View>
@@ -286,7 +294,8 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            onPress={() => { alert(4) }}
           />
         </Right>
       </View>

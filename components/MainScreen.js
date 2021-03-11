@@ -18,6 +18,7 @@ import ReceiveScreen from './AppTabNavigator/WalletTabSub/ReceiveScreen.js';
 
 import CustomDrawerNavigator from './CustomDrawerNavigator';
 import ProfileScreen from './ProfileScreen';
+import ChangeProfileScreen from './Changing/ChangeProfileScreen';
 
 import { handleUserInfo, handleLoadingState } from '../redux/action';
 
@@ -154,6 +155,7 @@ const AppTabContainer = createAppContainer(
       SendConfirm: SendConfirmScreen,
       SendResult: SendResultScreen,
       Receive: ReceiveScreen,
+      ChangeProfile: ChangeProfileScreen,
     },
     {
       initialRouteName: 'AppTabNavigator',

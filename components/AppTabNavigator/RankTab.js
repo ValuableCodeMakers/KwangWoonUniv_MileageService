@@ -112,6 +112,9 @@ function getWeekend() {
 
 //사람들 사진 개별로 가져오기
 function getPhotoFile() {
+  if (rankers.rank1.id == "") {
+    return 'default';
+  }
   fetch('http://192.168.0.5:3000/routes/getPhotos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -136,8 +139,8 @@ function getPhotoFile() {
 
 
 function _onRefresh() {
-  // 랭킹 갱신
-  fetch('http://192.168.0.4:3000/routes/getUsersRank', {
+  // 랭킹 갱신하기
+  fetch('http://192.168.0.5:3000/routes/getUsersRank', {
     method: 'GET',
   })
     .then((res) => {
