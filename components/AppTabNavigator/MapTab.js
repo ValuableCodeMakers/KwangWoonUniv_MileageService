@@ -19,7 +19,6 @@ import {
   Image,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-
 import {
   KW_Area,
   HwaDo,
@@ -36,9 +35,21 @@ import {
   IceLink,
 } from './Coordinates/Coordinate';
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
-
+import {
+  HwaDoImage,
+  BiMaImage,
+  OgUiImage,
+  BokJiImage,
+  YeonGuImage,
+  DongHaeImage,
+  ChamBitImage,
+  SaeBitImage,
+  HanWoolImage,
+  NooRiImage,
+  Anni80Image,
+  IceLinkImage,
+} from '../../src/building/*';
 import pinImage from '../../src/pin.png';
-import HwaDoImage from '../../src/building/HwaDo.jpg';
 
 const {width, height} = Dimensions.get('window');
 
@@ -276,49 +287,58 @@ const MapTab = (props) => {
               },
             },
           ])}>
-          {buildingList.map((building, index) => (
-            <View style={styles.buildingCard} key={index}>
-              <View style={{width: '100%', height: '50%'}}>
-                <Image
-                  source={HwaDoImage}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                  }}
-                  resizeMode="cover"></Image>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                  height: '50%',
-                }}>
+          {buildingList.map((building, index) => {
+            const bulidingName = building.title + "Image"
+            return (
+              <View style={styles.buildingCard} key={index}>
+                <View style={{width: '100%', height: '50%'}}>
+                  <Image
+                    source={bulidingName}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                    }}
+                    resizeMode="cover"></Image>
+                </View>
                 <View
                   style={{
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    flexDirection: 'row',
-                    overflow: 'hidden',
+                    width: '100%',
+                    height: '50%',
                   }}>
-                  <Text
+                  <View
                     style={{
-                      fontSize: 25,
-                      fontWeight: 'bold',
-                      fontFamily: 'BMDOHYEON',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                      overflow: 'hidden',
                     }}>
-                    {building.title}
-                  </Text>
-                  <Text style={{fontSize: 15, marginLeft: 10}}>500 토큰</Text>
-                </View>
-                <View>
-                  <Text style={{fontSize: 15}}>화도관 설명</Text>
+                    <Text
+                      style={{
+                        fontSize: 25,
+                        fontFamily: 'BMDOHYEON',
+                      }}>
+                      {building.title}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        marginLeft: 10,
+                        fontFamily: 'BMDOHYEON',
+                      }}>
+                      500 토큰
+                    </Text>
+                  </View>
+                  <View>
+                    <Text style={{fontSize: 15}}>화도관 설명</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </Animated.ScrollView>
       </View>
     );

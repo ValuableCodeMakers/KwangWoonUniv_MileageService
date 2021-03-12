@@ -29,7 +29,8 @@ const MainScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getUserId', {
+    console.log("기본 정보 불러오기")
+    fetch('http://172.30.1.33:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -41,7 +42,7 @@ const MainScreen = () => {
         console.log('MainScreen: id 불러오기 성공');
       })
       .then(() => {
-        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
+        fetch('http://172.30.1.33:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId: userState.userId }),
@@ -57,7 +58,7 @@ const MainScreen = () => {
             console.log('MainScreen: address 불러오기 성공');
           })
           .then(() => {
-            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
+            fetch('http://172.30.1.33:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({

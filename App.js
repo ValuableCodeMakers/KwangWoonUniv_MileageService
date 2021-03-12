@@ -57,7 +57,7 @@ const MainContainer = createAppContainer(
 
 export default class App extends Component {
   componentDidMount() {
-    SplashScreen.hide();
+    setTimeout(()=>SplashScreen.hide(), 1000);
   }
 
   render() {
