@@ -51,6 +51,7 @@ const MainContainer = createAppContainer(
     {
       initialRouteName: 'Auth',
       backBehavior: 'Auth',
+      
     },
   ),
 );
