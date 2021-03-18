@@ -18,7 +18,7 @@ const {width, height} = Dimensions.get('window');
 
 const handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://172.30.1.33:3000/routes/getEventToken', {
+  fetch('http://192.168.0.5:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({to: address}),
@@ -32,7 +32,7 @@ const handleGetEventToken = (address) => {
 };
 
 const handleSaveSpecification = (detail, amount) => {
-  fetch('http://172.30.1.33:3000/routes/saveSpecification', {
+  fetch('http://192.168.0.5:3000/routes/saveSpecification', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
@@ -112,17 +112,16 @@ const HomeTab = (props) => {
   };
 
   const event_BuildingIn = () => {
-    return buildingState.map((data) =>
+    return buildingState.map((data, index) =>
       data.state ? (
-        <Card style={styles.currentEvent} key={data.id}>
+        <Card style={styles.currentEvent} key={index}>
           <CardItem
             style={{
               height: 100,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-            }}
-            key={data.id}>
+            }}>
             <Text style={{fontSize: 20}}>{data.id} 이벤트 완료! 😊</Text>
             <TouchableOpacity
               style={styles.completeButton}
@@ -134,7 +133,7 @@ const HomeTab = (props) => {
                 // 이벤트 중단
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
-              <Text style={{fontSize:15,fontWeight:'bold'}}>수령</Text>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수령</Text>
             </TouchableOpacity>
           </CardItem>
         </Card>
@@ -221,7 +220,7 @@ const styles = StyleSheet.create({
   },
   currentBalanceContainer: {
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     width: '100%',
     height: height * 0.23,
   },
@@ -250,8 +249,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   completeButton: {
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '15%',
     height: '50%',
     marginLeft: 20,

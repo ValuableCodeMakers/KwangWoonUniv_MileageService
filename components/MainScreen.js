@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
@@ -30,7 +30,7 @@ const MainScreen = () => {
 
   useEffect(() => {
     console.log("기본 정보 불러오기")
-    fetch('http://172.30.1.33:3000/routes/getUserId', {
+    fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -42,7 +42,7 @@ const MainScreen = () => {
         console.log('MainScreen: id 불러오기 성공');
       })
       .then(() => {
-        fetch('http://172.30.1.33:3000/routes/getWalletAddress', {
+        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId: userState.userId }),
@@ -58,7 +58,7 @@ const MainScreen = () => {
             console.log('MainScreen: address 불러오기 성공');
           })
           .then(() => {
-            fetch('http://172.30.1.33:3000/routes/getTokenBalance', {
+            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -95,6 +95,7 @@ MainScreen.navigationOptions = () => ({
 
 export default MainScreen;
 
+// 아래부터 Navigation Tab
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
 const AppMainNavigator = createMaterialTopTabNavigator(
   {
@@ -106,7 +107,7 @@ const AppMainNavigator = createMaterialTopTabNavigator(
   {
     bounces: true,
     animationEnabled: true,
-    swipeEnabled: true,
+    swipeEnabled: false,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       labelStyle: { fontSize: 12 },
@@ -126,6 +127,7 @@ const AppMainNavigator = createMaterialTopTabNavigator(
       upperCaseLabel: false,
       showLabel: true,
       showIcon: true,
+      pressOpacity:0.5
     },
   },
 );

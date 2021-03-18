@@ -23,7 +23,7 @@ export default class CreateWalletScreen extends Component {
   componentDidMount() {
     const preState = this.props.navigation.getParam('preState');
 
-    fetch('http://172.30.1.33:3000/routes/createWallet', {
+    fetch('http://192.168.0.5:3000/routes/createWallet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -43,7 +43,7 @@ export default class CreateWalletScreen extends Component {
   }
 
   handleSaveProfile = () => {
-    fetch('http://172.30.1.33:3000/routes/saveProfile', {
+    fetch('http://192.168.0.5:3000/routes/saveProfile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
