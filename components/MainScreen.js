@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
@@ -29,6 +29,7 @@ const MainScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("기본 정보 불러오기")
     fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
@@ -94,6 +95,7 @@ MainScreen.navigationOptions = () => ({
 
 export default MainScreen;
 
+// 아래부터 Navigation Tab
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
 const AppMainNavigator = createMaterialTopTabNavigator(
   {
@@ -105,7 +107,7 @@ const AppMainNavigator = createMaterialTopTabNavigator(
   {
     bounces: true,
     animationEnabled: true,
-    swipeEnabled: true,
+    swipeEnabled: false,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       labelStyle: { fontSize: 12 },
@@ -125,6 +127,7 @@ const AppMainNavigator = createMaterialTopTabNavigator(
       upperCaseLabel: false,
       showLabel: true,
       showIcon: true,
+      pressOpacity:0.5
     },
   },
 );

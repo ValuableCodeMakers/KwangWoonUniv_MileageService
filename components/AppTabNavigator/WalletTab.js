@@ -1,13 +1,19 @@
-import React, { Component, Fragment } from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Icon, Container, Card, CardItem } from 'native-base';
-import { useSelector } from 'react-redux';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, {Component, Fragment, useState, useEffect} from 'react';
+import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {
+  Icon,
+  Container,
+  Card,
+  CardItem,
+  Tab,
+  Tabs,
+  TabHeading,
+} from 'native-base';
+import {useSelector} from 'react-redux';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import QRCode from 'react-native-qrcode-svg';
 
 import CustomHeader from './CustomHeader';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,9 +34,9 @@ const bottomSection = (activeBtn, address, historyState) => {
       if (historyState.length != 0) {
         return historyState.map((data, index) => {
           return (
-            <CardItem key={index} style={{ flexDirection: 'row' }}>
-              <View style={{ width: '20%', marginLeft: 0 }}>
-                <Text style={{ fontSize: 16 }}>
+            <CardItem key={index} style={{flexDirection: 'row', width: '98%'}}>
+              <View style={{width: '20%', marginLeft: 0}}>
+                <Text style={{fontSize: 16}}>
                   {data[index].date.split('-')[1]}.
                   {data[index].date.split('-')[2]}
                 </Text>
@@ -85,8 +91,8 @@ const WalletTab = (props) => {
         iconColor={'black'}></CustomHeader>
 
       <Container style={styles.mainContainer}>
-        <Card style={styles.currentBalanceContainer}>
-          <View style={{ alignItems: 'center' }}>
+        <View style={styles.upperContainer}>
+          <View style={{alignItems: 'center'}}>
             <Text
               style={{
                 fontSize: 15,
@@ -109,7 +115,7 @@ const WalletTab = (props) => {
               onPress={() => {
                 props.navigation.navigate(
                   'Send',
-                  userInfoStateuserWalletAddress,
+                  userInfoState.userWalletAddress,
                 );
               }}>
               <Icon
@@ -132,36 +138,68 @@ const WalletTab = (props) => {
               <Text style={{ fontSize: 15, color: 'white' }}> 받기</Text>
             </TouchableOpacity>
           </View>
-        </Card>
+        </View>
 
-        <View style={styles.subContainer}>
-          <CardItem style={styles.detailButtonContainer}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                setActiveBtn({ active: 1 });
-              }}>
-              <Text style={{ fontSize: 15 }}>바코드</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                setActiveBtn({ active: 2 });
-              }}>
-              <Text style={{ fontSize: 15 }}>내역</Text>
-            </TouchableOpacity>
-          </CardItem>
-          <ScrollView style={styles.detailScrollView}>
-            {loadState ? (
-              bottomSection(
-                activeBtn.active,
-                userInfoState.userWalletAddress,
-                historyState,
-              )
-            ) : (
-              <Fragment></Fragment>
-            )}
-          </ScrollView>
+        <View style={styles.lowerContainer}>
+          {loadState.loadState ? (
+            <Tabs>
+              <Tab
+                heading={
+                  <TabHeading style={{backgroundColor: '#fff'}}>
+                    <Text>바코드</Text>
+                  </TabHeading>
+                }>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    marginTop: '5%',
+                  }}>
+                  <QRCode
+                    value={userInfoState.userWalletAddress}
+                    size={200}></QRCode>
+                </View>
+              </Tab>
+              <Tab
+                heading={
+                  <TabHeading style={{backgroundColor: '#fff'}}>
+                    <Text>내역</Text>
+                  </TabHeading>
+                }>
+                <ScrollView style={styles.detailScrollView}>
+                  {historyState.map((data, index) => {
+                    return (
+                      <CardItem
+                        key={index}
+                        style={{flexDirection: 'row', width: '98%'}}>
+                        <View style={{width: '20%', marginLeft: 0}}>
+                          <Text style={{fontSize: 16}}>
+                            {data[index].date.split('-')[1]}.
+                            {data[index].date.split('-')[2]}
+                          </Text>
+                        </View>
+                        <View style={{width: '50%'}}>
+                          <Text>{data[index].detail}</Text>
+                        </View>
+                        <View style={{width: '30%'}}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: 'bold',
+                              textAlign: 'right',
+                              fontFamily: 'BMDOHYEON',
+                            }}>
+                            {data[index].amount} UMT
+                          </Text>
+                        </View>
+                      </CardItem>
+                    );
+                  })}
+                </ScrollView>
+              </Tab>
+            </Tabs>
+          ) : (
+            <Fragment></Fragment>
+          )}
         </View>
       </Container>
     </Container>
@@ -181,18 +219,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
-  currentBalanceContainer: {
+  upperContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.85,
     height: height * 0.23,
-    marginTop: height * 0.1,
+    marginVertical: height * 0.05,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     backgroundColor: '#c0392b',
-    elevation: 10,
+    elevation: 20,
   },
   buttonContainer: {
     width: '100%',
@@ -207,25 +245,16 @@ const styles = StyleSheet.create({
   receiveButton: {
     alignItems: 'center',
   },
-  subContainer: {
+  lowerContainer: {
     alignItems: 'center',
-    width: width * 0.8,
-    height: height * 0.58,
-    marginTop: height * 0.02,
-
+    width: width * 0.85,
+    height: height * 0.5,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
-    elevation: 10,
-  },
-  detailButtonContainer: {
-    width: '100%',
-    height: '15%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    elevation: 2,
   },
   detailScrollView: {
-    height: '100%',
-    width: '100%',
+    width: '99%',
+    height: '85%',
   },
 });

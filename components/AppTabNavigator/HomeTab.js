@@ -112,18 +112,17 @@ const HomeTab = (props) => {
   };
 
   const event_BuildingIn = () => {
-    return buildingState.map((data) =>
+    return buildingState.map((data, index) =>
       data.state ? (
-        <Card style={styles.currentEvent} key={data.id}>
+        <Card style={styles.currentEvent} key={index}>
           <CardItem
             style={{
               height: 100,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-            }}
-            key={data.id}>
-            <Text style={{ fontSize: 20 }}>{data.id} 이벤트 완료! 😊</Text>
+            }}>
+            <Text style={{fontSize: 20}}>{data.id} 이벤트 완료! 😊</Text>
             <TouchableOpacity
               style={styles.completeButton}
               onPress={() => {
@@ -134,7 +133,7 @@ const HomeTab = (props) => {
                 // 이벤트 중단
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
-              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>수령</Text>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수령</Text>
             </TouchableOpacity>
           </CardItem>
         </Card>

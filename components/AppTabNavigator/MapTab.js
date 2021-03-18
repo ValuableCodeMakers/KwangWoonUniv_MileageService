@@ -19,7 +19,6 @@ import {
   Image,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-
 import {
   KW_Area,
   HwaDo,
@@ -36,9 +35,7 @@ import {
   IceLink,
 } from './Coordinates/Coordinate';
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
-
 import pinImage from '../../src/pin.png';
-import HwaDoImage from '../../src/building/HwaDo.jpg';
 
 const {width, height} = Dimensions.get('window');
 
@@ -97,8 +94,8 @@ const MapTab = (props) => {
             buildingList[i].coordinate,
           )
         ) {
-          console.log(buildingList[i].title);
-          locationBuilding = buildingList[i].title;
+          console.log(buildingList[i].title_Kor);
+          locationBuilding = buildingList[i].title_Kor;
         }
       }
 
@@ -164,14 +161,12 @@ const MapTab = (props) => {
 
   let mapIndex = 0;
   let mapAnimation = new Animated.Value(0);
-
   // useEffect(()=>{
   //   mapAnimation.addListener(({value})=>{
   //     let index = Math.floor(value / 100);
 
   //   })
   // })
-
   const onMarkerPress = (mapEventData) => {
     const markerId = mapEventData._targetInst.return.key;
 
@@ -180,7 +175,6 @@ const MapTab = (props) => {
 
     _scrollView.current.getNode().scrollTo({x: x, y: 0, animated: true});
   };
-
   const _scrollView = React.useRef(null);
 
   if (!location) {
@@ -251,7 +245,7 @@ const MapTab = (props) => {
           {buildingList.map((building, index) => (
             <Marker
               coordinate={building.point}
-              title={building.title}
+              title={building.title_Kor}
               description="500 토큰"
               key={index}
               image={pinImage}
@@ -266,7 +260,7 @@ const MapTab = (props) => {
           pagingEnabled
           scrollEventThrottle={1}
           showsHorizontalScrollIndicator={false}
-          style={styles.scrollView}
+          style={styles.buildingCardScrollView}
           onScroll={Animated.event([
             {
               nativeEvent: {
@@ -276,49 +270,50 @@ const MapTab = (props) => {
               },
             },
           ])}>
-          {buildingList.map((building, index) => (
-            <View style={styles.buildingCard} key={index}>
-              <View style={{width: '100%', height: '50%'}}>
-                <Image
-                  source={HwaDoImage}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                  }}
-                  resizeMode="cover"></Image>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                  height: '50%',
-                }}>
+          {buildingList.map((building, index) => {
+            return (
+              <View style={styles.buildingCard} key={index}>
+                <View style={{width: '100%', height: '60%'}}>
+                  <Image
+                    source={building.image}
+                    style={styles.buildingImage}></Image>
+                </View>
                 <View
                   style={{
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    flexDirection: 'row',
-                    overflow: 'hidden',
+                    width: '100%',
+                    height: '40%',
                   }}>
-                  <Text
+                  <View
                     style={{
-                      fontSize: 25,
-                      fontWeight: 'bold',
-                      fontFamily: 'BMDOHYEON',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                      overflow: 'hidden',
                     }}>
-                    {building.title}
-                  </Text>
-                  <Text style={{fontSize: 15, marginLeft: 10}}>500 토큰</Text>
-                </View>
-                <View>
-                  <Text style={{fontSize: 15}}>화도관 설명</Text>
+                    <Text
+                      style={{
+                        fontSize: 25,
+                        fontFamily: 'BMDOHYEON',
+                      }}>
+                      {building.title_Kor}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        marginLeft: 10,
+                        fontFamily: 'BMDOHYEON',
+                      }}>
+                      500 토큰
+                    </Text>
+                  </View>
+                  <View>
+                    <Text style={{fontSize: 15}}>설명</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </Animated.ScrollView>
       </View>
     );
@@ -339,22 +334,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  scrollView: {
+  buildingCardScrollView: {
     position: 'absolute',
     bottom: 0,
-    left: 0,
-    right: 0,
+    height: height / 3,
     paddingVertical: 10,
   },
   buildingCard: {
     display: 'flex',
     width: width * 0.85,
-    height: height / 4,
+    height: height / 3.5,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: width * 0.075,
     backgroundColor: '#fff',
     borderBottomEndRadius: 35,
-    elevation: 6,
+    elevation: 5,
+  },
+  buildingImage: {
+    width: '100%',
+    height: '100%',
   },
 });
