@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useState, useEffect} from 'react';
+import React, { Component, Fragment, useState, useEffect } from 'react';
 import {
   Icon,
   Content,
@@ -17,11 +17,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {handleProfilePhoto} from '../redux/action';
+import { useSelector, useDispatch } from 'react-redux';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { handleProfilePhoto } from '../redux/action';
 
-var {width, height} = Dimensions.get('window');
+var { width, height } = Dimensions.get('window');
 
 function createFormData(id, photo) {
   const data = new FormData();
@@ -104,8 +104,8 @@ const ProfileScreen = (props) => {
   useEffect(() => {
     fetch('http://192.168.0.5:3000/routes/getProfileEtc', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId: userInfo.userId}),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: userInfo.userId }),
     })
       .then((res) => {
         return res.json();
@@ -120,13 +120,13 @@ const ProfileScreen = (props) => {
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#c0392b', height: height * 0.1}}>
-        <Left style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Header style={{ backgroundColor: '#c0392b', height: height * 0.1 }}>
+        <Left style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Icon
             name="chevron-back"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
             onPress={() => props.navigation.goBack()}
           />
           <Text
@@ -139,7 +139,7 @@ const ProfileScreen = (props) => {
             내 프로필
           </Text>
         </Left>
-        <Right style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Right style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Icon
             name="settings-outline"
             style={{ color: 'white' }}
@@ -157,8 +157,8 @@ const ProfileScreen = (props) => {
           paddingTop: 30,
           paddingBottom: 40,
         }}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1.2, alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex: 1.2, alignItems: 'center' }}>
             {userPhoto.fileName != '' ? (
               <View>
                 <TouchableOpacity
@@ -251,7 +251,7 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
           />
         </Right>
       </View>
@@ -308,7 +308,7 @@ const ProfileScreen = (props) => {
           <Icon
             name="chevron-forward"
             type="Ionicons"
-            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
           />
         </Right>
       </View>
@@ -318,8 +318,8 @@ const ProfileScreen = (props) => {
 
 ProfileScreen.navigationOptions = () => ({
   headerShown: false,
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="chevron-back" type="Ionicons" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="chevron-back" type="Ionicons" style={{ color: tintColor }} />
   ),
 });
 

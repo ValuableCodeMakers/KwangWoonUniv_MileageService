@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Card} from 'native-base';
-import {useSelector} from 'react-redux';
+import { Card } from 'native-base';
+import { useSelector } from 'react-redux';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 function logout(props) {
   fetch('http://192.168.0.5:3000/routes/logout', {
@@ -46,21 +46,21 @@ const CustomDrawerNavigator = (props) => {
             borderRadius: 100,
           }}></Image>
         <View style={styles.infoTextContainer}>
-          <Text style={{fontSize: 40, fontWeight: 'bold'}}>
+          <Text style={{ fontSize: 40, fontWeight: 'bold' }}>
             {userInfoState.userId}
           </Text>
-          <Text style={{fontSize: 20}}>{userInfoState.userBalance} 토큰</Text>
+          <Text style={{ fontSize: 20 }}>{userInfoState.userBalance} 토큰</Text>
         </View>
       </Card>
 
       <View style={styles.menuContainer}>
-        <View style={{...styles.menuButton, marginTop: 20}}>
+        <View style={{ ...styles.menuButton, marginTop: 20 }}>
           <TouchableOpacity
             onPress={() => {
               props.navigation.closeDrawer();
               props.navigation.navigate('AppMainNavigator');
             }}>
-            <Text style={{fontSize: 20}}>소개</Text>
+            <Text style={{ fontSize: 20 }}>소개</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.menuButton}>
@@ -69,7 +69,7 @@ const CustomDrawerNavigator = (props) => {
               props.navigation.closeDrawer();
               props.navigation.navigate('AppMainNavigator');
             }}>
-            <Text style={{fontSize: 20}}>홈</Text>
+            <Text style={{ fontSize: 20 }}>홈</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.menuButton}>
@@ -78,7 +78,7 @@ const CustomDrawerNavigator = (props) => {
               props.navigation.closeDrawer();
               props.navigation.navigate('Profile');
             }}>
-            <Text style={{fontSize: 20}}>내정보</Text>
+            <Text style={{ fontSize: 20 }}>내정보</Text>
           </TouchableOpacity>
         </View>
 
@@ -88,7 +88,7 @@ const CustomDrawerNavigator = (props) => {
               props.navigation.closeDrawer();
               props.navigation.navigate('HomeTab');
             }}>
-            <Text style={{fontSize: 20}}>설정</Text>
+            <Text style={{ fontSize: 20 }}>설정</Text>
           </TouchableOpacity>
         </View>
 
@@ -99,7 +99,7 @@ const CustomDrawerNavigator = (props) => {
         </View> */}
       </View>
       <View style={styles.bottomTextContainer}>
-        <Text style={{fontWeight: 'bold', color: '#fff'}}>Team 벨코즈</Text>
+        <Text style={{ fontWeight: 'bold', color: '#fff' }}>Team 벨코즈</Text>
       </View>
     </View>
   );

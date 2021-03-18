@@ -113,11 +113,11 @@ export default class CreateProfileScreen extends Component {
                       uri: this.state.image.uri,
                     }}></Thumbnail>
                 ) : (
-                    <Thumbnail
-                      circular={true}
-                      large
-                      source={basicImage}></Thumbnail>
-                  )}
+                  <Thumbnail
+                    circular={true}
+                    large
+                    source={basicImage}></Thumbnail>
+                )}
               </TouchableOpacity>
               <Text style={{ fontSize: 18, marginTop: 10 }}>프로필 사진</Text>
             </View>

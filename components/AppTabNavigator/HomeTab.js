@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {Card, CardItem, Icon, Container, Spinner} from 'native-base';
+import React, { Fragment } from 'react';
+import { Card, CardItem, Icon, Container, Spinner } from 'native-base';
 import {
   View,
   Text,
@@ -8,20 +8,20 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CountDown from 'react-native-countdown-component';
 
 import CustomHeader from './CustomHeader';
-import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
+import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
   fetch('http://192.168.0.5:3000/routes/getEventToken', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({to: address}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ to: address }),
   })
     .then((res) => {
       return res.json();
@@ -34,8 +34,8 @@ const handleGetEventToken = (address) => {
 const handleSaveSpecification = (detail, amount) => {
   fetch('http://192.168.0.5:3000/routes/saveSpecification', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: new Date(), amount: amount, detail: detail }),
   })
     .then((res) => {
       return res.json();
@@ -70,8 +70,8 @@ const HomeTab = (props) => {
               justifyContent: 'center',
               flexDirection: 'column',
             }}>
-            <Text style={{fontSize: 18}}>
-              <Text style={{fontWeight: 'bold'}}>'학교에서 있기'</Text> 이벤트가
+            <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontWeight: 'bold' }}>'학교에서 있기'</Text> 이벤트가
               진행중입니다.😊
             </Text>
             <View
@@ -84,14 +84,14 @@ const HomeTab = (props) => {
               onPress={() => {
                 alert('이벤트 설명');
               }}>
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>남은 시간 </Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>남은 시간 </Text>
               <CountDown
                 until={60 * 45} // 45분 60 * 45
                 size={20}
                 timeToShow={['M', 'S']}
-                timeLabels={{m: null, s: null}}
+                timeLabels={{ m: null, s: null }}
                 showSeparator={true}
-                digitStyle={{backgroundColor: '#ecf0f1'}}
+                digitStyle={{ backgroundColor: '#ecf0f1' }}
                 onFinish={() => {
                   alert(
                     `'학교에서 있기' 이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`,
@@ -123,7 +123,7 @@ const HomeTab = (props) => {
               justifyContent: 'center',
             }}
             key={data.id}>
-            <Text style={{fontSize: 20}}>{data.id} 이벤트 완료! 😊</Text>
+            <Text style={{ fontSize: 20 }}>{data.id} 이벤트 완료! 😊</Text>
             <TouchableOpacity
               style={styles.completeButton}
               onPress={() => {
@@ -134,7 +134,7 @@ const HomeTab = (props) => {
                 // 이벤트 중단
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
-              <Text style={{fontSize:15,fontWeight:'bold'}}>수령</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>수령</Text>
             </TouchableOpacity>
           </CardItem>
         </Card>
@@ -162,19 +162,19 @@ const HomeTab = (props) => {
             }}>
             현재 잔액
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon name="server-outline" style={{color: 'white'}} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name="server-outline" style={{ color: 'white' }} />
             <Text> </Text>
             {loadState.loadState ? (
               <Text
-                style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
+                style={{ fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON' }}>
                 {' ' + userInfoState.userBalance}
               </Text>
             ) : (
-              <Spinner color="white" style={{height: 20}}></Spinner>
+              <Spinner color="white" style={{ height: 20 }}></Spinner>
             )}
             <Text
-              style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
+              style={{ fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON' }}>
               {' '}
               토큰
             </Text>
@@ -206,8 +206,8 @@ const HomeTab = (props) => {
 };
 
 HomeTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-home" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-home" style={{ color: tintColor }} />
   ),
 });
 
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   currentBalanceContainer: {
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     width: '100%',
     height: height * 0.23,
   },
@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   completeButton: {
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '15%',
     height: '50%',
     marginLeft: 20,
