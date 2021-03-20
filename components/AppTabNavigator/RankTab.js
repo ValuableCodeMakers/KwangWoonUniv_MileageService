@@ -169,29 +169,12 @@ function setRankingPhoto(str) {
   }
 }
 
-function getWeekend() {
-  let week = new Array(
-    '일요일',
-    '월요일',
-    '화요일',
-    '수요일',
-    '목요일',
-    '금요일',
-    '토요일',
-  );
-
-  let today = new Date().getDay();
-  let weekend = week[today];
-
-  return weekend;
-}
-
 //사람들 사진 개별로 가져오기
 function getPhotoFile() {
   if (rankers.rank1.id == '') {
     return 'default';
   }
-  fetch('http://192.168.0.5:3000/routes/getPhotos', {
+  fetch('http://172.30.1.55:3000/routes/getPhotos', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
@@ -221,7 +204,7 @@ function getPhotoFile() {
 
 function _onRefresh() {
   // 랭킹 갱신하기
-  fetch('http://192.168.0.5:3000/routes/getUsersRank', {
+  fetch('http://172.30.1.55:3000/routes/getUsersRank', {
     method: 'GET',
   })
     .then((res) => {
@@ -233,6 +216,24 @@ function _onRefresh() {
 
   // 탑5 랭커 사진 갱신
   getPhotoFile();
+}
+
+// 요일 알기
+function getWeekend() {
+  let week = new Array(
+    '일요일',
+    '월요일',
+    '화요일',
+    '수요일',
+    '목요일',
+    '금요일',
+    '토요일',
+  );
+
+  let today = new Date().getDay();
+  let weekend = week[today];
+
+  return weekend;
 }
 
 const RankTab = (props) => {
@@ -257,7 +258,7 @@ const RankTab = (props) => {
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
 
-    fetch('http://192.168.0.5:3000/routes/getPhoto', {
+    fetch('http://172.30.1.55:3000/routes/getPhoto', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({userId: userInfo.userId}),
@@ -286,7 +287,9 @@ const RankTab = (props) => {
 
   // 유저 랭크 가져오기
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getUsersRank', {
+    console.log('유저 랭크 가져오기 요청');
+
+    fetch('http://172.30.1.55:3000/routes/getUsersRank', {
       method: 'GET',
     })
       .then((res) => {
@@ -310,6 +313,7 @@ const RankTab = (props) => {
         iconColor={'#fff'}></CustomHeader>
 
       <Container style={styles.mainContainer}>
+        {/* 배경 색 */}
         <View
           style={{
             position: 'absolute',
@@ -319,6 +323,7 @@ const RankTab = (props) => {
             top: 0,
             left: 0,
           }}></View>
+
         <View style={styles.textContainer}>
           <Text
             style={{
@@ -332,90 +337,101 @@ const RankTab = (props) => {
         </View>
 
         <View style={styles.upperContainer}>
-          <Text>{getWeekend()}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 20, marginBottom: 5}}>
+            {getWeekend()}
+          </Text>
           <View style={styles.userInfoContainer}>
             {userPhoto.filename != 'default' ? (
               <Thumbnail
                 circular={true}
                 large
                 source={{
-                  uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                  uri: `http://172.30.1.55:3000/${userPhoto.filename}`,
                 }}></Thumbnail>
             ) : (
               <Thumbnail circular={true} large source={basicImage}></Thumbnail>
             )}
-            <Text style={{fontWeight: 'bold'}}>유저 ID: {userInfo.userId}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 30}}>
+              {userInfo.userId}
+            </Text>
           </View>
         </View>
 
         <View style={styles.middleContainer}>
-          {rankerList.map((ranker, index) => (
-            <Fragment>
-              {index == 0 ? (
-                <View style={{alignItems: 'center'}}>
-                  {ranker.photoState ? (
-                    <Thumbnail
-                      circular={true}
-                      small
-                      source={{
-                        uri: `http://192.168.0.5:3000/${ranker.filename}`,
-                      }}
-                      style={{marginHorizontal: 20}}></Thumbnail>
-                  ) : (
-                    <Thumbnail
-                      circular={true}
-                      source={basicImage}
-                      style={{width: 60, height: 60}}></Thumbnail>
-                  )}
-                  <Text style={{fontWeight: 'bold'}}>🥈 {ranker.id}</Text>
-                </View>
-              ) : (
-                <Fragment></Fragment>
-              )}
-              {index == 1 ? (
-                <View style={{alignItems: 'center'}}>
-                  {ranker.photoState ? (
-                    <Thumbnail
-                      circular={true}
-                      large
-                      source={{
-                        uri: `http://192.168.0.5:3000/${ranker.filename}`,
-                      }}
-                      style={{marginHorizontal: 20}}></Thumbnail>
-                  ) : (
-                    <Thumbnail
-                      circular={true}
-                      large
-                      source={basicImage}></Thumbnail>
-                  )}
-                  <Text style={{fontWeight: 'bold'}}>🥇 {ranker.id}</Text>
-                </View>
-              ) : (
-                <Fragment></Fragment>
-              )}
-              {index == 2 ? (
-                <View style={{alignItems: 'center'}}>
-                  {ranker.photoState ? (
-                    <Thumbnail
-                      circular={true}
-                      small
-                      source={{
-                        uri: `http://192.168.0.5:3000/${ranker.filename}`,
-                      }}
-                      style={{marginHorizontal: 20}}></Thumbnail>
-                  ) : (
-                    <Thumbnail
-                      circular={true}
-                      source={basicImage}
-                      style={{width: 60, height: 60}}></Thumbnail>
-                  )}
-                  <Text style={{fontWeight: 'bold'}}>🥉 {ranker.id}</Text>
-                </View>
-              ) : (
-                <Fragment></Fragment>
-              )}
-            </Fragment>
-          ))}
+          <View style={{alignItems: 'center', width: '30%'}}>
+            <View>
+              <Text style={{fontSize: 30}}>🥈</Text>
+            </View>
+            {rankers.rank2.photoState ? (
+              <Thumbnail
+                circular={true}
+                source={{
+                  uri: `http://172.30.1.55:3000/${rankers.rank2.filename}`,
+                }}
+                large
+                style={{
+                  width: 75,
+                  height: 75,
+                }}></Thumbnail>
+            ) : (
+              <Thumbnail
+                circular={true}
+                large
+                style={{width: 75, height: 75}}
+                source={basicImage}></Thumbnail>
+            )}
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>
+              {rankers.rank2.id}
+            </Text>
+          </View>
+
+          <View style={{alignItems: 'center', width: '40%'}}>
+            <View>
+              <Text style={{fontSize: 35}}>🥇</Text>
+            </View>
+            {rankers.rank1.photoState ? (
+              <Thumbnail
+                circular={true}
+                large
+                source={{
+                  uri: `http://172.30.1.55:3000/${rankers.rank1.filename}`,
+                }}
+                style={{width: 90, height: 90}}></Thumbnail>
+            ) : (
+              <Thumbnail
+                circular={true}
+                large
+                source={basicImage}
+                style={{width: 90, height: 90}}></Thumbnail>
+            )}
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>
+              {rankers.rank1.id}
+            </Text>
+          </View>
+
+          <View style={{alignItems: 'center', width: '30%'}}>
+            <View>
+              <Text style={{fontSize: 30}}>🥉</Text>
+            </View>
+            {rankers.rank3.photoState ? (
+              <Thumbnail
+                circular={true}
+                large
+                source={{
+                  uri: `http://172.30.1.55:3000/${rankers.rank3.filename}`,
+                }}
+                style={{width: 75, height: 75}}></Thumbnail>
+            ) : (
+              <Thumbnail
+                circular={true}
+                large
+                source={basicImage}
+                style={{width: 75, height: 75}}></Thumbnail>
+            )}
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>
+              {rankers.rank3.id}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.lowerContainer}>
@@ -426,60 +442,53 @@ const RankTab = (props) => {
               <RefreshControl refreshing={false} onRefresh={_onRefresh} />
             }>
             <Fragment>
-              {rankerList.map((ranker, index) => (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    width: '100%',
-                    padding: 10,
-                    backgroundColor:
-                      ranker.id == userInfo.userId ? '#8a1601' : '#fff',
-                  }}>
-                  {index == 0 ? (
-                    <Text style={{fontSize: 30}}>🥇</Text>
-                  ) : (
-                    <Fragment></Fragment>
-                  )}
-                  {index == 1 ? (
-                    <Text style={{fontSize: 30}}>🥈</Text>
-                  ) : (
-                    <Fragment></Fragment>
-                  )}
-                  {index == 2 ? (
-                    <Text style={{fontSize: 30}}>🥉</Text>
-                  ) : (
-                    <Fragment></Fragment>
-                  )}
-                  {index > 2 ? (
-                    <Text style={{fontSize: 30}}>{index + 1}</Text>
-                  ) : (
-                    <Fragment></Fragment>
-                  )}
+              {rankerList.map((ranker, index) =>
+                index >= 3 ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      width: '100%',
+                      padding: 10,
+                      backgroundColor:
+                        ranker.id == userInfo.userId ? '#c0392b' : '#fff',
+                    }}>
+                    <View style={{width:'8%',marginHorizontal: 10}}>
+                      <Text style={{fontSize: 20}}>{index + 1}</Text>
+                    </View>
 
-                  {ranker.photoState ? (
-                    <Thumbnail
-                      circular={true}
-                      small
-                      source={{
-                        uri: `http://192.168.0.5:3000/${ranker.filename}`,
-                      }}
-                      style={{marginHorizontal: 20}}></Thumbnail>
-                  ) : (
-                    <Thumbnail
-                      circular={true}
-                      small
-                      source={basicImage}></Thumbnail>
-                  )}
-                  <Text style={{fontWeight: 'bold'}}>{ranker.id}</Text>
-                  <Right>
-                    <Text style={{fontWeight: 'bold'}}>
-                      {ranker.balance} UMT
+                    {ranker.photoState ? (
+                      <Thumbnail
+                        circular={true}
+                        small
+                        source={{
+                          uri: `http://172.30.1.55:3000/${ranker.filename}`,
+                        }}
+                        style={{marginHorizontal: 20}}></Thumbnail>
+                    ) : (
+                      <Thumbnail
+                        circular={true}
+                        small
+                        source={basicImage}></Thumbnail>
+                    )}
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        marginLeft: 20,
+                      }}>
+                      {ranker.id}
                     </Text>
-                  </Right>
-                </View>
-              ))}
+                    <Right>
+                      <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                        {ranker.balance} UMT
+                      </Text>
+                    </Right>
+                  </View>
+                ) : (
+                  <Fragment></Fragment>
+                ),
+              )}
             </Fragment>
           </ScrollView>
         </View>
@@ -529,11 +538,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '80%',
-    height: height * 0.17,
+    height: height * 0.27,
   },
   lowerContainer: {
     width: '100%',
-    height: height * 0.39,
+    height: height * 0.29,
     backgroundColor: '#fff',
   },
 });
