@@ -33,7 +33,7 @@ import {
   NooRi,
   Anni80,
   IceLink,
-} from './Coordinates/Coordinate';
+} from '../Coordinates/Coordinate.js';
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 import pinImage from '../../src/pin.png';
 

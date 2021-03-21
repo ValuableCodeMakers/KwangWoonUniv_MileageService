@@ -90,7 +90,7 @@ export const HwaDo = {
   ],
   title_Kor: '화도관',
   title_Eng: 'HwaDo',
-  image: require('../../../src/building/HwaDoImage.jpg'),
+  image: require('../../src/building/HwaDoImage.jpg'),
 };
 
 export const BiMa = {
@@ -123,7 +123,7 @@ export const BiMa = {
   ],
   title_Kor: '비마관',
   title_Eng: 'BiMa',
-  image: require('../../../src/building/BiMaImage.jpg'),
+  image: require('../../src/building/BiMaImage.jpg'),
 };
 
 export const OgUi = {
@@ -144,7 +144,7 @@ export const OgUi = {
   ],
   title_Kor: '옥의관',
   title_Eng: 'OgUi',
-  image: require('../../../src/building/OgUiImage.jpg'),
+  image: require('../../src/building/OgUiImage.jpg'),
 };
 
 export const BokJi = {
@@ -162,7 +162,7 @@ export const BokJi = {
   ],
   title_Kor: '복지관',
   title_Eng: 'BokJi',
-  image: require('../../../src/building/BokJiImage.jpg'),
+  image: require('../../src/building/BokJiImage.jpg'),
 };
 
 export const YeonGu = {
@@ -180,7 +180,7 @@ export const YeonGu = {
   ],
   title_Kor: '연구관',
   title_Eng: 'YeonGu',
-  image: require('../../../src/building/YeonGuImage.jpg'),
+  image: require('../../src/building/YeonGuImage.jpg'),
 };
 
 export const DongHae = {
@@ -201,7 +201,7 @@ export const DongHae = {
   ],
   title_Kor: '동해문화예술관',
   title_Eng: 'DongHae',
-  image: require('../../../src/building/DongHaeImage.jpg'),
+  image: require('../../src/building/DongHaeImage.jpg'),
 };
 
 export const ChamBit = {
@@ -231,7 +231,7 @@ export const ChamBit = {
   ],
   title_Kor: '참빛관',
   title_Eng: 'ChamBit',
-  image: require('../../../src/building/ChamBitImage.jpg'),
+  image: require('../../src/building/ChamBitImage.jpg'),
 };
 
 export const SaeBit = {
@@ -245,7 +245,7 @@ export const SaeBit = {
   ],
   title_Kor: '새빛관',
   title_Eng: 'SaeBit',
-  image: require('../../../src/building/SaeBitImage.jpg'),
+  image: require('../../src/building/SaeBitImage.jpg'),
 };
 
 export const HanWool = {
@@ -261,7 +261,7 @@ export const HanWool = {
   ],
   title_Kor: '한울관',
   title_Eng: 'HanWool',
-  image: require('../../../src/building/HanWoolImage.jpg'),
+  image: require('../../src/building/HanWoolImage.jpg'),
 };
 
 export const NooRi = {
@@ -283,7 +283,7 @@ export const NooRi = {
   ],
   title_Kor: '누리관',
   title_Eng: 'NooRi',
-  image: require('../../../src/building/NooRiImage.jpg'),
+  image: require('../../src/building/NooRiImage.jpg'),
 };
 
 export const Anni80 = {
@@ -297,7 +297,7 @@ export const Anni80 = {
   ],
   title_Kor: '80주년기념관',
   title_Eng: 'Anni80',
-  image: require('../../../src/building/Anni80Image.jpg'),
+  image: require('../../src/building/Anni80Image.jpg'),
 };
 
 export const IceLink = {
@@ -315,5 +315,5 @@ export const IceLink = {
   ],
   title_Kor: '아이스링크',
   title_Eng: 'IceLink',
-  image: require('../../../src/building/IceLinkImage.jpg'),
+  image: require('../../src/building/IceLinkImage.jpg'),
 };

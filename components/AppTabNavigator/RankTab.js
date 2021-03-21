@@ -17,7 +17,7 @@ import {
   Card,
 } from 'native-base';
 import {useSelector, useDispatch} from 'react-redux';
-import basicImage from '../../src/profile/profile1.png'; // 기본 이미지
+import basicImage from '../../src/profile/profile.png'; // 기본 이미지
 import {handleProfilePhoto, handleUserInfo} from '../../redux/action';
 
 import CustomHeader from './CustomHeader';
@@ -337,9 +337,7 @@ const RankTab = (props) => {
         </View>
 
         <View style={styles.upperContainer}>
-          <Text style={{fontWeight: 'bold', fontSize: 20, marginBottom: 5}}>
-            {getWeekend()}
-          </Text>
+          <Text style={{fontWeight: 'bold', fontSize: 20}}>{getWeekend()}</Text>
           <View style={styles.userInfoContainer}>
             {userPhoto.filename != 'default' ? (
               <Thumbnail
@@ -351,7 +349,7 @@ const RankTab = (props) => {
             ) : (
               <Thumbnail circular={true} large source={basicImage}></Thumbnail>
             )}
-            <Text style={{fontWeight: 'bold', fontSize: 30}}>
+            <Text style={{fontWeight: 'bold', fontSize: 25}}>
               {userInfo.userId}
             </Text>
           </View>
@@ -359,7 +357,7 @@ const RankTab = (props) => {
 
         <View style={styles.middleContainer}>
           <View style={{alignItems: 'center', width: '30%'}}>
-            <View>
+            <View style={{marginBottom: 10}}>
               <Text style={{fontSize: 30}}>🥈</Text>
             </View>
             {rankers.rank2.photoState ? (
@@ -380,13 +378,18 @@ const RankTab = (props) => {
                 style={{width: 75, height: 75}}
                 source={basicImage}></Thumbnail>
             )}
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>
-              {rankers.rank2.id}
-            </Text>
+            <View style={{marginTop: 3,justifyContent:'center'}}>
+              <Text style={{fontWeight: 'bold', fontSize: 13,}}>
+                {rankers.rank2.id}
+              </Text>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                {rankers.rank2.balance} UMT
+              </Text>
+            </View>
           </View>
 
           <View style={{alignItems: 'center', width: '40%'}}>
-            <View>
+            <View style={{marginBottom: 10}}>
               <Text style={{fontSize: 35}}>🥇</Text>
             </View>
             {rankers.rank1.photoState ? (
@@ -404,13 +407,18 @@ const RankTab = (props) => {
                 source={basicImage}
                 style={{width: 90, height: 90}}></Thumbnail>
             )}
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>
-              {rankers.rank1.id}
-            </Text>
+            <View style={{marginTop: 3}}>
+              <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                {rankers.rank1.id}
+              </Text>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                {rankers.rank1.balance} UMT
+              </Text>
+            </View>
           </View>
 
           <View style={{alignItems: 'center', width: '30%'}}>
-            <View>
+            <View style={{marginBottom: 10}}>
               <Text style={{fontSize: 30}}>🥉</Text>
             </View>
             {rankers.rank3.photoState ? (
@@ -428,9 +436,14 @@ const RankTab = (props) => {
                 source={basicImage}
                 style={{width: 75, height: 75}}></Thumbnail>
             )}
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>
-              {rankers.rank3.id}
-            </Text>
+            <View style={{marginTop: 3}}>
+              <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                {rankers.rank3.id}
+              </Text>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                {rankers.rank3.balance} UMT
+              </Text>
+            </View>
           </View>
         </View>
 
@@ -454,7 +467,7 @@ const RankTab = (props) => {
                       backgroundColor:
                         ranker.id == userInfo.userId ? '#c0392b' : '#fff',
                     }}>
-                    <View style={{width:'8%',marginHorizontal: 10}}>
+                    <View style={{width: '8%', marginHorizontal: 10}}>
                       <Text style={{fontSize: 20}}>{index + 1}</Text>
                     </View>
 

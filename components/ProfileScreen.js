@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState, useEffect } from 'react';
+import React, {Component, Fragment, useState, useEffect} from 'react';
 import {
   Icon,
   Content,
@@ -17,11 +17,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { handleProfilePhoto } from '../redux/action';
+import {useSelector, useDispatch} from 'react-redux';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {handleProfilePhoto} from '../redux/action';
 
-var { width, height } = Dimensions.get('window');
+var {width, height} = Dimensions.get('window');
 
 function createFormData(id, photo) {
   const data = new FormData();
@@ -104,8 +104,8 @@ const ProfileScreen = (props) => {
   useEffect(() => {
     fetch('http://172.30.1.55:3000/routes/getProfileEtc', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: userInfo.userId }),
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: userInfo.userId}),
     })
       .then((res) => {
         return res.json();
@@ -120,13 +120,13 @@ const ProfileScreen = (props) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <Header style={{ backgroundColor: '#c0392b', height: height * 0.1 }}>
-        <Left style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      <Header style={{backgroundColor: '#c0392b', height: height * 0.07}}>
+        <Left style={{flexDirection: 'row', alignItems: 'center'}}>
           <Icon
             name="chevron-back"
             type="Ionicons"
-            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
             onPress={() => props.navigation.goBack()}
           />
           <Text
@@ -136,29 +136,32 @@ const ProfileScreen = (props) => {
               color: 'white',
               alignItems: 'center',
             }}>
-            내 프로필
+            내 프로필 🛠
           </Text>
         </Left>
-        <Right style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Right style={{flexDirection: 'row', alignItems: 'center'}}>
           <Icon
             name="settings-outline"
-            style={{ color: 'white' }}
-            onPress={() => props.navigation.navigate('ChangeProfile', {
-              Id: userInfo.userId,
-              Name: userEtc.userName,
-              Nickname: userEtc.userNickname,
-              Department: userEtc.userDepartment,
-            })}
+            style={{color: 'white'}}
+            onPress={() =>
+              props.navigation.navigate('ChangeProfile', {
+                Id: userInfo.userId,
+                Name: userEtc.userName,
+                Nickname: userEtc.userNickname,
+                Department: userEtc.userDepartment,
+              })
+            }
           />
         </Right>
       </Header>
-      <Container
+      <View
         style={{
-          paddingTop: 30,
-          paddingBottom: 40,
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: height * 0.3,
         }}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 1.2, alignItems: 'center' }}>
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 1, alignItems: 'center'}}>
             {userPhoto.fileName != '' ? (
               <View>
                 <TouchableOpacity
@@ -180,7 +183,7 @@ const ProfileScreen = (props) => {
                       paddingRight: 10,
                       fontSize: 30,
                       color: '#ff5050',
-                      left: 100,
+                      left: 80,
                       top: 100,
                     }}
                   />
@@ -218,7 +221,7 @@ const ProfileScreen = (props) => {
                     paddingRight: 10,
                     fontSize: 30,
                     color: '#ff5050',
-                    left: 100,
+                    left: 80,
                     top: 100,
                   }}
                 />
@@ -226,91 +229,100 @@ const ProfileScreen = (props) => {
             )}
           </View>
         </View>
-      </Container>
+      </View>
 
       {/* 프로필 하단부 */}
-      <View
-        style={{
-          backgroundColor: 'black',
-          padding: 10,
-        }}>
-        <Text
+      <View style={{height: height * 0.63}}>
+        <View
           style={{
-            color: '#bdc3c7',
-            fontSize: 13,
+            backgroundColor: 'black',
+            padding: 10,
           }}>
-          계정 정보
-        </Text>
-      </View>
-      <View style={styles.bottomTab}>
-        <View>
-          <Text style={styles.bottomText1}>학번</Text>
-          <Text style={styles.bottomText2}>{userInfo.userId}</Text>
+          <Text
+            style={{
+              color: '#bdc3c7',
+              fontSize: 13,
+              fontWeight: 'bold',
+            }}>
+            계정 정보
+          </Text>
         </View>
-        <Right>
-          <Icon
-            name="chevron-forward"
-            type="Ionicons"
-            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-          />
-        </Right>
-      </View>
+        <View style={styles.bottomTab}>
+          <View>
+            <Text style={styles.bottomTextTitle}>학번</Text>
+            <Text style={styles.bottomText2}>{userInfo.userId}</Text>
+          </View>
+          <Right>
+            <Icon
+              name="chevron-forward"
+              type="Ionicons"
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            />
+          </Right>
+        </View>
 
-      <View style={styles.bottomTab}>
-        <View>
-          <Text style={styles.bottomText1}>이름</Text>
-          <Text style={styles.bottomText2}>{userEtc.userName}</Text>
+        <View style={styles.bottomTab}>
+          <View>
+            <Text style={styles.bottomTextTitle}>이름</Text>
+            <Text style={styles.bottomText2}>{userEtc.userName}</Text>
+          </View>
+          <Right>
+            <Icon
+              name="chevron-forward"
+              type="Ionicons"
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+              onPress={() => {
+                alert(2);
+              }}
+            />
+          </Right>
         </View>
-        <Right>
-          <Icon
-            name="chevron-forward"
-            type="Ionicons"
-            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-            onPress={() => { alert(2) }}
-          />
-        </Right>
-      </View>
-      <View style={styles.bottomTab}>
-        <View>
-          <Text style={styles.bottomText1}>별명</Text>
-          <Text style={styles.bottomText2}>{userEtc.userNickname}</Text>
+        <View style={styles.bottomTab}>
+          <View>
+            <Text style={styles.bottomTextTitle}>별명</Text>
+            <Text style={styles.bottomText2}>{userEtc.userNickname}</Text>
+          </View>
+          <Right>
+            <Icon
+              name="chevron-forward"
+              type="Ionicons"
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+              onPress={() => {
+                alert(3);
+              }}
+            />
+          </Right>
         </View>
-        <Right>
-          <Icon
-            name="chevron-forward"
-            type="Ionicons"
-            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-            onPress={() => { alert(3) }}
-          />
-        </Right>
-      </View>
 
-      <View style={styles.bottomTab}>
-        <View>
-          <Text style={styles.bottomText1}>학과</Text>
-          <Text style={styles.bottomText2}>{userEtc.userDepartment}</Text>
+        <View style={styles.bottomTab}>
+          <View>
+            <Text style={styles.bottomTextTitle}>학과</Text>
+            <Text style={styles.bottomText2}>{userEtc.userDepartment}</Text>
+          </View>
+          <Right>
+            <Icon
+              name="chevron-forward"
+              type="Ionicons"
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+              onPress={() => {
+                alert(4);
+              }}
+            />
+          </Right>
         </View>
-        <Right>
-          <Icon
-            name="chevron-forward"
-            type="Ionicons"
-            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-            onPress={() => { alert(4) }}
-          />
-        </Right>
-      </View>
-      <View style={styles.bottomTab}>
-        <View>
-          <Text style={styles.bottomText1}>지갑 정보</Text>
-          <Text style={styles.bottomText2}>{userInfo.userWalletAddress}</Text>
+        <View style={styles.bottomTab}>
+          <View>
+            <Text style={styles.bottomTextTitle}>지갑 정보</Text>
+            <Text style={styles.bottomText2}>{userInfo.userWalletAddress}</Text>
+          </View>
+          <Right>
+            <Icon
+              name="chevron-forward"
+              type="Ionicons"
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
+            />
+          </Right>
         </View>
-        <Right>
-          <Icon
-            name="chevron-forward"
-            type="Ionicons"
-            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-          />
-        </Right>
       </View>
     </View>
   );
@@ -318,19 +330,14 @@ const ProfileScreen = (props) => {
 
 ProfileScreen.navigationOptions = () => ({
   headerShown: false,
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="chevron-back" type="Ionicons" style={{ color: tintColor }} />
+  tabBarIcon: ({tintColor}) => (
+    <Icon name="chevron-back" type="Ionicons" style={{color: tintColor}} />
   ),
 });
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   profilePhoto: {
     width: 100,
     height: 100,
@@ -338,28 +345,26 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   profileButton: {
-    flex: 1,
-    justifyContent: 'center',
     height: 30,
     marginHorizontal: 10,
     marginTop: 10,
   },
   bottomTab: {
+    flex: 1,
     flexDirection: 'row',
+    alignItems:'center',
     borderWidth: 1,
     borderColor: 'black',
     backgroundColor: '#464646',
-    paddingLeft: 13,
-    paddingTop: 13,
-    paddingBottom: 13,
+    paddingLeft:10,
   },
-  bottomText1: {
+  bottomTextTitle: {
     fontSize: 15,
     color: '#bdc3c7',
-    paddingBottom: 5,
+    marginBottom:5
   },
   bottomText2: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#a0a0a0',
   },
 });

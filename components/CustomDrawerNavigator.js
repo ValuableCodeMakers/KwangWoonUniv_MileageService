@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { Card } from 'native-base';
 import { useSelector } from 'react-redux';
 
 const { width, height } = Dimensions.get('window');
@@ -35,7 +34,7 @@ const CustomDrawerNavigator = (props) => {
 
   return (
     <View style={styles.container}>
-      <Card style={styles.infoContainer}>
+      <View style={styles.infoContainer}>
         <Image
           source={{
             uri: `http://172.30.1.55:3000/${userPhoto.filename}`,
@@ -46,12 +45,12 @@ const CustomDrawerNavigator = (props) => {
             borderRadius: 100,
           }}></Image>
         <View style={styles.infoTextContainer}>
-          <Text style={{ fontSize: 40, fontWeight: 'bold' }}>
+          <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
             {userInfoState.userId}
           </Text>
-          <Text style={{ fontSize: 20 }}>{userInfoState.userBalance} 토큰</Text>
+          <Text style={{ fontSize: 20 }}>{userInfoState.userBalance} UMT</Text>
         </View>
-      </Card>
+      </View>
 
       <View style={styles.menuContainer}>
         <View style={{ ...styles.menuButton, marginTop: 20 }}>
@@ -99,7 +98,7 @@ const CustomDrawerNavigator = (props) => {
         </View> */}
       </View>
       <View style={styles.bottomTextContainer}>
-        <Text style={{ fontWeight: 'bold', color: '#fff' }}>Team 벨코즈</Text>
+        <Text style={{ fontSize:20,fontWeight: 'bold', color: '#fff' }}>Team 벨코즈</Text>
       </View>
     </View>
   );
@@ -116,6 +115,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     justifyContent: 'center',
+    alignItems:'center',
     flexDirection: 'row',
     height: height * 0.3,
     borderTopLeftRadius: 40,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   bottomTextContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: height * 0.05,
+    height: height * 0.1,
     borderBottomLeftRadius: 40,
 
     backgroundColor: '#c0392b',

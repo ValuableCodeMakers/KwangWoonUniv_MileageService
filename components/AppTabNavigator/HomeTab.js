@@ -97,7 +97,7 @@ const HomeTab = (props) => {
                     `'학교에서 있기' 이벤트가 종료되었습니다.\n\곧 토큰이 지급됩니다!`,
                   );
                   //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
-                  handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
+                  //handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
 
                   // 이벤트 중단
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단'));
@@ -128,7 +128,7 @@ const HomeTab = (props) => {
               onPress={() => {
                 alert(data.id + ' 방문 이벤트 완료!');
                 //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
-                handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
+                //handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
 
                 // 이벤트 중단
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));

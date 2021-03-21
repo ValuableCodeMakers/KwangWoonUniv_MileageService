@@ -132,6 +132,11 @@ android {
         applicationId "com.kwangwoonuniv_mileageservice"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+         // QR 스캐너용
+        missingDimensionStrategy 'react-native-camera', 'general'
+        missingDimensionStrategy 'react-native-camera', 'mlkit'
+        // multiDex 에러를 위해
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }

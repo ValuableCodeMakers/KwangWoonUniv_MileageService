@@ -55,7 +55,7 @@ class SendConfirmScreen extends Component {
               <Text style={{fontSize: 15, fontWeight: 'bold'}}>수량</Text>
             </View>
             <View style={styles.resultText}>
-              <Text>{this.state.value} KWC</Text>
+              <Text>{this.state.value} UMT</Text>
             </View>
           </View>
           <View style={styles.resultContainer}>

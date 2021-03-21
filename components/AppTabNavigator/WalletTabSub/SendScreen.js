@@ -10,6 +10,7 @@ import {
   Input,
   Icon,
 } from 'native-base';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('window');
 
@@ -27,6 +28,11 @@ class SendScreen extends Component {
     };
   }
 
+  handleState = (data) => {
+    this.setState({toAddress: data.toAddress});
+    console.log(this.state)
+  };
+
   render() {
     return (
       <Container style={styles.container}>
@@ -35,10 +41,16 @@ class SendScreen extends Component {
             <View style={styles.addressForm}>
               <View style={styles.addressMenu}>
                 <Text style={{fontSize: 18}}>상대 주소</Text>
-                <Icon name="camera" style={{fontSize: 22}} />
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate('QRcode', {handleState: this.handleState});
+                  }}>
+                  <Icon name="camera" style={{fontSize: 22}} />
+                </TouchableOpacity>
               </View>
               <Textarea
                 placeholder="상대방의 주소를 입력해주세요."
+                value={this.state.toAddress}
                 rowSpan={4}
                 placeholderTextColor="#BBB"
                 backgroundColor="#f5f6fa"
