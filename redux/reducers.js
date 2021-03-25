@@ -1,19 +1,19 @@
 // 이벤트 재발생 대기시간
-const TIME_LAPSE = 1000; // 900000 
+const TIME_LAPSE = 1000; // 900000
 const buildingEvent_Reducer_initialState = {
   events: [
-    {id: '화도관', state: false, time: new Date(0)},
-    {id: '비마관', state: false, time: new Date(0)},
-    {id: '옥의관', state: false, time: new Date(0)},
-    {id: '복지관', state: false, time: new Date(0)},
-    {id: '연구관', state: false, time: new Date(0)},
-    {id: '동해문화예술관', state: false, time: new Date(0)},
-    {id: '참빛관', state: false, time: new Date(0)},
-    {id: '새빛관', state: false, time: new Date(0)},
-    {id: '한울관', state: false, time: new Date(0)},
-    {id: '누리관', state: false, time: new Date(0)},
-    {id: '80주년기념관', state: false, time: new Date(0)},
-    {id: '아이스링크', state: false, time: new Date(0)},
+    { id: '화도관', state: false, time: new Date(0) },
+    { id: '비마관', state: false, time: new Date(1) },
+    { id: '옥의관', state: false, time: new Date(0) },
+    { id: '복지관', state: false, time: new Date(0) },
+    { id: '연구관', state: false, time: new Date(0) },
+    { id: '동해문화예술관', state: false, time: new Date(0) },
+    { id: '참빛관', state: false, time: new Date(0) },
+    { id: '새빛관', state: false, time: new Date(0) },
+    { id: '한울관', state: false, time: new Date(0) },
+    { id: '누리관', state: false, time: new Date(0) },
+    { id: '80주년기념관', state: false, time: new Date(0) },
+    { id: '아이스링크', state: false, time: new Date(0) },
   ],
 };
 
@@ -59,7 +59,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, HwaDo: action.result};
+      return { ...state, HwaDo: action.result };
     case '비마관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -72,7 +72,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, BiMa: action.result};
+      return { ...state, BiMa: action.result };
     case '옥의관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -85,7 +85,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, OgUi: action.result};
+      return { ...state, OgUi: action.result };
     case '복지관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -98,7 +98,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, BokJi: action.result};
+      return { ...state, BokJi: action.result };
     case '연구관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -111,7 +111,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, YeonGu: action.result};
+      return { ...state, YeonGu: action.result };
     case '동해문화예술관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -124,7 +124,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, DongHae: action.result};
+      return { ...state, DongHae: action.result };
     case '참빛관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -137,7 +137,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, ChamBit: action.result};
+      return { ...state, ChamBit: action.result };
     case '새빛관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -150,7 +150,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, SaeBit: action.result};
+      return { ...state, SaeBit: action.result };
     case '한울관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -163,7 +163,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, HanWool: action.result};
+      return { ...state, HanWool: action.result };
     case '누리관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -176,7 +176,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, NooRi: action.result};
+      return { ...state, NooRi: action.result };
     case '80주년기념관':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -189,7 +189,7 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, Anni80: action.result};
+      return { ...state, Anni80: action.result };
     case '아이스링크':
       index = state.events.findIndex((data) => data.id === action.type);
       newArray = [...state.events];
@@ -202,13 +202,13 @@ export const buildingEventReducer = (
           }
         }
       }
-      return {...state, events: newArray};
+      return { ...state, events: newArray };
     case '방문 이벤트 중단':
       index = state.events.findIndex((data) => data.state === true);
       newArray = [...state.events];
       newArray[index].state = false;
       newArray[index].time = Date.now();
-      return {...state, events: newArray};
+      return { ...state, events: newArray };
     default:
       return state;
   }
@@ -220,9 +220,9 @@ export const holdingEventReducer = (
 ) => {
   switch (action.type) {
     case '이벤트 실행':
-      return {...state, state: action.result};
+      return { ...state, state: action.result };
     case '이벤트 중단':
-      return {...state, state: action.result};
+      return { ...state, state: action.result };
     default:
       return state;
   }
@@ -232,14 +232,14 @@ export const holdingEventReducer = (
 export const userInfoReducer = (state = userData_initialState, action) => {
   switch (action.type) {
     case 'UPDATE_id':
-      return {...state, userId: action.userId};
+      return { ...state, userId: action.userId };
     case 'UPDATE_address':
-      return {...state, userWalletAddress: action.userWalletAddress};
+      return { ...state, userWalletAddress: action.userWalletAddress };
     case 'UPDATE_balacne':
       if (action.userBalance != '') {
-        return {...state, userBalance: action.userBalance};
+        return { ...state, userBalance: action.userBalance };
       } else {
-        return {...state, userBalance: 0};
+        return { ...state, userBalance: 0 };
       }
     default:
       return state;
@@ -268,9 +268,9 @@ export const loadingStateReducer = (
 ) => {
   switch (action.type) {
     case '로딩완료':
-      return {loadState: action.result};
+      return { loadState: action.result };
     case '로딩중':
-      return {loadState: action.result};
+      return { loadState: action.result };
     default:
       return state;
   }

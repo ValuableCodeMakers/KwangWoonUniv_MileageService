@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('window');
 
 const handleGetEventToken = (address) => {
   console.log('이벤트 토큰 전송 메소드');
-  fetch('http://172.30.1.55:3000/routes/getEventToken', {
+  fetch('http://192.168.0.4:3000/routes/getEventToken', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ to: address }),
@@ -32,7 +32,7 @@ const handleGetEventToken = (address) => {
 };
 
 const handleSaveSpecification = (detail, amount) => {
-  fetch('http://172.30.1.55:3000/routes/saveSpecification', {
+  fetch('http://192.168.0.4:3000/routes/saveSpecification', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ date: new Date(), amount: amount, detail: detail }),
@@ -43,6 +43,21 @@ const handleSaveSpecification = (detail, amount) => {
     .then((data) => {
       console.log(data);
     });
+};
+
+const handleSaveHistory = (amount) => {
+  fetch('http://192.168.0.4:3000/routes/saveHistory', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: new Date(), amount: amount }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      if (res.saveHistory_result == true)
+        alert("건물방문 3회차 보너스 코인" + amount + " 지급!");
+    })
 };
 
 const HomeTab = (props) => {
@@ -122,7 +137,7 @@ const HomeTab = (props) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text style={{fontSize: 20}}>{data.id} 이벤트 완료! 😊</Text>
+            <Text style={{ fontSize: 20 }}>{data.id} 이벤트 완료! 😊</Text>
             <TouchableOpacity
               style={styles.completeButton}
               onPress={() => {
@@ -130,10 +145,11 @@ const HomeTab = (props) => {
                 //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
                 //handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
 
+                handleSaveHistory(300); // History 업데이트 (3개 건물 방문 이벤트)
                 // 이벤트 중단
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수령</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>수령</Text>
             </TouchableOpacity>
           </CardItem>
         </Card>

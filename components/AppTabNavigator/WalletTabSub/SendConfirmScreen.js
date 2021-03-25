@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Container, Card, Button, Content} from 'native-base';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { Container, Card, Button, Content } from 'native-base';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {handleUserInfo} from '../../../redux/action';
+import { handleUserInfo } from '../../../redux/action';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 function handleTransfer(sendState, dispatch, props) {
   console.log('토큰 전송 메소드');
-  fetch('http://172.30.1.55:3000/routes/transferToken', {
+  fetch('http://192.168.0.4:3000/routes/transferToken', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(sendState),
   })
     .then((res) => {
@@ -35,9 +35,9 @@ function handleTransfer(sendState, dispatch, props) {
       console.log('잔액 업데이트');
 
       setTimeout(() => {
-        fetch('http://172.30.1.55:3000/routes/getTokenBalance', {
+        fetch('http://192.168.0.4:3000/routes/getTokenBalance', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             address: sendState.from,
           }),
@@ -60,10 +60,10 @@ function handleTransfer(sendState, dispatch, props) {
 }
 
 const handleSaveSpecification = (detail, amount) => {
-  fetch('http://172.30.1.55:3000/routes/saveSpecification', {
+  fetch('http://192.168.0.4:3000/routes/saveSpecification', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: new Date(), amount: amount, detail: detail }),
   })
     .then((res) => {
       return res.json();
@@ -91,16 +91,16 @@ const SendConfirmScreen = (props) => {
   return (
     <Container style={styles.container}>
       <Card style={styles.mainContainer}>
-        <Content contentContainerStyle={{flex: 1}}>
+        <Content contentContainerStyle={{ flex: 1 }}>
           <View>
             <View style={styles.confirmContainer}>
-              <Text style={{fontSize: 15}}>{toAddress}... 에게</Text>
-              <Text style={{fontSize: 30,fontWeight:'bold'}}>{sendState[0].value} UMT</Text>
-              <Text style={{fontSize: 15}}>토큰을 보낼까요?</Text>
+              <Text style={{ fontSize: 15 }}>{toAddress}... 에게</Text>
+              <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{sendState[0].value} UMT</Text>
+              <Text style={{ fontSize: 15 }}>토큰을 보낼까요?</Text>
             </View>
           </View>
           <View style={styles.cautionText}>
-            <Text style={{fontSize: 12}}>
+            <Text style={{ fontSize: 12 }}>
               상대방의 주소와 토큰의 양을 확인하세요.
             </Text>
             <Text
@@ -118,7 +118,7 @@ const SendConfirmScreen = (props) => {
           <Button
             style={styles.cancelButton}
             onPress={() => props.navigation.goBack()}>
-            <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
               취소
             </Text>
           </Button>
@@ -127,7 +127,7 @@ const SendConfirmScreen = (props) => {
             style={styles.nextButton}
             onPress={() => handleTransfer(sendState[0], dispatch, props)}
             danger>
-            <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
               전송
             </Text>
           </Button>

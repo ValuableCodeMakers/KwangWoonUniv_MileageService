@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Icon} from 'native-base';
+import React, { useState, useEffect } from 'react';
+import { Icon } from 'native-base';
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
@@ -8,7 +8,7 @@ import MapView, {
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   Text,
@@ -34,10 +34,10 @@ import {
   Anni80,
   IceLink,
 } from '../Coordinates/Coordinate.js';
-import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
+import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 import pinImage from '../../src/pin.png';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 async function requestPermission() {
   try {
@@ -90,7 +90,7 @@ const MapTab = (props) => {
       for (i = 0; i < buildingList.length; i++) {
         if (
           geolib.isPointInPolygon(
-            {latitude: location.latitude, longitude: location.longitude},
+            { latitude: location.latitude, longitude: location.longitude },
             buildingList[i].coordinate,
           )
         ) {
@@ -112,7 +112,7 @@ const MapTab = (props) => {
   useEffect(() => {
     if (location) {
       const locationResult = geolib.isPointInPolygon(
-        {latitude: location.latitude, longitude: location.longitude},
+        { latitude: location.latitude, longitude: location.longitude },
         KW_Area[0],
       );
 
@@ -173,21 +173,21 @@ const MapTab = (props) => {
     let x = markerId * width;
     console.log(markerId);
 
-    _scrollView.current.getNode().scrollTo({x: x, y: 0, animated: true});
+    _scrollView.current.getNode().scrollTo({ x: x, y: 0, animated: true });
   };
   const _scrollView = React.useRef(null);
 
   if (!location) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );
   } else {
     return (
-      <View style={{flex: 1, width: '100%'}}>
+      <View style={{ flex: 1, width: '100%' }}>
         <MapView
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           provider={PROVIDER_GOOGLE}
           showsMyLocationButton={true}
           showsCompass={true}
@@ -250,7 +250,7 @@ const MapTab = (props) => {
               key={index}
               image={pinImage}
               onPress={(e) => onMarkerPress(e)}
-              style={{width: 5, height: 5}}></Marker>
+              style={{ width: 5, height: 5 }}></Marker>
           ))}
         </MapView>
 
@@ -273,7 +273,7 @@ const MapTab = (props) => {
           {buildingList.map((building, index) => {
             return (
               <View style={styles.buildingCard} key={index}>
-                <View style={{width: '100%', height: '60%'}}>
+                <View style={{ width: '100%', height: '60%' }}>
                   <Image
                     source={building.image}
                     style={styles.buildingImage}></Image>
@@ -308,7 +308,7 @@ const MapTab = (props) => {
                     </Text>
                   </View>
                   <View>
-                    <Text style={{fontSize: 15}}>설명</Text>
+                    <Text style={{ fontSize: 15 }}>설명</Text>
                   </View>
                 </View>
               </View>
@@ -321,8 +321,8 @@ const MapTab = (props) => {
 };
 
 MapTab.navigationOptions = (screenProps) => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-map" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-map" style={{ color: tintColor }} />
   ),
 });
 

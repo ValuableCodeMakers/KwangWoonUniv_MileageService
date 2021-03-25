@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 const { width, height } = Dimensions.get('window');
 
 function logout(props) {
-  fetch('http://172.30.1.55:3000/routes/logout', {
+  fetch('http://192.168.0.4:3000/routes/logout', {
     method: 'GET',
   })
     .then((res) => {
@@ -37,7 +37,7 @@ const CustomDrawerNavigator = (props) => {
       <View style={styles.infoContainer}>
         <Image
           source={{
-            uri: `http://172.30.1.55:3000/${userPhoto.filename}`,
+            uri: `http://192.168.0.4:3000/${userPhoto.filename}`,
           }}
           style={{
             width: 100,
@@ -98,7 +98,7 @@ const CustomDrawerNavigator = (props) => {
         </View> */}
       </View>
       <View style={styles.bottomTextContainer}>
-        <Text style={{ fontSize:20,fontWeight: 'bold', color: '#fff' }}>Team 벨코즈</Text>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#fff' }}>Team 벨코즈</Text>
       </View>
     </View>
   );
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     flexDirection: 'row',
     height: height * 0.3,
     borderTopLeftRadius: 40,
