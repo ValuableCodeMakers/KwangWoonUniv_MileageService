@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Card, CardItem, Icon, Container, Spinner } from 'native-base';
 import {
   View,
@@ -13,6 +13,8 @@ import CountDown from 'react-native-countdown-component';
 
 import CustomHeader from './CustomHeader';
 import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
+import * as Progress from 'react-native-progress';
+import { bindActionCreators } from 'redux';
 
 const { width, height } = Dimensions.get('window');
 
@@ -60,7 +62,10 @@ const handleSaveHistory = (amount) => {
     })
 };
 
+
+
 const HomeTab = (props) => {
+  const [building_Visit_Count, setbuilding_Visit_Count] = useState();
   const dispatch = useDispatch();
   const loadState = useSelector((state) => state.loadState);
 
@@ -72,6 +77,25 @@ const HomeTab = (props) => {
 
   // 위치 이벤트 State
   const holdingState = useSelector((state) => state.holdingEvent);
+  var today = new Date();
+
+  // 오늘 건물 방문 횟수 가져오기
+  useEffect(() => {
+    fetch('http://192.168.0.4:3000/routes/getBuildingVisitCount', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        if (res.length < 3)
+          setbuilding_Visit_Count(res.length);
+
+        else
+          setbuilding_Visit_Count(3);
+      });
+  }, [userInfoState.userId]);
 
   const event_LocationIn = () => {
     if (holdingState.state) {
@@ -146,7 +170,9 @@ const HomeTab = (props) => {
                 //handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
 
                 handleSaveHistory(300); // History 업데이트 (3개 건물 방문 이벤트)
+                //get_Building_visit_count(); // 건물방문 이벤트 회차 불러오기
                 // 이벤트 중단
+                setbuilding_Visit_Count(building_Visit_Count + 1);
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
               <Text style={{ fontSize: 15, fontWeight: 'bold' }}>수령</Text>
@@ -156,6 +182,35 @@ const HomeTab = (props) => {
       ) : (
         <Fragment></Fragment>
       ),
+    );
+  };
+  const event_BuildingIn_Three = () => {
+    return (
+      <Card>
+        <CardItem
+          style={{
+            height: 100,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 15,
+            }}>
+            <Text style={{ fontSize: 20 }}>
+              {today.getMonth() + 1}월 {today.getDate()}일 건물방문 3회 이벤트</Text>
+            <Progress.Bar
+              progress={building_Visit_Count / 3}
+              height={20} width={250}
+              borderRadius={0}
+              color='#c0392b'
+            />
+          </View>
+        </CardItem>
+      </Card >
     );
   };
 
@@ -201,6 +256,7 @@ const HomeTab = (props) => {
           {loadState.loadState ? (
             <ScrollView style={styles.eventScrollView}>
               <Fragment>{event_LocationIn()}</Fragment>
+              <Fragment>{event_BuildingIn_Three()}</Fragment>
               <Fragment>{event_BuildingIn()}</Fragment>
             </ScrollView>
           ) : (
