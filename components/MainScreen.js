@@ -30,7 +30,7 @@ const MainScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("기본 정보 불러오기")
+    console.log("MainScreen: 기본 정보 불러오기")
     fetch('http://192.168.0.5:3000/routes/getUserId', {
       method: 'GET',
     })
@@ -81,7 +81,7 @@ const MainScreen = () => {
                 console.log('MainScreen: 지갑 용량 불러오기 성공');
 
                 dispatch(handleLoadingState('로딩완료', true));
-                console.log('로딩 완료');
+                console.log('MainScreen: 로딩 완료');
               });
           });
       });

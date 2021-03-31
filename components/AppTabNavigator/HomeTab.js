@@ -14,12 +14,11 @@ import CountDown from 'react-native-countdown-component';
 import CustomHeader from './CustomHeader';
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 import * as Progress from 'react-native-progress';
-import {bindActionCreators} from 'redux';
 
 const {width, height} = Dimensions.get('window');
 
 const handleGetEventToken = (address) => {
-  console.log('이벤트 토큰 전송 메소드');
+  console.log('HomeTab: 이벤트 토큰 전송 메소드');
   fetch('http://192.168.0.5:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -63,7 +62,7 @@ const handleSaveHistory = (amount) => {
 };
 
 const HomeTab = (props) => {
-  const [building_Visit_Count, setbuilding_Visit_Count] = useState();
+  const [buildingVisitCount, setbuildingVisitCount] = useState();
   const dispatch = useDispatch();
 
   const loadState = useSelector((state) => state.loadState);
@@ -86,8 +85,8 @@ const HomeTab = (props) => {
         return res.json();
       })
       .then((res) => {
-        if (res.length < 3) setbuilding_Visit_Count(res.length);
-        else setbuilding_Visit_Count(3);
+        if (res.length < 3) setbuildingVisitCount(res.length);
+        else setbuildingVisitCount(3);
       });
   }, [userInfoState.userId]);
 
@@ -96,10 +95,11 @@ const HomeTab = (props) => {
       //console.log('위치 이벤트 카드 불러오기');
 
       return (
-        <Card style={styles.currentEvent} key={'event_LocationIn'}>
+        <Card style={styles.currentEvent}>
           <CardItem
             style={{
               height: 120,
+              width: '100%',
               justifyContent: 'center',
               flexDirection: 'column',
             }}>
@@ -155,7 +155,7 @@ const HomeTab = (props) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text style={{fontSize: 20}}>{data.id} 이벤트 완료! 😊</Text>
+            <Text style={{fontSize: 20}}>{data.id} 이벤트 완료! 🎉</Text>
             <TouchableOpacity
               style={styles.completeButton}
               onPress={() => {
@@ -164,9 +164,9 @@ const HomeTab = (props) => {
                 //handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
 
                 handleSaveHistory(300); // History 업데이트 (3개 건물 방문 이벤트)
-                //get_Building_visit_count(); // 건물방문 이벤트 회차 불러오기
+                //get_Buildingvisitcount(); // 건물방문 이벤트 회차 불러오기
                 // 이벤트 중단
-                setbuilding_Visit_Count(building_Visit_Count + 1);
+                setbuildingVisitCount(buildingVisitCount + 1);
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
               <Text style={{fontSize: 15, fontWeight: 'bold'}}>수령</Text>
@@ -174,16 +174,16 @@ const HomeTab = (props) => {
           </CardItem>
         </Card>
       ) : (
-        <Fragment></Fragment>
+        <Fragment key={index}></Fragment>
       ),
     );
   };
   const event_BuildingIn_Three = () => {
     return (
-      <Card>
+      <Card style={styles.currentEvent}>
         <CardItem
           style={{
-            height: 100,
+            height: 120,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -193,7 +193,7 @@ const HomeTab = (props) => {
             {today.getMonth() + 1}월 {today.getDate()}일
           </Text>
           <Text style={{fontSize: 18, marginBottom: 5}}>
-            {building_Visit_Count == 3 ? (
+            {buildingVisitCount == 3 ? (
               <Fragment>
                 <Text style={{fontWeight: 'bold'}}>건물 3회 방문 이벤트 </Text>
                 <Text>완료! </Text>
@@ -208,7 +208,7 @@ const HomeTab = (props) => {
             )}
           </Text>
           <Progress.Bar
-            progress={building_Visit_Count / 3}
+            progress={buildingVisitCount / 3}
             height={20}
             width={250}
             borderRadius={5}

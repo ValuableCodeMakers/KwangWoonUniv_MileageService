@@ -8,7 +8,7 @@ import {
     Dimensions,
     Icon,
 } from 'react-native';
-import { Card, TabHeading } from 'native-base';
+import { Card } from 'native-base';
 
 const { width, height } = Dimensions.get('window');
 const userInfo = {

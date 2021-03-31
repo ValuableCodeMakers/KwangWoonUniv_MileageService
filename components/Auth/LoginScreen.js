@@ -37,7 +37,7 @@ class LoginScreen extends Component {
         return res.json();
       })
       .then((res) => {
-        console.log('응답 결과 ', res);
+        console.log('LoginScreen: 로그인 결과 ', res);
 
         if (res.result == false) {
           // 로그인 실패
@@ -48,14 +48,14 @@ class LoginScreen extends Component {
           );
         } else if (res.result == 'NEW_REGISTER') {
           // 처음 회원 가입
-          console.log('새로운 회원');
+          console.log('LoginScreen: 새로운 회원');
 
           this.props.navigation.navigate('NewRegister', {
             screen: 'CreateProfile',
           });
         } else {
           // 이미 회원
-          console.log('이미 회원');
+          console.log('LoginScreen: 이미 회원');
 
           this.props.navigation.navigate('Main', {
             screen: 'HomeTab',
