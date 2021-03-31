@@ -33,7 +33,7 @@ class RegisterScreen extends Component {
     const userPwdCheck = this.state.passwordCheck;
 
     if (userPwd === userPwdCheck) {
-      fetch('http://192.168.0.4:3000/routes/register', {
+      fetch('http://192.168.0.5:3000/routes/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state),

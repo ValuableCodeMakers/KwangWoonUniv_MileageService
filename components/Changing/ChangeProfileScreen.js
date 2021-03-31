@@ -25,7 +25,7 @@ function confirmButtonClickEvent(state, navigation) {
         state.nickname = userInfo.Nickname;
     if (state.department == '')
         state.department = userInfo.Department;
-    fetch('http://192.168.0.4:3000/routes/changeProfile', {
+    fetch('http://192.168.0.5:3000/routes/changeProfile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

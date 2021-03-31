@@ -174,7 +174,7 @@ function getPhotoFile() {
   if (rankers.rank1.id == '') {
     return 'default';
   }
-  fetch('http://192.168.0.4:3000/routes/getPhotos', {
+  fetch('http://192.168.0.5:3000/routes/getPhotos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -204,7 +204,7 @@ function getPhotoFile() {
 
 function _onRefresh() {
   // 랭킹 갱신하기
-  fetch('http://192.168.0.4:3000/routes/getUsersRank', {
+  fetch('http://192.168.0.5:3000/routes/getUsersRank', {
     method: 'GET',
   })
     .then((res) => {
@@ -258,7 +258,7 @@ const RankTab = (props) => {
   useEffect(() => {
     console.log('프로필 사진 가져오기 요청');
 
-    fetch('http://192.168.0.4:3000/routes/getPhoto', {
+    fetch('http://192.168.0.5:3000/routes/getPhoto', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userInfo.userId }),
@@ -289,7 +289,7 @@ const RankTab = (props) => {
   useEffect(() => {
     console.log('유저 랭크 가져오기 요청');
 
-    fetch('http://192.168.0.4:3000/routes/getUsersRank', {
+    fetch('http://192.168.0.5:3000/routes/getUsersRank', {
       method: 'GET',
     })
       .then((res) => {
@@ -344,7 +344,7 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://192.168.0.4:3000/${userPhoto.filename}`,
+                  uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
                 }}></Thumbnail>
             ) : (
               <Thumbnail circular={true} large source={basicImage}></Thumbnail>
@@ -364,7 +364,7 @@ const RankTab = (props) => {
               <Thumbnail
                 circular={true}
                 source={{
-                  uri: `http://192.168.0.4:3000/${rankers.rank2.filename}`,
+                  uri: `http://192.168.0.5:3000/${rankers.rank2.filename}`,
                 }}
                 large
                 style={{
@@ -397,7 +397,7 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://192.168.0.4:3000/${rankers.rank1.filename}`,
+                  uri: `http://192.168.0.5:3000/${rankers.rank1.filename}`,
                 }}
                 style={{ width: 90, height: 90 }}></Thumbnail>
             ) : (
@@ -426,7 +426,7 @@ const RankTab = (props) => {
                 circular={true}
                 large
                 source={{
-                  uri: `http://192.168.0.4:3000/${rankers.rank3.filename}`,
+                  uri: `http://192.168.0.5:3000/${rankers.rank3.filename}`,
                 }}
                 style={{ width: 75, height: 75 }}></Thumbnail>
             ) : (
@@ -476,7 +476,7 @@ const RankTab = (props) => {
                         circular={true}
                         small
                         source={{
-                          uri: `http://192.168.0.4:3000/${ranker.filename}`,
+                          uri: `http://192.168.0.5:3000/${ranker.filename}`,
                         }}
                         style={{ marginHorizontal: 20 }}></Thumbnail>
                     ) : (
