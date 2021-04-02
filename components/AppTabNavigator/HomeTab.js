@@ -1,5 +1,4 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {Card, CardItem, Icon, Container, Spinner} from 'native-base';
 import {
   View,
   Text,
@@ -8,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {Card, CardItem, Icon, Container, Spinner} from 'native-base';
 import {useSelector, useDispatch} from 'react-redux';
 import CountDown from 'react-native-countdown-component';
 
@@ -19,7 +19,7 @@ const {width, height} = Dimensions.get('window');
 
 const handleGetEventToken = (address) => {
   console.log('HomeTab: 이벤트 토큰 전송 메소드');
-  fetch('http://192.168.0.5:3000/routes/getEventToken', {
+  fetch('http://172.30.1.42:3000/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({to: address}),
@@ -33,7 +33,7 @@ const handleGetEventToken = (address) => {
 };
 
 const handleSaveSpecification = (detail, amount) => {
-  fetch('http://192.168.0.5:3000/routes/saveSpecification', {
+  fetch('http://172.30.1.42:3000/routes/saveSpecification', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
@@ -47,7 +47,7 @@ const handleSaveSpecification = (detail, amount) => {
 };
 
 const handleSaveHistory = (amount) => {
-  fetch('http://192.168.0.5:3000/routes/saveHistory', {
+  fetch('http://172.30.1.42:3000/routes/saveHistory', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({date: new Date(), amount: amount}),
@@ -77,7 +77,7 @@ const HomeTab = (props) => {
 
   // 오늘 건물 방문 횟수 가져오기
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getBuildingVisitCount', {
+    fetch('http://172.30.1.42:3000/routes/getBuildingVisitCount', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
     })

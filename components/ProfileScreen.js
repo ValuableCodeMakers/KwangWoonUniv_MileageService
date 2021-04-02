@@ -50,7 +50,7 @@ const handleChangePhoto = (id, dispatch) => {
       const data = createFormData(id, res);
       const photo = res;
 
-      fetch('http://192.168.0.5:3000/routes/changePhoto', {
+      fetch('http://172.30.1.42:3000/routes/changePhoto', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -102,7 +102,7 @@ const ProfileScreen = (props) => {
   });
 
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getProfileEtc', {
+    fetch('http://172.30.1.42:3000/routes/getProfileEtc', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userInfo.userId }),
@@ -168,7 +168,7 @@ const ProfileScreen = (props) => {
                   onPress={() => handleChangePhoto(userInfo.userId, dispatch)}>
                   <Image
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                      uri: `http://172.30.1.42:3000/${userPhoto.filename}`,
                     }}
                     style={{
                       width: 120,

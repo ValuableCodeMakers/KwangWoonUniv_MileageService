@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get('window');
 
 function handleTransfer(sendState, dispatch, props) {
   console.log('토큰 전송 메소드');
-  fetch('http://192.168.0.5:3000/routes/transferToken', {
+  fetch('http://172.30.1.42:3000/routes/transferToken', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(sendState),
@@ -35,7 +35,7 @@ function handleTransfer(sendState, dispatch, props) {
       console.log('잔액 업데이트');
 
       setTimeout(() => {
-        fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
+        fetch('http://172.30.1.42:3000/routes/getTokenBalance', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -60,7 +60,7 @@ function handleTransfer(sendState, dispatch, props) {
 }
 
 const handleSaveSpecification = (detail, amount) => {
-  fetch('http://192.168.0.5:3000/routes/saveSpecification', {
+  fetch('http://172.30.1.42:3000/routes/saveSpecification', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ date: new Date(), amount: amount, detail: detail }),
