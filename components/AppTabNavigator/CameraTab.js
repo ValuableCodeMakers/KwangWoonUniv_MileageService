@@ -1,24 +1,47 @@
-import React, {Component, useEffect, useState, useRef} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import React, {Component, useEffect, useState, useRef, Fragment} from 'react';
+import {StyleSheet, View, Text, Dimensions, Modal} from 'react-native';
 import {Icon, Container} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-
-import CustomHeader from './CustomHeader';
-
+import {useSelector} from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+
+import CustomHeader from '../CustomHeader';
+import CustomModal from '../CustomModal';
 
 const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
 
+const handleGetEventToken = (address) => {
+  console.log('CameraTab: 이벤트 토큰 전송 메소드');
+  // fetch('http://192.168.0.5:3000/routes/getEventToken', {
+  //   method: 'POST',
+  //   headers: {'Content-Type': 'application/json'},
+  //   body: JSON.stringify({to: address}),
+  // })
+  //   .then((res) => {
+  //     return res.json();
+  //   })
+  //   .then((data) => {
+  //     console.log('이벤트 토큰 hash', data.txhash);
+  //   });
+};
+
 const CameraTab = (props) => {
   const scanner = React.useRef('');
   const [cameraState, setCameraState] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const userInfoState = useSelector((state) => state.userInfo);
+
+  // {"eventTitle":"scanEvent","eventReward":500}
   const onSuccess = (e) => {
-    console.log(e);
+    let scanData = JSON.parse(e.data);
 
-    // props.navigation.goBack();
-    // props.navigation.state.params.handleState({toAddress: e.data});
+    if (scanData['eventTitle'] == 'scanEvent') {
+      setCameraState(false);
+      setModalVisible(true);
+      handleGetEventToken(userInfoState.userWalletAddress);
+    }
   };
 
   return (
@@ -27,9 +50,16 @@ const CameraTab = (props) => {
         props={props}
         menuColor={'#c0392b'}
         iconColor={'#fff'}></CustomHeader>
-
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}></CustomModal>
       <Container style={styles.mainContainer}>
-        <View style={styles.cameraContainer}>
+        <View
+          style={
+            cameraState
+              ? styles.cameraAfterContainer
+              : styles.cameraBeforeContainer
+          }>
           {cameraState ? (
             <QRCodeScanner
               reactivate={true}
@@ -38,55 +68,43 @@ const CameraTab = (props) => {
                 scanner.current = node;
               }}
               onRead={onSuccess}
-              cameraStyle={{height: "100%"}}
-              topContent={
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: height * 0.1,
-                    width: width,
-                    backgroundColor: '#c0392b',
-                  }}>
-                  <Text
-                    style={{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>
-                    QR코드를 찍으세요!
-                  </Text>
-                </View>
-              }
-              bottomContent={
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: height * 0.1,
-                    width: width,
-                    backgroundColor: '#c0392b',
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      props.navigation.goBack();
-                    }}>
-                    <Text
-                      style={{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>
-                      스캔 중지 🙅‍♂️
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              }></QRCodeScanner>
+              cameraStyle={{height: '100%'}}></QRCodeScanner>
           ) : (
-            <Text>카메라 실행 전</Text>
+            <Icon
+              type="MaterialCommunityIcons"
+              name="qrcode-scan"
+              style={{fontSize: 150}}
+            />
           )}
         </View>
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              setCameraState(true);
-            }}>
-            <View>
-              <Text>스캔 시작</Text>
-            </View>
-          </TouchableOpacity>
+
+        <View style={{...styles.menuContainer, opacity: cameraState ? 0.5 : 1}}>
+          {cameraState ? (
+            <TouchableOpacity
+              style={styles.scanButton}
+              onPress={() => {
+                setCameraState(false);
+              }}>
+              <Text style={{fontSize: 20, fontWeight: 'bold', color: '#111'}}>
+                스캔 중지
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.scanButton}
+              onPress={() => {
+                setCameraState(true);
+              }}>
+              <Text style={{fontSize: 20, fontWeight: 'bold', color: '#111'}}>
+                스캔 시작
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          <Text style={{fontSize: 15, fontWeight: 'bold', color: '#e74c3c'}}>
+            이벤트 QR코드를 인식하세요.
+            <Text style={{fontSize: 25}}> 🧐</Text>
+          </Text>
         </View>
       </Container>
     </Container>
@@ -97,7 +115,7 @@ CameraTab.navigationOptions = () => ({
   tabBarIcon: ({tintColor}) => (
     <Icon
       type="MaterialCommunityIcons"
-      name="qrcode-scan"
+      name="qrcode"
       style={{color: tintColor}}
     />
   ),
@@ -106,12 +124,39 @@ CameraTab.navigationOptions = () => ({
 const styles = StyleSheet.create({
   mainContainer: {
     display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  cameraContainer: {
-    height: height * 0.5,
+  cameraAfterContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: width,
-    borderWidth: 1,
+    height: height * 0.83,
+    top: 0,
+  },
+  cameraBeforeContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width,
+    height: height * 0.5,
+  },
+  menuContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width * 0.9,
+    height: height * 0.2,
+
+    backgroundColor: '#f5f6fa',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    elevation: 10,
+  },
+  scanButton: {
+    width: '50%',
+    height: '50%',
+    alignItems: 'center',
   },
 });
 export default CameraTab;

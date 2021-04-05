@@ -54,11 +54,6 @@ const QRcodeScreen = (props) => {
             width: width,
             backgroundColor: '#c0392b',
           }}>
-          {/* <TouchableOpacity
-              style={styles.buttonTouchable}
-              onPress={() => this.scanner.reactivate()}>
-              <Text style={{fontSize:20,fontWeight:'bold'}}>OK. Got it!</Text>
-            </TouchableOpacity> */}
 
           <TouchableOpacity
             onPress={() => {
