@@ -5,12 +5,12 @@ import {
     StyleSheet,
     TextInput,
     TouchableOpacity,
-    Dimensions,
     Icon,
 } from 'react-native';
 import { Card } from 'native-base';
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js'
 
-const { width, height } = Dimensions.get('window');
 const userInfo = {
     Id: '',
     Name: '',
@@ -25,7 +25,7 @@ function confirmButtonClickEvent(state, navigation) {
         state.nickname = userInfo.Nickname;
     if (state.department == '')
         state.department = userInfo.Department;
-    fetch('http://192.168.0.5:3000/routes/changeProfile', {
+    fetch(Address.url + '/routes/changeProfile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

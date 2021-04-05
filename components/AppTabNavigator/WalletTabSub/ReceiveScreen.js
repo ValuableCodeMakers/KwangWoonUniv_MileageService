@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {  Text, StyleSheet, Dimensions } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { Container, Card, CardItem, Toast, Button } from 'native-base';
 
 import QRCode from 'react-native-qrcode-svg';
-
-const { width, height } = Dimensions.get('window');
+import { width, height } from '../../../Modules/Dimensions.js'
 
 class ReceiveScreen extends Component {
   static navigationOptions = {

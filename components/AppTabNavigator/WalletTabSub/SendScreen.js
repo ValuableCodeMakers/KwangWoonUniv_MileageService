@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import {
   Container,
   Card,
@@ -10,9 +10,8 @@ import {
   Input,
   Icon,
 } from 'native-base';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-
-const {width, height} = Dimensions.get('window');
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { width, height } from '../../../Modules/Dimensions.js'
 
 class SendScreen extends Component {
   static navigationOptions = {
@@ -29,7 +28,7 @@ class SendScreen extends Component {
   }
 
   handleState = (data) => {
-    this.setState({toAddress: data.toAddress});
+    this.setState({ toAddress: data.toAddress });
     console.log(this.state)
   };
 
@@ -40,12 +39,12 @@ class SendScreen extends Component {
           <View style={styles.formContainer}>
             <View style={styles.addressForm}>
               <View style={styles.addressMenu}>
-                <Text style={{fontSize: 18}}>상대 주소</Text>
+                <Text style={{ fontSize: 18 }}>상대 주소</Text>
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('QRcode', {handleState: this.handleState});
+                    this.props.navigation.navigate('QRcode', { handleState: this.handleState });
                   }}>
-                  <Icon name="camera" style={{fontSize: 22}} />
+                  <Icon name="camera" style={{ fontSize: 22 }} />
                 </TouchableOpacity>
               </View>
               <Textarea
@@ -56,16 +55,16 @@ class SendScreen extends Component {
                 backgroundColor="#f5f6fa"
                 width="100%"
                 onChangeText={(toAddress) => {
-                  this.setState({toAddress});
+                  this.setState({ toAddress });
                 }}></Textarea>
             </View>
             <View style={styles.transferForm}>
-              <Text style={{fontSize: 18}}>토큰 수량</Text>
+              <Text style={{ fontSize: 18 }}>토큰 수량</Text>
               <Item floatingLabel>
                 <Label>전송할 토큰 수량을 적어주세요.</Label>
                 <Input
                   onChangeText={(transferToken) => {
-                    this.setState({transferToken});
+                    this.setState({ transferToken });
                   }}
                 />
                 <Text>KWC</Text>
@@ -73,7 +72,7 @@ class SendScreen extends Component {
             </View>
           </View>
           <View style={styles.cautionTextContainer}>
-            <Text style={{fontSize: 12}}>
+            <Text style={{ fontSize: 12 }}>
               ! 상대방의 주소와 토큰의 양을 확인하세요.
             </Text>
             <Text
@@ -90,7 +89,7 @@ class SendScreen extends Component {
             <Button
               style={styles.cancelButton}
               onPress={() => this.props.navigation.goBack()}>
-              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
                 취소
               </Text>
             </Button>
@@ -101,7 +100,7 @@ class SendScreen extends Component {
                 this.props.navigation.navigate('SendConfirm', this.state);
               }}
               danger>
-              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
                 다음
               </Text>
             </Button>

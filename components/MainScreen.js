@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Platform, Dimensions } from 'react-native';
+import { Platform } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -23,8 +23,8 @@ import ProfileScreen from './ProfileScreen';
 import ChangeProfileScreen from './Changing/ChangeProfileScreen';
 
 import { handleUserInfo, handleLoadingState } from '../redux/action';
-
-const { width, height } = Dimensions.get('window');
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js'
 
 const MainScreen = () => {
   var userState = { userId: '', userWalletAddress: '', userWalletBalance: 'N/A' };
@@ -32,7 +32,7 @@ const MainScreen = () => {
 
   useEffect(() => {
     console.log("MainScreen: 기본 정보 불러오기")
-    fetch('http://192.168.0.5:3000/routes/getUserId', {
+    fetch(Address.url + '/routes/getUserId', {
       method: 'GET',
     })
       .then((res) => {
@@ -44,7 +44,7 @@ const MainScreen = () => {
         console.log('MainScreen: id 불러오기 성공');
       })
       .then(() => {
-        fetch('http://192.168.0.5:3000/routes/getWalletAddress', {
+        fetch(Address.url + '/routes/getWalletAddress', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId: userState.userId }),
@@ -60,7 +60,7 @@ const MainScreen = () => {
             console.log('MainScreen: address 불러오기 성공');
           })
           .then(() => {
-            fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
+            fetch(Address.url + '/routes/getTokenBalance', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({

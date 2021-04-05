@@ -3,16 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   Image,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-
-const { width, height } = Dimensions.get('window');
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js';
 
 function logout(props) {
-  fetch('http://192.168.0.5:3000/routes/logout', {
+  fetch(Address.url + '/routes/logout', {
     method: 'GET',
   })
     .then((res) => {
@@ -37,7 +36,7 @@ const CustomDrawerNavigator = (props) => {
       <View style={styles.infoContainer}>
         <Image
           source={{
-            uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+            uri: Address.url + '/${userPhoto.filename}',
           }}
           style={{
             width: 100,

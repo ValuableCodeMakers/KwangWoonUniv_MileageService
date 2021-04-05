@@ -4,14 +4,14 @@ import {
   Text,
   StyleSheet,
   Image,
-  Dimensions,
   TextInput,
   Alert,
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
 import { Card } from 'native-base';
-const { width, height } = Dimensions.get('window');
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js'
 
 class LoginScreen extends Component {
   static navigationOptions = {
@@ -28,7 +28,7 @@ class LoginScreen extends Component {
   }
 
   handleLogin = () => {
-    fetch('http://192.168.0.5:3000/routes/login', {
+    fetch(Address.url + '/routes/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),

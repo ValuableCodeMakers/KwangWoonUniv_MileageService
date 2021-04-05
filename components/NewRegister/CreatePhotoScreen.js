@@ -4,13 +4,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import { Card, CardItem, Thumbnail } from 'native-base';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import basicImage from '../../src/profile/profile.png'; // 기본 이미지
-
-const { width, height } = Dimensions.get('window');
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js';
 
 export default class CreateProfileScreen extends Component {
   constructor(props) {
@@ -25,7 +24,7 @@ export default class CreateProfileScreen extends Component {
   }
 
   componentDidMount() {
-    fetch('http://192.168.0.5:3000/routes/getUserId', {
+    fetch(Address.url + '/routes/getUserId', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -53,7 +52,7 @@ export default class CreateProfileScreen extends Component {
   handleSavePhoto = () => {
     const data = this.createFormData(this.state.image);
     console.log(data);
-    fetch('http://192.168.0.5:3000/routes/savePhoto', {
+    fetch(Address.url + '/routes/savePhoto', {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',

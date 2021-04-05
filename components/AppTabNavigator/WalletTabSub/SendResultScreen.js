@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Container, Card, Button } from 'native-base';
-
-const {width, height} = Dimensions.get('window');
+import React, { Component } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Container, Card, Button } from 'native-base';
+import { width, height } from '../../../Modules/Dimensions.js';
 
 class SendConfirmScreen extends Component {
   static navigationOptions = {
@@ -27,24 +26,24 @@ class SendConfirmScreen extends Component {
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <View style={styles.completeText}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>토큰 전송이</Text>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>토큰 전송이</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
               완료되었습니다. 🤗
             </Text>
           </View>
           <View style={styles.resultContainer}>
             <View style={styles.resultText}>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                 생성된 해쉬
               </Text>
             </View>
             <View style={styles.resultText}>
-              <Text style={{fontSize: 15}}>{txHash} ...</Text>
+              <Text style={{ fontSize: 15 }}>{txHash} ...</Text>
             </View>
           </View>
           <View style={styles.resultContainer}>
             <View style={styles.resultText}>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>받은 주소</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>받은 주소</Text>
             </View>
             <View style={styles.resultText}>
               <Text>{toAddress} ...</Text>
@@ -52,7 +51,7 @@ class SendConfirmScreen extends Component {
           </View>
           <View style={styles.resultContainer}>
             <View style={styles.resultText}>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수량</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>수량</Text>
             </View>
             <View style={styles.resultText}>
               <Text>{this.state.value} UMT</Text>
@@ -60,7 +59,7 @@ class SendConfirmScreen extends Component {
           </View>
           <View style={styles.resultContainer}>
             <View style={styles.resultText}>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수수료</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>수수료</Text>
             </View>
             <View style={styles.resultText}>
               <Text></Text>
@@ -73,7 +72,7 @@ class SendConfirmScreen extends Component {
                 this.props.navigation.navigate('AppTabNavigator');
               }}
               danger>
-              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
                 확인
               </Text>
             </Button>

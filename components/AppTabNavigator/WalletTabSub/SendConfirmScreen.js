@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Container, Card, Button, Content } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { handleUserInfo } from '../../../redux/action';
-
-const { width, height } = Dimensions.get('window');
+import { Address } from '../../../Modules/Url.js';
+import { width, height } from '../../../Modules/Dimensions.js';
 
 function handleTransfer(sendState, dispatch, props) {
   console.log('토큰 전송 메소드');
-  fetch('http://192.168.0.5:3000/routes/transferToken', {
+  fetch(Address.url + '/routes/transferToken', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(sendState),
@@ -35,7 +35,7 @@ function handleTransfer(sendState, dispatch, props) {
       console.log('잔액 업데이트');
 
       setTimeout(() => {
-        fetch('http://192.168.0.5:3000/routes/getTokenBalance', {
+        fetch(Address.url + '/routes/getTokenBalance', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -60,7 +60,7 @@ function handleTransfer(sendState, dispatch, props) {
 }
 
 const handleSaveSpecification = (detail, amount) => {
-  fetch('http://192.168.0.5:3000/routes/saveSpecification', {
+  fetch(Address.url + '/routes/saveSpecification', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ date: new Date(), amount: amount, detail: detail }),

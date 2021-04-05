@@ -1,5 +1,5 @@
-import React, {Component, Fragment, useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import React, { Component, Fragment, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import {
   Icon,
   Container,
@@ -10,13 +10,13 @@ import {
   TabHeading,
   DefaultTabBar,
 } from 'native-base';
-import {useSelector} from 'react-redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import QRCode from 'react-native-qrcode-svg';
 
 import CustomHeader from '../CustomHeader';
-
-const {width, height} = Dimensions.get('window');
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js'
 
 // Native base, Tab 오류때문에 사용
 const renderTabBar = (props) => {
@@ -31,9 +31,9 @@ const WalletTab = (props) => {
 
   useEffect(() => {
     console.log('WalletTab: 지갑 총량 변화로 "내역" 업데이트');
-    fetch('http://192.168.0.5:3000/routes/getSpecification', {
+    fetch(Address.url + '/routes/getSpecification', {
       method: 'GET',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => {
         return res.json();
@@ -52,7 +52,7 @@ const WalletTab = (props) => {
 
       <Container style={styles.mainContainer}>
         <View style={styles.upperContainer}>
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: 'center' }}>
             <Text
               style={{
                 fontSize: 15,
@@ -63,8 +63,8 @@ const WalletTab = (props) => {
               현재 잔액
             </Text>
             <Text
-              style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
-              <Icon name="server-outline" style={{color: 'white'}}></Icon>{' '}
+              style={{ fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON' }}>
+              <Icon name="server-outline" style={{ color: 'white' }}></Icon>{' '}
               {userInfoState.userBalance} 토큰
             </Text>
           </View>
@@ -80,8 +80,8 @@ const WalletTab = (props) => {
               }}>
               <Icon
                 name="exit-outline"
-                style={{fontSize: 20, color: 'white'}}></Icon>
-              <Text style={{fontSize: 15, color: 'white'}}>보내기</Text>
+                style={{ fontSize: 20, color: 'white' }}></Icon>
+              <Text style={{ fontSize: 15, color: 'white' }}>보내기</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.receiveButton}
@@ -94,8 +94,8 @@ const WalletTab = (props) => {
               }}>
               <Icon
                 name="enter-outline"
-                style={{fontSize: 20, color: 'white'}}></Icon>
-              <Text style={{fontSize: 15, color: 'white'}}> 받기</Text>
+                style={{ fontSize: 20, color: 'white' }}></Icon>
+              <Text style={{ fontSize: 15, color: 'white' }}> 받기</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -105,7 +105,7 @@ const WalletTab = (props) => {
             <Tabs renderTabBar={renderTabBar}>
               <Tab
                 heading={
-                  <TabHeading style={{backgroundColor: '#c0392b'}}>
+                  <TabHeading style={{ backgroundColor: '#c0392b' }}>
                     <Text
                       style={{
                         fontSize: 17,
@@ -131,7 +131,7 @@ const WalletTab = (props) => {
               </Tab>
               <Tab
                 heading={
-                  <TabHeading style={{backgroundColor: '#c0392b'}}>
+                  <TabHeading style={{ backgroundColor: '#c0392b' }}>
                     <Text
                       style={{
                         fontSize: 17,
@@ -148,17 +148,17 @@ const WalletTab = (props) => {
                     return (
                       <CardItem
                         key={index}
-                        style={{flexDirection: 'row', width: '98%'}}>
-                        <View style={{width: '20%', marginLeft: 0}}>
-                          <Text style={{fontSize: 16}}>
+                        style={{ flexDirection: 'row', width: '98%' }}>
+                        <View style={{ width: '20%', marginLeft: 0 }}>
+                          <Text style={{ fontSize: 16 }}>
                             {data[index].date.split('-')[1]}.
                             {data[index].date.split('-')[2]}
                           </Text>
                         </View>
-                        <View style={{width: '50%'}}>
+                        <View style={{ width: '50%' }}>
                           <Text>{data[index].detail}</Text>
                         </View>
-                        <View style={{width: '30%'}}>
+                        <View style={{ width: '30%' }}>
                           <Text
                             style={{
                               fontSize: 16,
@@ -185,8 +185,8 @@ const WalletTab = (props) => {
 };
 
 WalletTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-wallet-sharp" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-wallet-sharp" style={{ color: tintColor }} />
   ),
 });
 

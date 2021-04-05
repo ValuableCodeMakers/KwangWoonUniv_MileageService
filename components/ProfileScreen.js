@@ -13,15 +13,14 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   Image,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { handleProfilePhoto } from '../redux/action';
-
-var { width, height } = Dimensions.get('window');
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js'
 
 function createFormData(id, photo) {
   const data = new FormData();
@@ -50,7 +49,7 @@ const handleChangePhoto = (id, dispatch) => {
       const data = createFormData(id, res);
       const photo = res;
 
-      fetch('http://192.168.0.5:3000/routes/changePhoto', {
+      fetch(Address.url + '/routes/changePhoto', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -102,7 +101,7 @@ const ProfileScreen = (props) => {
   });
 
   useEffect(() => {
-    fetch('http://192.168.0.5:3000/routes/getProfileEtc', {
+    fetch(Address.url + '/routes/getProfileEtc', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userInfo.userId }),
@@ -168,7 +167,7 @@ const ProfileScreen = (props) => {
                   onPress={() => handleChangePhoto(userInfo.userId, dispatch)}>
                   <Image
                     source={{
-                      uri: `http://192.168.0.5:3000/${userPhoto.filename}`,
+                      uri: Address.url + `/${userPhoto.filename}`,
                     }}
                     style={{
                       width: 120,

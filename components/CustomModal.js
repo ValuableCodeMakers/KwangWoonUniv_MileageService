@@ -1,11 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions, Alert, Button} from 'react-native';
+import { StyleSheet, View, Text, Alert, Button } from 'react-native';
 import Modal from 'react-native-modal';
+import { width, height } from '../Modules/Dimensions.js';
 
-const width = Dimensions.get('screen').width;
-const height = Dimensions.get('screen').height;
-
-const CustomModal = ({modalVisible, setModalVisible}) => {
+const CustomModal = ({ modalVisible, setModalVisible }) => {
   return (
     <Modal isVisible={modalVisible}>
       <View style={styles.centeredView}>
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
   },
-  buttonClose: {width: 50, height: 50, backgroundColor: '#111'},
+  buttonClose: { width: 50, height: 50, backgroundColor: '#111' },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',

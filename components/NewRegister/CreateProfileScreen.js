@@ -1,20 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
-import {Card} from 'native-base';
-
-const {width, height} = Dimensions.get('window');
+import { Card } from 'native-base';
+import { width, height } from '../../Modules/Dimensions.js'
 
 export default class CreateProfileScreen extends Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       name: '',
       nickname: '',
@@ -29,30 +27,30 @@ export default class CreateProfileScreen extends Component {
         <View style={styles.inputContainer}>
           <Text style={styles.title}>Status</Text>
           <Card style={styles.card}>
-            <View style={{marginTop: 30}}>
+            <View style={{ marginTop: 30 }}>
               <Text style={styles.inputTitle}>이름</Text>
               <TextInput
                 style={styles.input}
                 autoCapitalize="none"
-                onChangeText={(name) => this.setState({name})}
+                onChangeText={(name) => this.setState({ name })}
                 value={this.state.name}></TextInput>
             </View>
 
-            <View style={{marginTop: 30}}>
+            <View style={{ marginTop: 30 }}>
               <Text style={styles.inputTitle}>학과</Text>
               <TextInput
                 style={styles.input}
                 autoCapitalize="none"
-                onChangeText={(department) => this.setState({department})}
+                onChangeText={(department) => this.setState({ department })}
                 value={this.state.department}></TextInput>
             </View>
 
-            <View style={{marginTop: 30}}>
+            <View style={{ marginTop: 30 }}>
               <Text style={styles.inputTitle}>별명</Text>
               <TextInput
                 style={styles.input}
                 autoCapitalize="none"
-                onChangeText={(nickname) => this.setState({nickname})}
+                onChangeText={(nickname) => this.setState({ nickname })}
                 value={this.state.nickname}></TextInput>
             </View>
           </Card>
@@ -62,10 +60,10 @@ export default class CreateProfileScreen extends Component {
             onPress={() =>
               this.props.navigation.navigate({
                 routeName: 'CreateWallet',
-                params: {preState: this.state}, // 다음 화면으로 state 전달
+                params: { preState: this.state }, // 다음 화면으로 state 전달
               })
             }>
-            <Text style={{fontSize: 20}}>다음</Text>
+            <Text style={{ fontSize: 20 }}>다음</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TextInput,
   StatusBar,
-  Dimensions,
   Image,
   TouchableOpacity,
   KeyboardAvoidingView,
@@ -13,7 +12,8 @@ import {
 import { Card } from 'native-base';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-const { width, height } = Dimensions.get('window');
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js'
 
 class RegisterScreen extends Component {
   static navigationOptions = {
@@ -33,7 +33,7 @@ class RegisterScreen extends Component {
     const userPwdCheck = this.state.passwordCheck;
 
     if (userPwd === userPwdCheck) {
-      fetch('http://192.168.0.5:3000/routes/register', {
+      fetch(Address.url + '/routes/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state),

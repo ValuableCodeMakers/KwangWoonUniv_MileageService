@@ -15,11 +15,11 @@ import {
   StyleSheet,
   Platform,
   PermissionsAndroid,
-  Dimensions,
   Image,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import {
+  InitialRegion,
   KW_Area,
   HwaDo,
   BiMa,
@@ -33,11 +33,10 @@ import {
   NooRi,
   Anni80,
   IceLink,
-} from '../Coordinates/Coordinate.js';
+} from '../../Modules/Coordinate.js';
 import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 import pinImage from '../../src/pin.png';
-
-const { width, height } = Dimensions.get('window');
+import { width, height } from '../../Modules/Dimensions.js';
 
 async function requestPermission() {
   try {
@@ -197,12 +196,7 @@ const MapTab = (props) => {
           loadingEnabled={true}
           moveOnMarkerPress={true}
           userLocationUpdateInterval={1000}
-          initialRegion={{
-            latitude: 37.619484994520285,
-            longitude: 127.05897358201273,
-            latitudeDelta: 0.004,
-            longitudeDelta: 0.002,
-          }}
+          initialRegion={InitialRegion}
           region={{
             latitude: location.latitude,
             longitude: location.longitude,

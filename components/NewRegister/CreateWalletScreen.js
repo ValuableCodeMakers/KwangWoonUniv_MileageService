@@ -4,11 +4,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import { Card, Textarea } from 'native-base';
-
-const { width, height } = Dimensions.get('window');
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js'
 
 export default class CreateWalletScreen extends Component {
   constructor(props) {
@@ -23,7 +22,7 @@ export default class CreateWalletScreen extends Component {
   componentDidMount() {
     const preState = this.props.navigation.getParam('preState');
 
-    fetch('http://192.168.0.5:3000/routes/createWallet', {
+    fetch(Address.url + '/routes/createWallet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -43,7 +42,7 @@ export default class CreateWalletScreen extends Component {
   }
 
   handleSaveProfile = () => {
-    fetch('http://192.168.0.5:3000/routes/saveProfile', {
+    fetch(Address.url + '/routes/saveProfile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
