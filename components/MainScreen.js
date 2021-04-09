@@ -23,8 +23,9 @@ import ProfileScreen from './ProfileScreen';
 import ChangeProfileScreen from './Changing/ChangeProfileScreen';
 
 import { handleUserInfo, handleLoadingState } from '../redux/action';
-import { Address } from '../Modules/Url.js';
-import { width, height } from '../Modules/Dimensions.js'
+
+import { Address } from '../modules/Url.js';
+import { width, height } from '../modules/Dimensions.js'
 
 const MainScreen = () => {
   var userState = { userId: '', userWalletAddress: '', userWalletBalance: 'N/A' };

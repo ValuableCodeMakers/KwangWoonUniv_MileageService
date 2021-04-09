@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon, Right, Header, Left } from 'native-base';
-import { width, height } from '../Modules/Dimensions.js';
+import { width, height } from '../modules/Dimensions.js';
 
 const CustomHeader = (props) => {
   return (

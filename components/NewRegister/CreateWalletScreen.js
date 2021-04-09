@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Card, Textarea } from 'native-base';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js'
+import { Address } from '../../modules/Url.js';
+import { width, height } from '../../modules/Dimensions.js'
 
 export default class CreateWalletScreen extends Component {
   constructor(props) {

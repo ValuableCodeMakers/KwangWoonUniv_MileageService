@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Alert, Button } from 'react-native';
 import Modal from 'react-native-modal';
-import { width, height } from '../Modules/Dimensions.js';
+import { width, height } from '../modules/Dimensions.js';
 
 const CustomModal = ({ modalVisible, setModalVisible }) => {
   return (

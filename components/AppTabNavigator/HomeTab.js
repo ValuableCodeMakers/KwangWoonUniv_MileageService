@@ -13,8 +13,8 @@ import CountDown from 'react-native-countdown-component';
 import CustomHeader from '../CustomHeader';
 import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 import * as Progress from 'react-native-progress';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js'
+import { Address } from '../../modules/Url.js';
+import { width, height } from '../../modules/Dimensions.js'
 
 const handleGetEventToken = (address) => {
   console.log('HomeTab: 이벤트 토큰 전송 메소드');

@@ -6,7 +6,7 @@ import {
   Linking,
   TouchableOpacity,
 } from 'react-native';
-import { width, height } from '../../../Modules/Dimensions.js'
+import { width, height } from '../../../modules/Dimensions.js'
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 

@@ -7,8 +7,8 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import CustomHeader from '../CustomHeader';
 import CustomModal from '../CustomModal';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js'
+import { Address } from '../../modules/Url.js';
+import { width, height } from '../../modules/Dimensions.js'
 
 const handleGetEventToken = (address) => {
   console.log('CameraTab: 이벤트 토큰 전송 메소드');

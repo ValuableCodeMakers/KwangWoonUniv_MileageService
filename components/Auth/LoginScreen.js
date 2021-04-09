@@ -10,8 +10,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { Card } from 'native-base';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js'
+import { Address } from '../../modules/Url.js';
+import { width, height } from '../../modules/Dimensions.js'
 
 class LoginScreen extends Component {
   static navigationOptions = {

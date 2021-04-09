@@ -12,8 +12,8 @@ import {
 import { Card } from 'native-base';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js'
+import { Address } from '../../modules/Url.js';
+import { width, height } from '../../modules/Dimensions.js'
 
 class RegisterScreen extends Component {
   static navigationOptions = {

@@ -7,8 +7,8 @@ import {
   Image,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Address } from '../Modules/Url.js';
-import { width, height } from '../Modules/Dimensions.js';
+import { Address } from '../modules/Url.js';
+import { width, height } from '../modules/Dimensions.js';
 
 function logout(props) {
   fetch(Address.url + '/routes/logout', {
