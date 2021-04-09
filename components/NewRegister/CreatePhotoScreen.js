@@ -7,8 +7,9 @@ import {
 } from 'react-native';
 import { Card, CardItem, Thumbnail } from 'native-base';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { Address } from '../../modules/Url.js';
-import { width, height } from '../../modules/Dimensions.js';
+
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js';
 
 import basicImage from '../../src/profile/profile.png'; // 기본 이미지
 

@@ -1,14 +1,14 @@
-import React, { Component, useEffect, useState, useRef, Fragment } from 'react';
-import { StyleSheet, View, Text, Modal } from 'react-native';
-import { Icon, Container } from 'native-base';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import React, {Component, useEffect, useState, useRef, Fragment} from 'react';
+import {StyleSheet, View, Text, Modal} from 'react-native';
+import {Icon, Container} from 'native-base';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import CustomHeader from '../CustomHeader';
-import CustomModal from '../CustomModal';
-import { Address } from '../../modules/Url.js';
-import { width, height } from '../../modules/Dimensions.js'
+import {EventCustomModal} from '../CustomModal';
+import {Address} from '../../Modules/Url.js';
+import {width, height} from '../../Modules/Dimensions.js';
 
 const handleGetEventToken = (address) => {
   console.log('CameraTab: 이벤트 토큰 전송 메소드');
@@ -49,9 +49,11 @@ const CameraTab = (props) => {
         props={props}
         menuColor={'#c0392b'}
         iconColor={'#fff'}></CustomHeader>
-      <CustomModal
+
+      <EventCustomModal
         modalVisible={modalVisible}
-        setModalVisible={setModalVisible}></CustomModal>
+        setModalVisible={setModalVisible}></EventCustomModal>
+
       <Container style={styles.mainContainer}>
         <View
           style={
@@ -67,24 +69,24 @@ const CameraTab = (props) => {
                 scanner.current = node;
               }}
               onRead={onSuccess}
-              cameraStyle={{ height: '100%' }}></QRCodeScanner>
+              cameraStyle={{height: '100%'}}></QRCodeScanner>
           ) : (
             <Icon
               type="MaterialCommunityIcons"
               name="qrcode-scan"
-              style={{ fontSize: 150 }}
+              style={{fontSize: 150}}
             />
           )}
         </View>
 
-        <View style={{ ...styles.menuContainer, opacity: cameraState ? 0.5 : 1 }}>
+        <View style={{...styles.menuContainer, opacity: cameraState ? 0.5 : 1}}>
           {cameraState ? (
             <TouchableOpacity
               style={styles.scanButton}
               onPress={() => {
                 setCameraState(false);
               }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#111' }}>
+              <Text style={{fontSize: 20, fontWeight: 'bold', color: '#111'}}>
                 스캔 중지
               </Text>
             </TouchableOpacity>
@@ -94,15 +96,15 @@ const CameraTab = (props) => {
               onPress={() => {
                 setCameraState(true);
               }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#111' }}>
+              <Text style={{fontSize: 20, fontWeight: 'bold', color: '#111'}}>
                 스캔 시작
               </Text>
             </TouchableOpacity>
           )}
-
-          <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#e74c3c' }}>
+          
+          <Text style={{fontSize: 15, fontWeight: 'bold', color: '#e74c3c'}}>
             이벤트 QR코드를 인식하세요.
-            <Text style={{ fontSize: 25 }}> 🧐</Text>
+            <Text style={{fontSize: 25}}> 🧐</Text>
           </Text>
         </View>
       </Container>
@@ -111,11 +113,11 @@ const CameraTab = (props) => {
 };
 
 CameraTab.navigationOptions = () => ({
-  tabBarIcon: ({ tintColor }) => (
+  tabBarIcon: ({tintColor}) => (
     <Icon
       type="MaterialCommunityIcons"
       name="qrcode"
-      style={{ color: tintColor }}
+      style={{color: tintColor}}
     />
   ),
 });

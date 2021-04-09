@@ -4,8 +4,8 @@ import { Container, Card, Button, Content } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { handleUserInfo } from '../../../redux/action';
-import { Address } from '../../../modules/Url.js';
-import { width, height } from '../../../modules/Dimensions.js';
+import { Address } from '../../../Modules/Url.js';
+import { width, height } from '../../../Modules/Dimensions.js';
 
 function handleTransfer(sendState, dispatch, props) {
   console.log('토큰 전송 메소드');

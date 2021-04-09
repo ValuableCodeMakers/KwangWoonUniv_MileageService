@@ -19,8 +19,8 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { handleProfilePhoto } from '../redux/action';
-import { Address } from '../modules/Url.js';
-import { width, height } from '../modules/Dimensions.js'
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js'
 
 function createFormData(id, photo) {
   const data = new FormData();

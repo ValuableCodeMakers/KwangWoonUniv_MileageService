@@ -33,10 +33,10 @@ import {
   NooRi,
   Anni80,
   IceLink,
-} from '../../modules/Coordinate.js';
+} from '../../Modules/Coordinate.js';
 import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 import pinImage from '../../src/pin.png';
-import { width, height } from '../../modules/Dimensions.js';
+import { width, height } from '../../Modules/Dimensions.js';
 
 async function requestPermission() {
   try {
@@ -99,7 +99,7 @@ const MapTab = (props) => {
       }
 
       if (locationBuilding != '') {
-        console.log(locationBuilding + '도착! 시간 이벤트 실행');
+        console.log("MapTab: " + locationBuilding + '도착! 시간 이벤트 실행');
         setArriveLocation(true);
         dispatch(handleBuildingEvent(locationBuilding)); // dispatch 에 true 전달
       }
@@ -116,13 +116,13 @@ const MapTab = (props) => {
       );
 
       if (locationResult && !holdingState.state) {
-        console.log('학교도착! 시간 이벤트 실행', locationResult);
+        console.log('MapTab: 학교도착! 시간 이벤트 실행', locationResult);
 
         setTimeout(() => {
           dispatch(handleHoldingEvent('학교도착, 이벤트 실행')); // dispatch 에 true 전달
         }, 1000);
       } else if (!locationResult && holdingState.state) {
-        console.log('학교 이탈! 시간 이벤트 중단', locationResult);
+        console.log('MapTab: 학교 이탈! 시간 이벤트 중단', locationResult);
 
         dispatch(handleHoldingEvent('학교도착, 이벤트 중단')); // dispatch 에 false 전달
       }
@@ -132,7 +132,7 @@ const MapTab = (props) => {
   // componentdidmount
   useEffect(() => {
     requestPermission().then((result) => {
-      console.log('위치 접근 권한', result);
+      console.log('MapTab: 위치 접근 권한', result);
       if (result === 'granted') {
         const watchId = Geolocation.watchPosition(
           (pos) => {

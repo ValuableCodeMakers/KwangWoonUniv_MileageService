@@ -15,8 +15,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import QRCode from 'react-native-qrcode-svg';
 
 import CustomHeader from '../CustomHeader';
-import { Address } from '../../modules/Url.js';
-import { width, height } from '../../modules/Dimensions.js'
+import { Address } from '../../Modules/Url.js';
+import { width, height } from '../../Modules/Dimensions.js'
 
 // Native base, Tab 오류때문에 사용
 const renderTabBar = (props) => {

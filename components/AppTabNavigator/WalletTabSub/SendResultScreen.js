@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Container, Card, Button } from 'native-base';
-import { width, height } from '../../../modules/Dimensions.js';
+import { width, height } from '../../../Modules/Dimensions.js';
 
 class SendConfirmScreen extends Component {
   static navigationOptions = {

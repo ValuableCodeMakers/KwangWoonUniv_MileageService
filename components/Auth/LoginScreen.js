@@ -1,132 +1,130 @@
-import React, { Component, Fragment } from 'react';
+import React, {Fragment, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Image,
   TextInput,
-  Alert,
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import { Card } from 'native-base';
-import { Address } from '../../modules/Url.js';
-import { width, height } from '../../modules/Dimensions.js'
+import {Card} from 'native-base';
+import {AuthCustomModal} from '../CustomModal';
 
-class LoginScreen extends Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+import {Address} from '../../Modules/Url.js';
+import {width, height} from '../../Modules/Dimensions.js';
 
-  constructor() {
-    super();
-
-    this.state = {
-      id: '',
-      password: '',
-    };
-  }
-
-  handleLogin = () => {
-    fetch(Address.url + '/routes/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(this.state),
+const handleLogin = (props, userInfo, setModalVisible) => {
+  fetch(Address.url + '/routes/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(userInfo),
+  })
+    .then((res) => {
+      return res.json();
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log('LoginScreen: 로그인 결과 ', res);
+    .then((res) => {
+      console.log('LoginScreen: 로그인 결과 ', res);
 
-        if (res.result == false) {
-          // 로그인 실패
-          Alert.alert(
-            '회원 정보를 확인하세요.',
-            [{ text: '확인', onPress: () => console.log('OK Pressed') }],
-            { cancelable: false },
-          );
-        } else if (res.result == 'NEW_REGISTER') {
-          // 처음 회원 가입
-          console.log('LoginScreen: 새로운 회원');
+      if (res.result === false) {
+        // 로그인 실패
+        console.log('Login 실패');
+        setModalVisible(true);
+      } else if (res.result == 'NEW_REGISTER') {
+        // 처음 회원 가입
+        console.log('LoginScreen: 새로운 회원');
 
-          this.props.navigation.navigate('NewRegister', {
-            screen: 'CreateProfile',
-          });
-        } else {
-          // 이미 회원
-          console.log('LoginScreen: 이미 회원');
+        props.navigation.navigate('NewRegister', {
+          screen: 'CreateProfile',
+        });
+      } else {
+        // 이미 회원
+        console.log('LoginScreen: 이미 회원');
 
-          this.props.navigation.navigate('Main', {
-            screen: 'HomeTab',
-          });
-        }
-      });
-  };
+        props.navigation.navigate('Main', {
+          screen: 'HomeTab',
+        });
+      }
+    });
+};
 
-  render() {
-    return (
-      <Fragment>
-        <KeyboardAvoidingView style={{ flex: 1 }}>
-          <View style={styles.mainContainer}>
-            <View style={{ height: height * 0.4 }}></View>
-            <Card style={styles.textInputContainer}>
+const LoginScreen = (props) => {
+  const [userInfo, setUserInfo] = useState({
+    id: '',
+    password: '',
+  });
+  const [modalVisible, setModalVisible] = useState(false);
+
+  return (
+    <Fragment>
+      <AuthCustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}></AuthCustomModal>
+
+      <KeyboardAvoidingView style={{flex: 1}}>
+        <View style={styles.mainContainer}>
+          <View style={{height: height * 0.4}}></View>
+          <Card style={styles.textInputContainer}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 35,
+                fontFamily: 'BMDOHYEON',
+                marginBottom: 30,
+                marginVertical: 25,
+              }}>
+              Login
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Univ. ID"
+              autoCapitalize="none"
+              onChangeText={(id) => setUserInfo({...userInfo, id: id})}
+              value={userInfo.id}></TextInput>
+            <TextInput
+              style={styles.textInput}
+              placeholder="PASSWORD"
+              secureTextEntry={true}
+              onChangeText={(password) =>
+                setUserInfo({...userInfo, password: password})
+              }
+              value={userInfo.password}></TextInput>
+
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => handleLogin(props, userInfo, setModalVisible)}>
               <Text
                 style={{
+                  fontSize: 18,
                   fontWeight: 'bold',
-                  fontSize: 35,
-                  fontFamily: 'BMDOHYEON',
-                  marginBottom: 30,
-                  marginVertical: 25,
+                  color: 'white',
                 }}>
                 Login
               </Text>
-              <TextInput
-                style={styles.textInput}
-                placeholder="Univ. ID"
-                autoCapitalize="none"
-                onChangeText={(id) => this.setState({ id })}
-                value={this.state.id}></TextInput>
-              <TextInput
-                style={styles.textInput}
-                placeholder="PASSWORD"
-                secureTextEntry={true}
-                onChangeText={(password) => this.setState({ password })}
-                value={this.state.password}></TextInput>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.loginButton}
-                onPress={this.handleLogin}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    color: 'white',
-                  }}>
-                  Login
-                </Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Register')}>
+              <Text style={{fontSize: 15, justifyContent: 'flex-end'}}>
+                회원이 아니신가요? 회원가입
+              </Text>
+            </TouchableOpacity>
+          </Card>
+        </View>
+      </KeyboardAvoidingView>
+    </Fragment>
+  );
+};
 
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Register')}>
-                <Text style={{ fontSize: 15, justifyContent: 'flex-end' }}>
-                  회원이 아니신가요? 회원가입
-                </Text>
-              </TouchableOpacity>
-            </Card>
-          </View>
-        </KeyboardAvoidingView>
-      </Fragment>
-    );
-  }
-}
+LoginScreen.navigationOptions = () => ({
+  headerShown: false,
+});
 
 const styles = StyleSheet.create({
   mainContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    backgroundColor: '#c0392b'
+    backgroundColor: '#c0392b',
   },
   textInputContainer: {
     alignItems: 'center',

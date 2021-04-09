@@ -3,7 +3,7 @@ import { Text, StyleSheet } from 'react-native';
 import { Container, Card, CardItem, Toast, Button } from 'native-base';
 
 import QRCode from 'react-native-qrcode-svg';
-import { width, height } from '../../../modules/Dimensions.js'
+import { width, height } from '../../../Modules/Dimensions.js'
 
 class ReceiveScreen extends Component {
   static navigationOptions = {

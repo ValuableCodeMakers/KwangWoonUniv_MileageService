@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
-import CameraTab from './AppTabNavigator/CameraTab';
+import CameraTab from './AppTabNavigator/ScanTab';
 import WalletTab from './AppTabNavigator/WalletTab';
 import RankTab from './AppTabNavigator/RankTab';
 
@@ -24,8 +24,8 @@ import ChangeProfileScreen from './Changing/ChangeProfileScreen';
 
 import { handleUserInfo, handleLoadingState } from '../redux/action';
 
-import { Address } from '../modules/Url.js';
-import { width, height } from '../modules/Dimensions.js'
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js';
 
 const MainScreen = () => {
   var userState = { userId: '', userWalletAddress: '', userWalletBalance: 'N/A' };
