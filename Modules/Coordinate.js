@@ -20,24 +20,10 @@ export const KW_Area = [
         { latitude: 37.620678, longitude: 127.059383 },
         { latitude: 37.62083, longitude: 127.059116 },
         { latitude: 37.62086, longitude: 127.059048 },
-        { latitude: 37.619225, longitude: 127.05797 },
-        { latitude: 37.619175, longitude: 127.058019 },
-        { latitude: 37.619124, longitude: 127.058176 },
-        { latitude: 37.618957, longitude: 127.058412 },
-        { latitude: 37.618686, longitude: 127.058648 },
-        { latitude: 37.618551, longitude: 127.058875 },
-        { latitude: 37.6191, longitude: 127.05984 },
-        { latitude: 37.6191, longitude: 127.05988 },
-        { latitude: 37.61898, longitude: 127.060064 },
-        { latitude: 37.61907, longitude: 127.060177 },
-        { latitude: 37.619034, longitude: 127.060224 },
-        { latitude: 37.618989, longitude: 127.060714 },
-        { latitude: 37.618721, longitude: 127.061062 },
-    ],
-    [
-        // 연구관 아래 시작
-        { latitude: 37.619164, longitude: 127.057809 },
-        { latitude: 37.619937, longitude: 127.05829 },
+        //             횡단보도                           ㄱ
+        { latitude: 37.619893, longitude: 127.05838 },// ||
+        { latitude: 37.619937, longitude: 127.05829 },// ||
+        //             횡단보도                           ㅡ
         { latitude: 37.620139, longitude: 127.05749 },
         { latitude: 37.620176, longitude: 127.057416 },
         { latitude: 37.620396, longitude: 127.057286 },
@@ -66,12 +52,26 @@ export const KW_Area = [
         { latitude: 37.619779, longitude: 127.05694 },
         { latitude: 37.619766, longitude: 127.056954 },
         { latitude: 37.619776, longitude: 127.056974 },
-        { latitude: 37.619164, longitude: 127.057809 },
+        //             횡단보도                           ㄱ
+        { latitude: 37.619164, longitude: 127.057809 },// ||
+        { latitude: 37.619175, longitude: 127.058019 },// ||
+        //             횡단보도                           ㅡ
+        { latitude: 37.619124, longitude: 127.058176 },
+        { latitude: 37.618957, longitude: 127.058412 },
+        { latitude: 37.618686, longitude: 127.058648 },
+        { latitude: 37.618551, longitude: 127.058875 },
+        { latitude: 37.6191, longitude: 127.05984 },
+        { latitude: 37.6191, longitude: 127.05988 },
+        { latitude: 37.61898, longitude: 127.060064 },
+        { latitude: 37.61907, longitude: 127.060177 },
+        { latitude: 37.619034, longitude: 127.060224 },
+        { latitude: 37.618989, longitude: 127.060714 },
+        { latitude: 37.618721, longitude: 127.061062 },
     ],
 ];
 
 export const HwaDo = {
-    point: { latitude: 37.6204659, longitude: 127.05944285 },
+    point: { latitude: 37.620363548137746, longitude: 127.05948745366962 },
     coordinate: [
         { latitude: 37.620704, longitude: 127.05909 },
         { latitude: 37.620686, longitude: 127.059071 },
@@ -97,10 +97,11 @@ export const HwaDo = {
     title_Kor: '화도관',
     title_Eng: 'HwaDo',
     image: require('../src/building/HwaDoImage.jpg'),
+    explanation: '광운대학교에서 가장 오래된 건물이다.\n대학행정실 및 총장실 등이 있다.',
 };
 
 export const BiMa = {
-    point: { latitude: 37.619515535848116, longitude: 127.05991798998568 },
+    point: { latitude: 37.61952208010247, longitude: 127.05991755305058 },
     coordinate: [
         { latitude: 37.619143, longitude: 127.05972 },
         { latitude: 37.619214, longitude: 127.059943 },
@@ -130,10 +131,11 @@ export const BiMa = {
     title_Kor: '비마관',
     title_Eng: 'BiMa',
     image: require('../src/building/BiMaImage.jpg'),
+    explanation: '북카페 페가수스와, 노트북, 강의실 대여가 가능한 광운mooc센터가 있다. 전자정보공과대학과 공과대학의 핟생들이 공부하는 곳이다.',
 };
 
 export const OgUi = {
-    point: { latitude: 37.618791, longitude: 127.059079 },
+    point: { latitude: 37.618744657982994, longitude: 127.05907171127613 },
     coordinate: [
         { latitude: 37.618615, longitude: 127.058872 },
         { latitude: 37.61888, longitude: 127.059399 },
@@ -151,6 +153,7 @@ export const OgUi = {
     title_Kor: '옥의관',
     title_Eng: 'OgUi',
     image: require('../src/building/OgUiImage.jpg'),
+    explanation: '미디어솔루션 이라는 작은 카페가 있다.\n자연과학대학 건물이다.',
 };
 
 export const BokJi = {
@@ -169,10 +172,11 @@ export const BokJi = {
     title_Kor: '복지관',
     title_Eng: 'BokJi',
     image: require('../src/building/BokJiImage.jpg'),
+    explanation: '총학생회실과, 총동아리연합회실, \n다양한 동아리실 및 학생식당 함지마루가 있다.',
 };
 
 export const YeonGu = {
-    point: { latitude: 37.61947250274096, longitude: 127.05763228716857 },
+    point: { latitude: 37.61941561550499, longitude: 127.05769707304387 },
     coordinate: [
         { latitude: 37.61931106380559, longitude: 127.05773905454224 },
         { latitude: 37.61944701937686, longitude: 127.05788319675851 },
@@ -187,10 +191,11 @@ export const YeonGu = {
     title_Kor: '연구관',
     title_Eng: 'YeonGu',
     image: require('../src/building/YeonGuImage.jpg'),
+    explanation: '광운 정보과학교육원에서 사용하는 곳이며,\n컴퓨터 필수 교양 수업을 하는 건물이다.',
 };
 
 export const DongHae = {
-    point: { latitude: 37.61985491716964, longitude: 127.05758668961711 },
+    point: { latitude: 37.619759788842664, longitude: 127.0575388227182 },
     coordinate: [
         { latitude: 37.619597997378015, longitude: 127.05786328237406 },
         { latitude: 37.61965959030286, longitude: 127.05792871535378 },
@@ -208,10 +213,11 @@ export const DongHae = {
     title_Kor: '동해문화예술관',
     title_Eng: 'DongHae',
     image: require('../src/building/DongHaeImage.jpg'),
+    explanation: '졸업식, 입학식 등 다양한 행사을 진행하는 곳이다.\n지하에는 푸드코트가 있다.',
 };
 
 export const ChamBit = {
-    point: { latitude: 37.619238, longitude: 127.060908 },
+    point: { latitude: 37.619111941262354, longitude: 127.06092291962801 },
     coordinate: [
         { latitude: 37.618956420432404, longitude: 127.06092732179584 },
         { latitude: 37.61910726296122, longitude: 127.06090787578123 },
@@ -238,10 +244,11 @@ export const ChamBit = {
     title_Kor: '참빛관',
     title_Eng: 'ChamBit',
     image: require('../src/building/ChamBitImage.jpg'),
+    explanation: '광운대학교의 교훈인 "참과 빛"에서 따왔으며,\n전자정보 공과대학의 교수님들 연구실이 많이 있다.',
 };
 
 export const SaeBit = {
-    point: { latitude: 37.61973223747628, longitude: 127.06088358524107 },
+    point: { latitude: 37.61963703772277, longitude: 127.06088524698262 },
     coordinate: [
         { latitude: 37.619551337778326, longitude: 127.06098443004952 },
         { latitude: 37.619830181531114, longitude: 127.0610762957047 },
@@ -252,6 +259,7 @@ export const SaeBit = {
     title_Kor: '새빛관',
     title_Eng: 'SaeBit',
     image: require('../src/building/SaeBitImage.jpg'),
+    explanation: '광운대학교에서 가장 최근에 지어진 건물이며,\n소프트웨어 융합대학 건물이다.',
 };
 
 export const HanWool = {
@@ -268,10 +276,11 @@ export const HanWool = {
     title_Kor: '한울관',
     title_Eng: 'HanWool',
     image: require('../src/building/HanWoolImage.jpg'),
+    explanation: '인문사회과학대, 정법대에서 많이 사용하는 건물이다.\n여학생들이 많아서 한울여대라고도 불린다.',
 };
 
 export const NooRi = {
-    point: { latitude: 37.62022384033076, longitude: 127.05472153533972 },
+    point: { latitude: 37.620227368156336, longitude: 127.05489118589068 },
     coordinate: [
         { latitude: 37.62004941660347, longitude: 127.05500857566201 },
         { latitude: 37.62050406111984, longitude: 127.05531971189554 },
@@ -290,6 +299,7 @@ export const NooRi = {
     title_Kor: '누리관',
     title_Eng: 'NooRi',
     image: require('../src/building/NooRiImage.jpg'),
+    explanation: '경영대, 로봇학부, ROTC 건물이다.',
 };
 
 export const Anni80 = {
@@ -304,10 +314,11 @@ export const Anni80 = {
     title_Kor: '80주년기념관',
     title_Eng: 'Anni80',
     image: require('../src/building/Anni80Image.jpg'),
+    explanation: '1층에는 중앙도서관과 푸드코트가 있고, \n2층에는 카페와 쉼터가 있다.',
 };
 
 export const IceLink = {
-    point: { latitude: 37.620288442143405, longitude: 127.05719002525126 },
+    point: { latitude: 37.62021671469943, longitude: 127.05717937053326 },
     coordinate: [
         { latitude: 37.620190276417595, longitude: 127.05727750975406 },
         { latitude: 37.62023276659658, longitude: 127.05728890914193 },
@@ -322,4 +333,5 @@ export const IceLink = {
     title_Kor: '아이스링크',
     title_Eng: 'IceLink',
     image: require('../src/building/IceLinkImage.jpg'),
+    explanation: '광운대학교의 자랑 아이스링크장이다.\n재학생은 매주 목요일에 무료로 이용할 수 있다.',
 };

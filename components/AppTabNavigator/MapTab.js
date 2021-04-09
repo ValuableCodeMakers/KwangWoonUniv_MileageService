@@ -211,12 +211,13 @@ const MapTab = (props) => {
           />
           <Polygon coordinates={KW_Area[0]} fillColor="rgba(100,100,100,0.3)" />
           {/* 광운대학교 영역 서쪽*/}
+          {/*
           <Polyline
             coordinates={KW_Area[1]}
             strokeColor="#000"
             strokeWidth={3}
           />
-          <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,100,0.3)" />
+          <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,100,0.3)" /> */}
 
           {buildingList.map((building, index) => (
             <Polyline
@@ -302,7 +303,7 @@ const MapTab = (props) => {
                     </Text>
                   </View>
                   <View>
-                    <Text style={{ fontSize: 15 }}>설명</Text>
+                    <Text style={{ fontSize: 15 }}>{building.explanation}</Text>
                   </View>
                 </View>
               </View>
