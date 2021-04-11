@@ -8,8 +8,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Card} from 'native-base';
-import {AuthCustomModal} from '../CustomModal';
 
+import {AuthCustomModal} from '../CustomModal';
 import {Address} from '../../Modules/Url.js';
 import {width, height} from '../../Modules/Dimensions.js';
 
@@ -57,6 +57,7 @@ const LoginScreen = (props) => {
   return (
     <Fragment>
       <AuthCustomModal
+        mode={'Login'}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}></AuthCustomModal>
 
@@ -66,7 +67,6 @@ const LoginScreen = (props) => {
           <Card style={styles.textInputContainer}>
             <Text
               style={{
-                fontWeight: 'bold',
                 fontSize: 35,
                 fontFamily: 'BMDOHYEON',
                 marginBottom: 30,
@@ -95,7 +95,7 @@ const LoginScreen = (props) => {
               <Text
                 style={{
                   fontSize: 18,
-                  fontWeight: 'bold',
+                  fontFamily: 'BMDOHYEON',
                   color: 'white',
                 }}>
                 Login
@@ -104,7 +104,10 @@ const LoginScreen = (props) => {
 
             <TouchableOpacity
               onPress={() => props.navigation.navigate('Register')}>
-              <Text style={{fontSize: 15, justifyContent: 'flex-end'}}>
+              <Text
+                style={{
+                  fontSize: 15,
+                }}>
                 회원이 아니신가요? 회원가입
               </Text>
             </TouchableOpacity>
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 0.1,
     shadowRadius: 5,
-    elevation: 1,
+    elevation: 5,
     borderRadius: 10,
     backgroundColor: '#fff',
   },

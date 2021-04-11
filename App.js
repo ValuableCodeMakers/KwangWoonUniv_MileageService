@@ -51,14 +51,13 @@ const MainContainer = createAppContainer(
     {
       initialRouteName: 'Auth',
       backBehavior: 'Auth',
-      
     },
   ),
 );
 
 export default class App extends Component {
   componentDidMount() {
-    setTimeout(()=>SplashScreen.hide(), 1000);
+    setTimeout(() => SplashScreen.hide(), 1000);
   }
 
   render() {

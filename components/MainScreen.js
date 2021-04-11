@@ -16,7 +16,6 @@ import SendScreen from './AppTabNavigator/WalletTabSub/SendScreen.js';
 import SendConfirmScreen from './AppTabNavigator/WalletTabSub/SendConfirmScreen.js';
 import SendResultScreen from './AppTabNavigator/WalletTabSub/SendResultScreen.js';
 import ReceiveScreen from './AppTabNavigator/WalletTabSub/ReceiveScreen.js';
-import QRcodeScreen from './AppTabNavigator/QRcode/QRcodeScreen.js'
 
 import CustomDrawerNavigator from './CustomDrawerNavigator';
 import ProfileScreen from './ProfileScreen';
@@ -163,7 +162,6 @@ const AppTabContainer = createAppContainer(
       SendResult: SendResultScreen,
       Receive: ReceiveScreen,
       ChangeProfile: ChangeProfileScreen,
-      QRcode: QRcodeScreen
     },
     {
       initialRouteName: 'AppTabNavigator',

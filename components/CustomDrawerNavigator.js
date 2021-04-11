@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import { useSelector } from 'react-redux';
-import { Address } from '../Modules/Url.js';
-import { width, height } from '../Modules/Dimensions.js';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {useSelector} from 'react-redux';
+import {Address} from '../Modules/Url.js';
+import {width, height} from '../Modules/Dimensions.js';
 
 function logout(props) {
   fetch(Address.url + '/routes/logout', {
@@ -36,7 +30,7 @@ const CustomDrawerNavigator = (props) => {
       <View style={styles.infoContainer}>
         <Image
           source={{
-            uri: Address.url + '/${userPhoto.filename}',
+            uri: Address.url + `/${userPhoto.filename}`,
           }}
           style={{
             width: 100,
@@ -44,21 +38,34 @@ const CustomDrawerNavigator = (props) => {
             borderRadius: 100,
           }}></Image>
         <View style={styles.infoTextContainer}>
-          <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
-            {userInfoState.userId}
-          </Text>
-          <Text style={{ fontSize: 20 }}>{userInfoState.userBalance} UMT</Text>
+          <View style={{marginBottom: 10}}>
+            <Text style={{fontSize: 15, fontFamily: 'BMDOHYEON'}}>
+              Univ. ID
+            </Text>
+            <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+              {userInfoState.userId}
+            </Text>
+          </View>
+
+          <View>
+            <Text style={{fontSize: 15, fontFamily: 'BMDOHYEON'}}>
+              보유 토큰
+            </Text>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              {userInfoState.userBalance} UMT
+            </Text>
+          </View>
         </View>
       </View>
 
       <View style={styles.menuContainer}>
-        <View style={{ ...styles.menuButton, marginTop: 20 }}>
+        <View style={{...styles.menuButton, marginTop: 20}}>
           <TouchableOpacity
             onPress={() => {
               props.navigation.closeDrawer();
               props.navigation.navigate('AppMainNavigator');
             }}>
-            <Text style={{ fontSize: 20 }}>소개</Text>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>소개</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.menuButton}>
@@ -67,7 +74,7 @@ const CustomDrawerNavigator = (props) => {
               props.navigation.closeDrawer();
               props.navigation.navigate('AppMainNavigator');
             }}>
-            <Text style={{ fontSize: 20 }}>홈</Text>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>홈</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.menuButton}>
@@ -76,28 +83,20 @@ const CustomDrawerNavigator = (props) => {
               props.navigation.closeDrawer();
               props.navigation.navigate('Profile');
             }}>
-            <Text style={{ fontSize: 20 }}>내정보</Text>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>내정보</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.menuButton}>
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.closeDrawer();
-              props.navigation.navigate('HomeTab');
-            }}>
-            <Text style={{ fontSize: 20 }}>설정</Text>
+          <TouchableOpacity onPress={() => logout(props)}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>로그아웃</Text>
           </TouchableOpacity>
         </View>
-
-        {/* <View style={{...styles.menuButton, marginTop: '55%'}}>
-          <TouchableOpacity onPress={() => logout(props)}>
-            <Text style={{fontSize: 20}}>로그아웃</Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
       <View style={styles.bottomTextContainer}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#fff' }}>Team 벨코즈</Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>
+          Team 벨코즈
+        </Text>
       </View>
     </View>
   );
@@ -115,21 +114,19 @@ const styles = StyleSheet.create({
   infoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
     height: height * 0.3,
+    width: '100%',
     borderTopLeftRadius: 40,
-    padding: 50,
-    backgroundColor: '#f1f2f6',
+    backgroundColor: 'white',
     elevation: 5,
   },
   infoTextContainer: {
-    justifyContent: 'center',
-    marginHorizontal: 10,
+    width: '70%',
+    marginTop: 10,
   },
   menuContainer: {
     alignItems: 'center',
     height: height * 0.6,
-    borderBottomLeftRadius: 40,
   },
   menuButton: {
     width: '80%',
@@ -142,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: height * 0.1,
     borderBottomLeftRadius: 40,
-
     backgroundColor: '#c0392b',
+    elevation: 5,
   },
 });

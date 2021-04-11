@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import {width, height} from '../Modules/Dimensions.js';
@@ -21,7 +21,6 @@ const EventCustomModal = ({modalVisible, setModalVisible}) => {
           <TouchableOpacity
             style={styles.buttonClose}
             onPress={() => {
-              console.log(modalVisible);
               setModalVisible(false);
             }}>
             <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white'}}>
@@ -34,21 +33,29 @@ const EventCustomModal = ({modalVisible, setModalVisible}) => {
   );
 };
 
-const AuthCustomModal = ({modalVisible, setModalVisible}) => {
+const AuthCustomModal = ({mode, modalVisible, setModalVisible}) => {
   return (
     <Modal isVisible={modalVisible}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            로그인 오류 <Text style={{fontSize: 30}}>😥</Text>
+            {mode === 'Login' ? (
+              <Fragment>
+                <Text>로그인 오류 </Text> <Text style={{fontSize: 30}}>😥</Text>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Text>회원가입 오류 </Text>
+                <Text style={{fontSize: 30}}>😥</Text>
+              </Fragment>
+            )}
           </Text>
-          <Text style={{marginTop: 5, marginBottom: 15}}>
+          <Text style={{marginTop: 20, marginBottom: 15}}>
             비밀번호와 아이디를 확인해주세요.
           </Text>
           <TouchableOpacity
             style={styles.buttonClose}
             onPress={() => {
-              console.log(modalVisible);
               setModalVisible(false);
             }}>
             <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white'}}>

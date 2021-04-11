@@ -32,6 +32,7 @@ const CameraTab = (props) => {
 
   const userInfoState = useSelector((state) => state.userInfo);
 
+  // QR 데이터 형식
   // {"eventTitle":"scanEvent","eventReward":500}
   const onSuccess = (e) => {
     let scanData = JSON.parse(e.data);
@@ -69,7 +70,8 @@ const CameraTab = (props) => {
                 scanner.current = node;
               }}
               onRead={onSuccess}
-              cameraStyle={{height: '100%'}}></QRCodeScanner>
+              cameraStyle={{height: '100%'}}
+              markerStyle={{color: '#11111'}}></QRCodeScanner>
           ) : (
             <Icon
               type="MaterialCommunityIcons"
@@ -79,7 +81,7 @@ const CameraTab = (props) => {
           )}
         </View>
 
-        <View style={{...styles.menuContainer, opacity: cameraState ? 0.5 : 1}}>
+        <View style={{...styles.menuContainer, opacity: cameraState ? 0.7 : 1}}>
           {cameraState ? (
             <TouchableOpacity
               style={styles.scanButton}
@@ -101,7 +103,7 @@ const CameraTab = (props) => {
               </Text>
             </TouchableOpacity>
           )}
-          
+
           <Text style={{fontSize: 15, fontWeight: 'bold', color: '#e74c3c'}}>
             이벤트 QR코드를 인식하세요.
             <Text style={{fontSize: 25}}> 🧐</Text>
@@ -148,7 +150,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.9,
     height: height * 0.2,
-
     backgroundColor: '#f5f6fa',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
