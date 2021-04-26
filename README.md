@@ -1,5 +1,6 @@
 # KwangWoonMileageService
-# 광운대학교 산학협력 프로젝트
+광운대학교 산학협력 프로젝트
+
 <p align="center">
 <img width="250" src="https://user-images.githubusercontent.com/55469709/116030139-dd6a4800-a695-11eb-848b-9c1730861b53.png"></img>
 </p>
