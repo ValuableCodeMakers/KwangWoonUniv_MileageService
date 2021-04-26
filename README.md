@@ -1,5 +1,8 @@
 # KwangWoonMileageService
-광운대학교 산학협력 프로젝트
+# 광운대학교 산학협력 프로젝트
+<p align="center">
+<img width="250" src="https://user-images.githubusercontent.com/55469709/116030139-dd6a4800-a695-11eb-848b-9c1730861b53.png"></img>
+</p>
 
 ## 프로젝트 소개 🔎
 블록체인 기술(암호화폐)을 사용한 광운대학교 마일리지 어플리케이션입니다.
@@ -39,7 +42,12 @@ Web3
 
 OpenZeppelin / https://github.com/OpenZeppelin/openzeppelin-contracts
 
------------
+
+## 아키텍쳐 🧾
+<p align="center">
+<img width="80%" src="https://user-images.githubusercontent.com/55469709/116030064-b449b780-a695-11eb-936b-3050e1d9b558.png"></img>
+</p>
+
 ## Team 💻
 #### 개발자 
 * 노경진 / rudwls468@gmail.com
