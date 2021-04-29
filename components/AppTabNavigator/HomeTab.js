@@ -15,8 +15,8 @@ import {EventCustomModal} from '../CustomModal';
 
 import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 import * as Progress from 'react-native-progress';
-import {Address} from '../../Modules/Url.js';
-import {width, height} from '../../Modules/Dimensions.js';
+import {Address} from '../Modules/Url.js';
+import {width, height} from '../Modules/Dimensions.js';
 
 const handleGetEventToken = (address) => {
   console.log('HomeTab: 이벤트 토큰 전송 메소드');

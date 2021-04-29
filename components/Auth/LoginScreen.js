@@ -10,8 +10,9 @@ import {
 import {Card} from 'native-base';
 
 import {AuthCustomModal} from '../CustomModal';
-import {Address} from '../../Modules/Url.js';
-import {width, height} from '../../Modules/Dimensions.js';
+
+import {Address} from '../Modules/Url.js';
+import {width, height} from '../Modules/Dimensions.js';
 
 const handleLogin = (props, userInfo, setModalVisible) => {
   fetch(Address.url + '/routes/login', {

@@ -8,8 +8,8 @@ import {
     Icon,
 } from 'react-native';
 import { Card } from 'native-base';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js'
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js'
 
 const userInfo = {
     Id: '',

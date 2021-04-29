@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Card } from 'native-base';
-import { width, height } from '../../Modules/Dimensions.js'
+import { width, height } from '../Modules/Dimensions.js'
 
 export default class CreateProfileScreen extends Component {
   constructor(props) {

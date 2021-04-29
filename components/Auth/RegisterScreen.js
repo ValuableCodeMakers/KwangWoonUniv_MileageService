@@ -8,8 +8,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Address} from '../../Modules/Url.js';
-import {width, height} from '../../Modules/Dimensions.js';
+import {Address} from '../Modules/Url.js';
+import {width, height} from '../Modules/Dimensions.js';
 
 import {AuthCustomModal} from '../CustomModal';
 

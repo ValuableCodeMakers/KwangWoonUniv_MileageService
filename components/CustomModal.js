@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
-import {width, height} from '../Modules/Dimensions.js';
+import {width, height} from './Modules/Dimensions.js';
 
 const EventCustomModal = ({modalVisible, setModalVisible}) => {
   return (

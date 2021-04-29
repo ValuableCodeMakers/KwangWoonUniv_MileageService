@@ -11,7 +11,7 @@ import {
   Icon,
 } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { width, height } from '../../../Modules/Dimensions.js'
+import { width, height } from '../../Modules/Dimensions.js'
 
 class SendScreen extends Component {
   static navigationOptions = {

@@ -33,10 +33,10 @@ import {
   NooRi,
   Anni80,
   IceLink,
-} from '../../Modules/Coordinate.js';
+} from '../Modules/Coordinate.js';
 import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 import pinImage from '../../src/pin.png';
-import { width, height } from '../../Modules/Dimensions.js';
+import { width, height } from '../Modules/Dimensions.js';
 
 async function requestPermission() {
   try {

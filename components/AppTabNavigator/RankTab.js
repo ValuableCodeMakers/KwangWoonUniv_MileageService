@@ -12,8 +12,8 @@ import basicImage from '../../src/profile/profile.png'; // 기본 이미지
 import { handleProfilePhoto, handleUserInfo } from '../../redux/action';
 
 import CustomHeader from '../CustomHeader';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js';
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js';
 
 var rankers = {
   rank1: {

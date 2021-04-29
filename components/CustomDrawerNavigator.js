@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useSelector} from 'react-redux';
-import {Address} from '../Modules/Url.js';
-import {width, height} from '../Modules/Dimensions.js';
+import {Address} from './Modules/Url.js';
+import {width, height} from './Modules/Dimensions.js';
 
 function logout(props) {
   fetch(Address.url + '/routes/logout', {
