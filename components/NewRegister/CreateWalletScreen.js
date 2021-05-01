@@ -46,7 +46,7 @@ export default class CreateWalletScreen extends Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state),
-    }).then((res) => {
+    }).then(() => {
       this.props.navigation.navigate({
         routeName: 'CreatePhoto',
         params: { preState: this.state }, // 다음 화면으로 state 전달

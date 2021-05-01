@@ -21,7 +21,7 @@ const handleSignUp = (props, registerInfo, setModalVisible) => {
     fetch(Address.url + '/routes/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(this.state),
+      body: JSON.stringify(registerInfo),
     }).then((res) => {
       console.log(res);
       props.navigation.navigate('Login');
