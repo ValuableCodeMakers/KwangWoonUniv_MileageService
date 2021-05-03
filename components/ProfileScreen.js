@@ -1,26 +1,12 @@
-import React, { Component, Fragment, useState, useEffect } from 'react';
-import {
-  Icon,
-  Content,
-  Header,
-  Left,
-  Right,
-  Thumbnail,
-  Container,
-} from 'native-base';
+import React, {useState, useEffect} from 'react';
+import {Icon, Header, Left, Right, Thumbnail} from 'native-base';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { handleProfilePhoto } from '../redux/action';
-import { Address } from './Modules/Url.js';
-import { width, height } from './Modules/Dimensions.js'
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {handleProfilePhoto} from '../redux/action';
+import {Address} from './Modules/Url.js';
+import {width, height} from './Modules/Dimensions.js';
 
 function createFormData(id, photo) {
   const data = new FormData();
@@ -76,19 +62,10 @@ const handleChangePhoto = (id, dispatch) => {
         });
     }
   });
-
-  // 카메라
-  // launchImageLibrary(options, (response) => {
-  //   if (response.error) {
-  //     console.log('LaunchImageLibrary Error: ', response.error);
-  //   } else {
-  //     setImageSource(response.uri);
-  //   }
-  // });
 };
 
 const ProfileScreen = (props) => {
-  const reduxState = useSelector((state) => state); // redux의 store 가져오기
+  const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
 
   // 유저 정보
@@ -103,8 +80,8 @@ const ProfileScreen = (props) => {
   useEffect(() => {
     fetch(Address.url + '/routes/getProfileEtc', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: userInfo.userId }),
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: userInfo.userId}),
     })
       .then((res) => {
         return res.json();
@@ -119,13 +96,13 @@ const ProfileScreen = (props) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <Header style={{ backgroundColor: '#c0392b', height: height * 0.07 }}>
-        <Left style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      <Header style={{backgroundColor: '#c0392b', height: height * 0.07}}>
+        <Left style={{flexDirection: 'row', alignItems: 'center'}}>
           <Icon
             name="chevron-back"
             type="Ionicons"
-            style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+            style={{paddingRight: 10, fontSize: 25, color: 'white'}}
             onPress={() => props.navigation.goBack()}
           />
           <Text
@@ -138,10 +115,10 @@ const ProfileScreen = (props) => {
             내 프로필 🛠
           </Text>
         </Left>
-        <Right style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Right style={{flexDirection: 'row', alignItems: 'center'}}>
           <Icon
             name="settings-outline"
-            style={{ color: 'white' }}
+            style={{color: 'white'}}
             onPress={() =>
               props.navigation.navigate('ChangeProfile', {
                 Id: userInfo.userId,
@@ -157,10 +134,10 @@ const ProfileScreen = (props) => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          height: height * 0.3,
+          height: height * 0.25,
         }}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 1, alignItems: 'center'}}>
             {userPhoto.fileName != '' ? (
               <View>
                 <TouchableOpacity
@@ -231,7 +208,7 @@ const ProfileScreen = (props) => {
       </View>
 
       {/* 프로필 하단부 */}
-      <View style={{ height: height * 0.63 }}>
+      <View style={{flex: 1}}>
         <View
           style={{
             backgroundColor: 'black',
@@ -255,7 +232,7 @@ const ProfileScreen = (props) => {
             <Icon
               name="chevron-forward"
               type="Ionicons"
-              style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
             />
           </Right>
         </View>
@@ -269,10 +246,7 @@ const ProfileScreen = (props) => {
             <Icon
               name="chevron-forward"
               type="Ionicons"
-              style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-              onPress={() => {
-                alert(2);
-              }}
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
             />
           </Right>
         </View>
@@ -285,10 +259,7 @@ const ProfileScreen = (props) => {
             <Icon
               name="chevron-forward"
               type="Ionicons"
-              style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-              onPress={() => {
-                alert(3);
-              }}
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
             />
           </Right>
         </View>
@@ -302,10 +273,7 @@ const ProfileScreen = (props) => {
             <Icon
               name="chevron-forward"
               type="Ionicons"
-              style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
-              onPress={() => {
-                alert(4);
-              }}
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
             />
           </Right>
         </View>
@@ -318,7 +286,7 @@ const ProfileScreen = (props) => {
             <Icon
               name="chevron-forward"
               type="Ionicons"
-              style={{ paddingRight: 10, fontSize: 25, color: 'white' }}
+              style={{paddingRight: 10, fontSize: 25, color: 'white'}}
             />
           </Right>
         </View>
@@ -329,8 +297,8 @@ const ProfileScreen = (props) => {
 
 ProfileScreen.navigationOptions = () => ({
   headerShown: false,
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="chevron-back" type="Ionicons" style={{ color: tintColor }} />
+  tabBarIcon: ({tintColor}) => (
+    <Icon name="chevron-back" type="Ionicons" style={{color: tintColor}} />
   ),
 });
 
@@ -352,7 +320,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
+    borderBottomWidth: 2,
     borderColor: 'black',
     backgroundColor: '#464646',
     paddingLeft: 10,
@@ -360,7 +328,7 @@ const styles = StyleSheet.create({
   bottomTextTitle: {
     fontSize: 15,
     color: '#bdc3c7',
-    marginBottom: 5
+    marginBottom: 5,
   },
   bottomText2: {
     fontSize: 16,

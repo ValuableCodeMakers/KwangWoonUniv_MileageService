@@ -1,79 +1,29 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import {Icon, Container, Right, Thumbnail} from 'native-base';
-import {useSelector, useDispatch} from 'react-redux';
-import {handleProfilePhoto,} from '../../redux/action';
+import {useSelector} from 'react-redux';
 
 import CustomHeader from '../CustomHeader';
+
 import {Address} from '../Modules/Url.js';
 import {width, height} from '../Modules/Dimensions.js';
-
 import basicImage from '../../src/profile/profile.png'; // 기본 이미지
 
-var rankers = {
-  rank1: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank2: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank3: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank4: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank5: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank6: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank7: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank8: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank9: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-  rank10: {
-    id: '',
-    filename: basicImage,
-    balance: '0',
-    photoState: false,
-  },
-};
+async function fetchUserRankdAndPhoto(setRankers) {
+  const userRankData = await fetchUsersRank();
+  const newState = await fetchUsersPhoto(userRankData);
+  await setRankers(newState);
+}
 
-function setRankingId(str) {
+async function fetchUsersRank() {
+  const getResponse = await fetch(Address.url + '/routes/getUsersRank', {
+    method: 'GET',
+  });
+  const getJson = await getResponse.json();
+  return await parseUsersRank(JSON.stringify(getJson));
+}
+
+function parseUsersRank(str) {
   let ranking = new Array();
   let balance = new Array();
 
@@ -87,29 +37,41 @@ function setRankingId(str) {
     balance[i] = balance[i].split(',')[1].split(':')[1];
   }
 
-  rankers.rank1.id = ranking[0];
-  rankers.rank2.id = ranking[1];
-  rankers.rank3.id = ranking[2];
-  rankers.rank4.id = ranking[3];
-  rankers.rank5.id = ranking[4];
-  rankers.rank6.id = ranking[5];
-  rankers.rank7.id = ranking[6];
-  rankers.rank8.id = ranking[7];
-  rankers.rank9.id = ranking[8];
-  rankers.rank10.id = ranking[9];
-  rankers.rank1.balance = balance[0];
-  rankers.rank2.balance = balance[1];
-  rankers.rank3.balance = balance[2];
-  rankers.rank4.balance = balance[3];
-  rankers.rank5.balance = balance[4];
-  rankers.rank6.balance = balance[5];
-  rankers.rank7.balance = balance[6];
-  rankers.rank8.balance = balance[7];
-  rankers.rank9.balance = balance[8];
-  rankers.rank10.balance = balance[9];
+  let rankers = {};
+  for (let i = 0; i < 10; i++) {
+    rankers[i] = {id: ranking[i], balance: balance[i]};
+  }
+  return rankers;
 }
 
-function setRankingPhoto(str) {
+//사람들 사진 개별로 가져오기
+async function fetchUsersPhoto(rankers) {
+  const postResponse = await fetch(Address.url + '/routes/getPhotos', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      user1: rankers[0].id,
+      user2: rankers[1].id,
+      user3: rankers[2].id,
+      user4: rankers[3].id,
+      user5: rankers[4].id,
+      user6: rankers[5].id,
+      user7: rankers[6].id,
+      user8: rankers[7].id,
+      user9: rankers[8].id,
+      user10: rankers[9].id,
+    }),
+  });
+  const postJson = await postResponse.json();
+
+  if (postJson) {
+    return await parseUsersPhoto(JSON.stringify(postJson), rankers);
+  } else {
+    return 'default';
+  }
+}
+
+function parseUsersPhoto(str, rankers) {
   let ranking = new Array();
   let rankingId = new Array();
   let rankingPhoto = new Array();
@@ -121,89 +83,32 @@ function setRankingPhoto(str) {
     rankingPhoto.push(ranking[i].split(':')[2].split('"')[1]);
   }
 
-  for (let i = 0; i < ranking.length; i++) {
-    if (rankers.rank1.id == rankingId[i]) {
-      rankers.rank1.filename = rankingPhoto[i];
-      rankers.rank1.photoState = true;
-    } else if (rankers.rank2.id == rankingId[i]) {
-      rankers.rank2.filename = rankingPhoto[i];
-      rankers.rank2.photoState = true;
-    } else if (rankers.rank3.id == rankingId[i]) {
-      rankers.rank3.filename = rankingPhoto[i];
-      rankers.rank3.photoState = true;
-    } else if (rankers.rank4.id == rankingId[i]) {
-      rankers.rank4.filename = rankingPhoto[i];
-      rankers.rank4.photoState = true;
-    } else if (rankers.rank5.id == rankingId[i]) {
-      rankers.rank5.filename = rankingPhoto[i];
-      rankers.rank5.photoState = true;
-    } else if (rankers.rank6.id == rankingId[i]) {
-      rankers.rank6.filename = rankingPhoto[i];
-      rankers.rank6.photoState = true;
-    } else if (rankers.rank7.id == rankingId[i]) {
-      rankers.rank7.filename = rankingPhoto[i];
-      rankers.rank7.photoState = true;
-    } else if (rankers.rank8.id == rankingId[i]) {
-      rankers.rank8.filename = rankingPhoto[i];
-      rankers.rank8.photoState = true;
-    } else if (rankers.rank9.id == rankingId[i]) {
-      rankers.rank9.filename = rankingPhoto[i];
-      rankers.rank9.photoState = true;
-    } else if (rankers.rank10.id == rankingId[i]) {
-      rankers.rank10.filename = rankingPhoto[i];
-      rankers.rank10.photoState = true;
-    }
-  }
-}
+  let newState = {};
+  for (let key in rankers) {
+    const id = rankers[key].id;
+    const balance = rankers[key].balance;
 
-//사람들 사진 개별로 가져오기
-function getPhotoFile() {
-  if (rankers.rank1.id == '') {
-    return 'default';
-  }
-
-  fetch(Address.url + '/routes/getPhotos', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      user1: rankers.rank1.id,
-      user2: rankers.rank2.id,
-      user3: rankers.rank3.id,
-      user4: rankers.rank4.id,
-      user5: rankers.rank5.id,
-      user6: rankers.rank6.id,
-      user7: rankers.rank7.id,
-      user8: rankers.rank8.id,
-      user9: rankers.rank9.id,
-      user10: rankers.rank10.id,
-    }),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      if (res.photos) {
-        setRankingPhoto(JSON.stringify(res.photos));
-      } else {
-        return 'default';
+    let filename = '';
+    for (let i = 0; i < 10; i++) {
+      if (rankingPhoto[i].includes(id)) {
+        filename = rankingPhoto[i];
       }
-    });
+    }
+
+    newState[parseInt(key) + 1] = {
+      id: id,
+      balance: balance,
+      filename: filename,
+      photoState: true,
+    };
+  }
+
+  return newState;
 }
 
-function _onRefresh() {
-  // 랭킹 갱신하기
-  fetch(Address.url + '/routes/getUsersRank', {
-    method: 'GET',
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      setRankingId(JSON.stringify(res));
-    });
-
-  // 탑5 랭커 사진 갱신
-  getPhotoFile();
+// 랭킹 갱신하기
+function _onRefresh(setRankers) {
+  fetchUserRankdAndPhoto(setRankers);
 }
 
 // 요일 알기
@@ -227,70 +132,16 @@ const getWeekend = () => {
 const RankTab = (props) => {
   const userInfo = useSelector((state) => state.userInfo);
   const userPhoto = useSelector((state) => state.userProfilePhoto);
-  const dispatch = useDispatch();
-  const rankerList = [
-    rankers.rank1,
-    rankers.rank2,
-    rankers.rank3,
-    rankers.rank4,
-    rankers.rank5,
-    rankers.rank6,
-    rankers.rank7,
-    rankers.rank8,
-    rankers.rank9,
-    rankers.rank10,
-  ];
 
-  // userInfo 가 들어오면 프로필 사진 가져오기
+  const [rankers, setRankers] = useState(null);
+  const rankersKey = [4, 5, 6, 7, 8, 9, 10];
+
+  // 유저들 랭크 가져오기
   useEffect(() => {
-    console.log('RankTab: 현재 유저 프로필 사진 가져오기 요청');
+    console.log('RankTab: 현재 유저들 랭크 가져오기 요청');
 
-    fetch(Address.url + '/routes/getPhoto', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId: userInfo.userId}),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        if (!res.photo) {
-          // 프로필 사진이 없을때
-          dispatch(
-            handleProfilePhoto('UPDATE_photo', [
-              {
-                id: userInfo.userId,
-                filename: 'default',
-                path: 'default',
-              },
-            ]),
-          );
-        } else {
-          // 프로필 사진이 있을때
-          dispatch(handleProfilePhoto('UPDATE_photo', res.photo));
-        }
-      });
-  }, [userInfo.userId]);
-
-  // 유저 랭크 가져오기
-  useEffect(() => {
-    console.log('RankTab: 현재 유저 랭크 가져오기 요청');
-
-    fetch(Address.url + '/routes/getUsersRank', {
-      method: 'GET',
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        setRankingId(JSON.stringify(res));
-      });
-  }, [userInfo.userId]);
-
-  // 탑5 랭커 사진파일 가져오기
-  useEffect(() => {
-    getPhotoFile();
-  }, [rankers.rank5.id]);
+    fetchUserRankdAndPhoto(setRankers);
+  }, []);
 
   return (
     <Container>
@@ -344,158 +195,168 @@ const RankTab = (props) => {
           </View>
         </View>
 
-        <View style={styles.middleContainer}>
-          <View style={{alignItems: 'center', width: '30%'}}>
-            <View style={{marginBottom: 10}}>
-              <Text style={{fontSize: 30}}>🥈</Text>
-            </View>
-            {rankers.rank2.photoState ? (
-              <Thumbnail
-                circular={true}
-                source={{
-                  uri: Address.url + `/${rankers.rank2.filename}`,
-                }}
-                large
-                style={{
-                  width: 75,
-                  height: 75,
-                }}></Thumbnail>
-            ) : (
-              <Thumbnail
-                circular={true}
-                large
-                style={{width: 75, height: 75}}
-                source={basicImage}></Thumbnail>
-            )}
-            <View
-              style={{
-                marginTop: 3,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontWeight: 'bold', fontSize: 13}}>
-                {rankers.rank2.id}
-              </Text>
-              <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
-                {rankers.rank2.balance} UMT
-              </Text>
-            </View>
-          </View>
-
-          <View style={{alignItems: 'center', width: '40%'}}>
-            <View style={{marginBottom: 10}}>
-              <Text style={{fontSize: 35}}>🥇</Text>
-            </View>
-            {rankers.rank1.photoState ? (
-              <Thumbnail
-                circular={true}
-                large
-                source={{
-                  uri: Address.url + `/${rankers.rank1.filename}`,
-                }}
-                style={{width: 90, height: 90}}></Thumbnail>
-            ) : (
-              <Thumbnail
-                circular={true}
-                large
-                source={basicImage}
-                style={{width: 90, height: 90}}></Thumbnail>
-            )}
-            <View style={{marginTop: 3}}>
-              <Text style={{fontWeight: 'bold', fontSize: 13}}>
-                {rankers.rank1.id}
-              </Text>
-              <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
-                {rankers.rank1.balance} UMT
-              </Text>
-            </View>
-          </View>
-
-          <View style={{alignItems: 'center', width: '30%'}}>
-            <View style={{marginBottom: 10}}>
-              <Text style={{fontSize: 30}}>🥉</Text>
-            </View>
-            {rankers.rank3.photoState ? (
-              <Thumbnail
-                circular={true}
-                large
-                source={{
-                  uri: Address.url + `/${rankers.rank3.filename}`,
-                }}
-                style={{width: 75, height: 75}}></Thumbnail>
-            ) : (
-              <Thumbnail
-                circular={true}
-                large
-                source={basicImage}
-                style={{width: 75, height: 75}}></Thumbnail>
-            )}
-            <View style={{marginTop: 3}}>
-              <Text style={{fontWeight: 'bold', fontSize: 13}}>
-                {rankers.rank3.id}
-              </Text>
-              <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
-                {rankers.rank3.balance} UMT
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.lowerContainer}>
-          <ScrollView
-            style={{width: '100%'}}
-            contentContainerStyle={{justifyContent: 'center'}}
-            refreshControl={
-              <RefreshControl refreshing={false} onRefresh={_onRefresh} />
-            }>
-            <Fragment>
-              {rankerList.map((ranker, index) =>
-                index >= 3 ? (
-                  <View
-                    style={{
-                      ...styles.rankContainer,
-                      backgroundColor:
-                        ranker.id == userInfo.userId ? '#c0392b' : '#fff',
+        {rankers === null ? (
+          <Fragment></Fragment>
+        ) : (
+          <Fragment>
+            <View style={styles.middleContainer}>
+              <View style={{alignItems: 'center', width: '30%'}}>
+                <View style={{marginBottom: 10}}>
+                  <Text style={{fontSize: 30}}>🥈</Text>
+                </View>
+                {rankers[2].photoState ? (
+                  <Thumbnail
+                    circular={true}
+                    source={{
+                      uri: Address.url + `/${rankers[2].filename}`,
                     }}
-                    key={index}>
-                    <View style={{width: '8%', marginHorizontal: 10}}>
-                      <Text style={{fontSize: 20}}>{index + 1}</Text>
-                    </View>
-
-                    {ranker.photoState ? (
-                      <Thumbnail
-                        circular={true}
-                        small
-                        source={{
-                          uri: Address.url + `/${ranker.filename}`,
-                        }}></Thumbnail>
-                    ) : (
-                      <Thumbnail
-                        circular={true}
-                        small
-                        source={basicImage}></Thumbnail>
-                    )}
-
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        marginLeft: 20,
-                      }}>
-                      {ranker.id}
-                    </Text>
-                    <Right>
-                      <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
-                        {ranker.balance} UMT
-                      </Text>
-                    </Right>
-                  </View>
+                    large
+                    style={{
+                      width: 75,
+                      height: 75,
+                    }}></Thumbnail>
                 ) : (
-                  <Fragment key={index}></Fragment>
-                ),
-              )}
-            </Fragment>
-          </ScrollView>
-        </View>
+                  <Thumbnail
+                    circular={true}
+                    large
+                    style={{width: 75, height: 75}}
+                    source={basicImage}></Thumbnail>
+                )}
+                <View
+                  style={{
+                    marginTop: 3,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                    {rankers[2].id}
+                  </Text>
+                  <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                    {rankers[2].balance} UMT
+                  </Text>
+                </View>
+              </View>
+
+              <View style={{alignItems: 'center', width: '40%'}}>
+                <View style={{marginBottom: 10}}>
+                  <Text style={{fontSize: 35}}>🥇</Text>
+                </View>
+                {rankers[1].photoState ? (
+                  <Thumbnail
+                    circular={true}
+                    large
+                    source={{
+                      uri: Address.url + `/${rankers[1].filename}`,
+                    }}
+                    style={{width: 90, height: 90}}></Thumbnail>
+                ) : (
+                  <Thumbnail
+                    circular={true}
+                    large
+                    source={basicImage}
+                    style={{width: 90, height: 90}}></Thumbnail>
+                )}
+                <View style={{marginTop: 3}}>
+                  <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                    {rankers[1].id}
+                  </Text>
+                  <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                    {rankers[1].balance} UMT
+                  </Text>
+                </View>
+              </View>
+
+              <View style={{alignItems: 'center', width: '30%'}}>
+                <View style={{marginBottom: 10}}>
+                  <Text style={{fontSize: 30}}>🥉</Text>
+                </View>
+                {rankers[3].photoState ? (
+                  <Thumbnail
+                    circular={true}
+                    large
+                    source={{
+                      uri: Address.url + `/${rankers[3].filename}`,
+                    }}
+                    style={{width: 75, height: 75}}></Thumbnail>
+                ) : (
+                  <Thumbnail
+                    circular={true}
+                    large
+                    source={basicImage}
+                    style={{width: 75, height: 75}}></Thumbnail>
+                )}
+                <View style={{marginTop: 3}}>
+                  <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                    {rankers[3].id}
+                  </Text>
+                  <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                    {rankers[3].balance} UMT
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.lowerContainer}>
+              <ScrollView
+                style={{width: '100%'}}
+                contentContainerStyle={{justifyContent: 'center'}}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={false}
+                    onRefresh={() => _onRefresh(setRankers)}
+                  />
+                }>
+                <Fragment>
+                  {rankersKey.map((key) => {
+                    return (
+                      <View
+                        style={{
+                          ...styles.rankContainer,
+                          backgroundColor:
+                            rankers[key].id == userInfo.userId
+                              ? '#c0392b'
+                              : '#fff',
+                        }}
+                        key={key}>
+                        <View style={{width: '8%', marginHorizontal: 10}}>
+                          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                            {key}
+                          </Text>
+                        </View>
+                        {rankers[key].photoState ? (
+                          <Thumbnail
+                            circular={true}
+                            small
+                            source={{
+                              uri: Address.url + `/${rankers[key].filename}`,
+                            }}></Thumbnail>
+                        ) : (
+                          <Thumbnail
+                            circular={true}
+                            small
+                            source={basicImage}></Thumbnail>
+                        )}
+
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            marginLeft: 20,
+                          }}>
+                          {rankers[key].id}
+                        </Text>
+                        <Right>
+                          <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                            {rankers[key].balance} UMT
+                          </Text>
+                        </Right>
+                      </View>
+                    );
+                  })}
+                </Fragment>
+              </ScrollView>
+            </View>
+          </Fragment>
+        )}
       </Container>
     </Container>
   );
@@ -545,8 +406,8 @@ const styles = StyleSheet.create({
     height: height * 0.27,
   },
   lowerContainer: {
+    flex: 1,
     width: '100%',
-    height: height * 0.29,
     backgroundColor: '#fff',
   },
   rankContainer: {

@@ -93,10 +93,8 @@ export function handleHoldingEvent(type) {
 
 export function handleUserInfo(type, input) {
   switch (type) {
-    case 'UPDATE_id':
-      return {type: 'UPDATE_id', userId: input};
-    case 'UPDATE_address':
-      return {type: 'UPDATE_address', userWalletAddress: input};
+    case 'UPDATE_info':
+      return {type: 'UPDATE_info', userInfo: input};
     case 'UPDATE_balacne':
       return {type: 'UPDATE_balacne', userBalance: input};
     default:

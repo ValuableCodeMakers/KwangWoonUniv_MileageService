@@ -18,8 +18,14 @@ import * as Progress from 'react-native-progress';
 import {Address} from '../Modules/Url.js';
 import {width, height} from '../Modules/Dimensions.js';
 
+const fetchEventAction = async (userInfoState) => {
+  console.log('이벤트 토큰 받기');
+  // await handleGetEventToken(userInfoState.userWalletAddress); // 이벤트 토큰 지급
+  // await handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
+};
+
 const handleGetEventToken = (address) => {
-  console.log('HomeTab: 이벤트 토큰 전송 메소드');
+  console.log('HomeTab: Fetch / 이벤트 토큰 전송 메소드');
   fetch(Address.url + '/routes/getEventToken', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -47,7 +53,7 @@ const handleSaveSpecification = (detail, amount) => {
     });
 };
 
-const handleSaveHistory = (amount) => {
+const handleSaveHistory = (amount, setModalVisible) => {
   fetch(Address.url + '/routes/saveHistory', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -57,46 +63,49 @@ const handleSaveHistory = (amount) => {
       return res.json();
     })
     .then((res) => {
-      if (res.saveHistory_result == true)
-        alert('건물방문 3회차 보너스 토큰 ' + amount + ' 지급!');
+      if (res.saveHistory_result == true) setModalVisible(true);
+    });
+};
+
+const handleGetVisitCount = (setbuildingVisitCount) => {
+  console.log('HomeTab: Fetch / 건물 방문 횟수 가져오기');
+
+  fetch(Address.url + '/routes/getBuildingVisitCount', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      if (res.length === null) setbuildingVisitCount(0);
+      if (res.length < 3) setbuildingVisitCount(res.length);
+      else setbuildingVisitCount(3);
     });
 };
 
 const HomeTab = (props) => {
-  const [buildingVisitCount, setbuildingVisitCount] = useState();
+  const [buildingVisitCount, setbuildingVisitCount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
 
   const dispatch = useDispatch();
 
   const loadState = useSelector((state) => state.loadState);
-  // 유저 정보 State
   const userInfoState = useSelector((state) => state.userInfo);
-  // 건물 이벤트 State
   const buildingState = useSelector((state) => state.buildingEvent.events);
-  // 위치 이벤트 State
   const holdingState = useSelector((state) => state.holdingEvent);
 
   const today = new Date();
 
-  // 오늘 건물 방문 횟수 가져오기
+  // 건물 방문 횟수 가져오기
   useEffect(() => {
-    fetch(Address.url + '/routes/getBuildingVisitCount', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        if (res.length < 3) setbuildingVisitCount(res.length);
-        else setbuildingVisitCount(3);
-      });
-  }, [userInfoState.userId]);
+    if (loadState.loadState) {
+      handleGetVisitCount(setbuildingVisitCount);
+    }
+  }, [loadState.loadState]);
 
   const event_LocationIn = (setModalVisible) => {
     if (holdingState.state) {
-      //console.log('위치 이벤트 카드 불러오기');
-
       return (
         <Card style={styles.currentEvent}>
           <CardItem
@@ -116,9 +125,6 @@ const HomeTab = (props) => {
                 alignItems: 'center',
                 flexDirection: 'row',
                 marginTop: 15,
-              }}
-              onPress={() => {
-                alert('이벤트 설명');
               }}>
               <Text style={{fontSize: 18, fontWeight: 'bold'}}>남은 시간 </Text>
               <CountDown
@@ -130,8 +136,7 @@ const HomeTab = (props) => {
                 digitStyle={{backgroundColor: '#ecf0f1'}}
                 onFinish={() => {
                   setModalVisible(true);
-                  //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
-                  //handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
+                  //fetchEventAction(userInfoState);
 
                   // 이벤트 중단
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단'));
@@ -163,13 +168,12 @@ const HomeTab = (props) => {
               style={styles.completeButton}
               onPress={() => {
                 setModalVisible(true);
-                //handleGetEventToken(userInfoState.userWalletAddress) // 이벤트 토큰 지급
-                //handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
+                //fetchEventAction(userInfoState);
 
-                //handleSaveHistory(300); // History 업데이트 (3개 건물 방문 이벤트)
-                //get_Buildingvisitcount(); // 건물방문 이벤트 회차 불러오기
-                // 이벤트 중단
                 setbuildingVisitCount(buildingVisitCount + 1);
+                handleSaveHistory(300); // History 업데이트 (3개 건물 방문 이벤트)
+
+                // 이벤트 중단
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
               <Text style={{fontSize: 15, fontWeight: 'bold'}}>수령</Text>
@@ -193,14 +197,15 @@ const HomeTab = (props) => {
             justifyContent: 'center',
           }}>
           <Text style={{fontSize: 18}}>
-            {today.getMonth() + 1} 월  {today.getDate()} 일
+            {today.getMonth() + 1} 월 {today.getDate()} 일
           </Text>
           <Text style={{fontSize: 18, marginBottom: 5}}>
             {buildingVisitCount == 3 ? (
               <Fragment>
                 <Text style={{fontWeight: 'bold'}}>건물 3회 방문 이벤트 </Text>
-                <Text>완료! </Text>
+                <Text>완료!</Text>
                 <Text style={{fontSize: 23}}>🏘</Text>
+                {fetchEventAction(userInfoState)}
               </Fragment>
             ) : (
               <Fragment>
@@ -309,9 +314,9 @@ const styles = StyleSheet.create({
     height: height * 0.23,
   },
   eventContainer: {
+    flex: 1,
     alignItems: 'center',
     width: width * 0.98,
-    height: height * 0.6,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     backgroundColor: '#fff',
