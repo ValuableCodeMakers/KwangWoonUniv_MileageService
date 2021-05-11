@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import {Platform} from 'react-native';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-import {createAppContainer} from 'react-navigation';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { Platform } from 'react-native';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createAppContainer } from 'react-navigation';
+import { useDispatch } from 'react-redux';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
@@ -27,8 +27,8 @@ import {
   handleLoadingState,
 } from '../redux/action';
 
-import {Address} from './Modules/Url.js';
-import {width, height} from './Modules/Dimensions.js';
+import { Address } from './Modules/Url.js';
+import { width, height } from './Modules/Dimensions.js';
 
 async function fetchUserData(dispatch) {
   const userId = await fetchUserId();
@@ -45,7 +45,7 @@ async function fetchUserData(dispatch) {
       userBalance: userWalletBalance,
     }),
   );
-  
+
   if (userPhoto) {
     // 프로필 사진이 있을때
     await dispatch(handleProfilePhoto('UPDATE_photo', userPhoto));
@@ -79,8 +79,8 @@ async function fetchUserId() {
 async function fetchUserPhoto(userId) {
   const userPhoto = await fetch(Address.url + '/routes/getPhoto', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({userId: userId}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: userId }),
   });
   const parsed_UserPhoto = await userPhoto.json();
 
@@ -90,8 +90,8 @@ async function fetchUserPhoto(userId) {
 async function fetchUserAddress(userId) {
   const userAddress = await fetch(Address.url + '/routes/getWalletAddress', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({userId: userId}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: userId }),
   });
   const parsed_userAddress = await userAddress.json();
 
@@ -103,7 +103,7 @@ async function fetchUserBalance(userWalletAddress) {
     Address.url + '/routes/getTokenBalance',
     {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         address: userWalletAddress,
       }),
@@ -139,11 +139,11 @@ export default MainScreen;
 // 좌우 제스쳐 기능 이용을 위해 BottomTabNaviator 사용 X
 const AppMainNavigator = createMaterialTopTabNavigator(
   {
-    홈: {screen: HomeTab},
-    지도: {screen: MapTab},
-    스캔: {screen: CameraTab},
-    결제: {screen: WalletTab},
-    랭킹: {screen: RankTab},
+    홈: { screen: HomeTab },
+    지도: { screen: MapTab },
+    스캔: { screen: CameraTab },
+    결제: { screen: WalletTab },
+    랭킹: { screen: RankTab },
   },
   {
     bounces: true,
@@ -151,20 +151,20 @@ const AppMainNavigator = createMaterialTopTabNavigator(
     swipeEnabled: false,
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      labelStyle: {fontSize: 12},
+      labelStyle: { fontSize: 12 },
       style: {
         height: height * 0.1,
         ...Platform.select({
           ios: {
             backgroundColor: '#ffffff',
           },
-          android: {backgroundColor: '#ffffff'},
+          android: { backgroundColor: '#ffffff' },
         }),
       },
-      iconStyle: {height: 30, width: 30},
+      iconStyle: { height: 30, width: 30 },
       activeTintColor: '#b33939',
       inactiveTintColor: 'black',
-      indicatorStyle: {backgroundColor: '#fff'},
+      indicatorStyle: { backgroundColor: '#fff' },
       upperCaseLabel: false,
       showLabel: true,
       showIcon: true,

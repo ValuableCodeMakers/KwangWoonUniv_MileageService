@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,30 +6,41 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {Card, CardItem, Icon, Container, Spinner} from 'native-base';
-import {useSelector, useDispatch} from 'react-redux';
+import { Card, CardItem, Icon, Container, Spinner } from 'native-base';
+import { useSelector, useDispatch } from 'react-redux';
 import CountDown from 'react-native-countdown-component';
 
 import CustomHeader from '../CustomHeader';
-import {EventCustomModal} from '../CustomModal';
+import { EventCustomModal } from '../CustomModal';
 
-import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
+import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
 import * as Progress from 'react-native-progress';
-import {Address} from '../Modules/Url.js';
-import {width, height} from '../Modules/Dimensions.js';
+import { Address } from '../Modules/Url.js';
+import { width, height } from '../Modules/Dimensions.js';
 
-const fetchEventAction = async (userInfoState) => {
+const fetchEventAction = async (userInfoState, type) => {
   console.log('이벤트 토큰 받기');
-  // await handleGetEventToken(userInfoState.userWalletAddress); // 이벤트 토큰 지급
-  // await handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
+  await handleGetEventToken(userInfoState.userWalletAddress); // 이벤트 토큰 지급
+  switch (type) {
+    case 0:
+      await handleSaveSpecification('학교 유지 이벤트', 500); // 내역 업데이트
+      break;
+    case 1:
+      await handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
+      break;
+    case 2:
+      await handleSaveSpecification('3회 방문 이벤트', 300); // 내역 업데이트
+      break;
+  }
+
 };
 
 const handleGetEventToken = (address) => {
   console.log('HomeTab: Fetch / 이벤트 토큰 전송 메소드');
   fetch(Address.url + '/routes/getEventToken', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({to: address}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ to: address }),
   })
     .then((res) => {
       return res.json();
@@ -42,8 +53,8 @@ const handleGetEventToken = (address) => {
 const handleSaveSpecification = (detail, amount) => {
   fetch(Address.url + '/routes/saveSpecification', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: new Date(), amount: amount, detail: detail }),
   })
     .then((res) => {
       return res.json();
@@ -56,8 +67,8 @@ const handleSaveSpecification = (detail, amount) => {
 const handleSaveHistory = (amount, setModalVisible) => {
   fetch(Address.url + '/routes/saveHistory', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({date: new Date(), amount: amount}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: new Date(), amount: amount }),
   })
     .then((res) => {
       return res.json();
@@ -72,7 +83,7 @@ const handleGetVisitCount = (setbuildingVisitCount) => {
 
   fetch(Address.url + '/routes/getBuildingVisitCount', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
   })
     .then((res) => {
       return res.json();
@@ -115,8 +126,8 @@ const HomeTab = (props) => {
               justifyContent: 'center',
               flexDirection: 'column',
             }}>
-            <Text style={{fontSize: 18}}>
-              <Text style={{fontWeight: 'bold'}}>'학교에서 있기'</Text> 이벤트가
+            <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontWeight: 'bold' }}>'학교에서 있기'</Text> 이벤트가
               진행중입니다.😊
             </Text>
             <View
@@ -126,14 +137,14 @@ const HomeTab = (props) => {
                 flexDirection: 'row',
                 marginTop: 15,
               }}>
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>남은 시간 </Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>남은 시간 </Text>
               <CountDown
                 until={60 * 45} // 45분 60 * 45
                 size={20}
                 timeToShow={['M', 'S']}
-                timeLabels={{m: null, s: null}}
+                timeLabels={{ m: null, s: null }}
                 showSeparator={true}
-                digitStyle={{backgroundColor: '#ecf0f1'}}
+                digitStyle={{ backgroundColor: '#ecf0f1' }}
                 onFinish={() => {
                   setModalVisible(true);
                   //fetchEventAction(userInfoState);
@@ -161,22 +172,32 @@ const HomeTab = (props) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              {data.id} 이벤트 완료! <Text style={{fontSize: 30}}>🎉</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+              {data.id} 이벤트 완료! <Text style={{ fontSize: 30 }}>🎉</Text>
             </Text>
             <TouchableOpacity
               style={styles.completeButton}
               onPress={() => {
                 setModalVisible(true);
-                //fetchEventAction(userInfoState);
-
                 setbuildingVisitCount(buildingVisitCount + 1);
+
+                if (buildingVisitCount == 0) {
+                  fetchEventAction(userInfoState, 1);
+                }
+                else if (buildingVisitCount == 1) {
+                  fetchEventAction(userInfoState, 1);
+                }
+                else if (buildingVisitCount == 2) {
+                  fetchEventAction(userInfoState, 2);
+                }
+
+
                 handleSaveHistory(300); // History 업데이트 (3개 건물 방문 이벤트)
 
                 // 이벤트 중단
                 dispatch(handleBuildingEvent('방문 코인 수령, 이벤트 중단'));
               }}>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>수령</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>수령</Text>
             </TouchableOpacity>
           </CardItem>
         </Card>
@@ -196,22 +217,22 @@ const HomeTab = (props) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Text style={{fontSize: 18}}>
+          <Text style={{ fontSize: 18 }}>
             {today.getMonth() + 1} 월 {today.getDate()} 일
           </Text>
-          <Text style={{fontSize: 18, marginBottom: 5}}>
-            {buildingVisitCount == 3 ? (
+          <Text style={{ fontSize: 18, marginBottom: 5 }}>
+            {(buildingVisitCount === 3) ? (
               <Fragment>
-                <Text style={{fontWeight: 'bold'}}>건물 3회 방문 이벤트 </Text>
+                <Text style={{ fontWeight: 'bold' }}>건물 3회 방문 이벤트 </Text>
                 <Text>완료!</Text>
-                <Text style={{fontSize: 23}}>🏘</Text>
-                {fetchEventAction(userInfoState)}
+                <Text style={{ fontSize: 23 }}>🏘</Text>
+                {/*fetchEventAction(userInfoState, 2)*/}
               </Fragment>
             ) : (
               <Fragment>
-                <Text style={{fontWeight: 'bold'}}>건물 3회 방문 이벤트 </Text>
+                <Text style={{ fontWeight: 'bold' }}>건물 3회 방문 이벤트 </Text>
                 <Text>진행중입니다.</Text>
-                <Text style={{fontSize: 23}}>🏘</Text>
+                <Text style={{ fontSize: 23 }}>🏘</Text>
               </Fragment>
             )}
           </Text>
@@ -249,19 +270,19 @@ const HomeTab = (props) => {
             }}>
             현재 잔액
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon name="server-outline" style={{color: 'white'}} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name="server-outline" style={{ color: 'white' }} />
             <Text> </Text>
             {loadState.loadState ? (
               <Text
-                style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
+                style={{ fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON' }}>
                 {' ' + userInfoState.userBalance}
               </Text>
             ) : (
-              <Spinner color="white" style={{height: 20}}></Spinner>
+              <Spinner color="white" style={{ height: 20 }}></Spinner>
             )}
             <Text
-              style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
+              style={{ fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON' }}>
               {' '}
               토큰
             </Text>
@@ -294,8 +315,8 @@ const HomeTab = (props) => {
 };
 
 HomeTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-home" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="ios-home" style={{ color: tintColor }} />
   ),
 });
 
