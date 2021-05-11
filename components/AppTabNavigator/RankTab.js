@@ -6,13 +6,13 @@ import {useSelector} from 'react-redux';
 import CustomHeader from '../CustomHeader';
 
 import {Address} from '../Modules/Url.js';
-import {width, height} from '../Modules/Dimensions.js';
+import {height} from '../Modules/Dimensions.js';
 import basicImage from '../../src/profile/profile.png'; // 기본 이미지
 
 async function fetchUserRankdAndPhoto(setRankers) {
   const userRankData = await fetchUsersRank();
-  const newState = await fetchUsersPhoto(userRankData);
-  await setRankers(newState);
+  const new_RankersState = await fetchUsersPhoto(userRankData);
+  await setRankers(new_RankersState);
 }
 
 async function fetchUsersRank() {
@@ -314,12 +314,20 @@ const RankTab = (props) => {
                           ...styles.rankContainer,
                           backgroundColor:
                             rankers[key].id == userInfo.userId
-                              ? '#c0392b'
+                              ? '#e74c3c'
                               : '#fff',
                         }}
                         key={key}>
                         <View style={{width: '8%', marginHorizontal: 10}}>
-                          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                          <Text
+                            style={{
+                              fontSize: 20,
+                              fontWeight: 'bold',
+                              color:
+                                rankers[key].id == userInfo.userId
+                                  ? '#fff'
+                                  : '#111',
+                            }}>
                             {key}
                           </Text>
                         </View>
@@ -339,13 +347,25 @@ const RankTab = (props) => {
 
                         <Text
                           style={{
-                            fontSize: 15,
+                            fontSize: 17,
                             marginLeft: 20,
+                            color:
+                              rankers[key].id == userInfo.userId
+                                ? '#fff'
+                                : '#111',
                           }}>
                           {rankers[key].id}
                         </Text>
                         <Right>
-                          <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                          <Text
+                            style={{
+                              fontFamily: 'BMDOHYEON',
+                              fontSize: 15,
+                              color:
+                                rankers[key].id == userInfo.userId
+                                  ? '#fff'
+                                  : '#111',
+                            }}>
                             {rankers[key].balance} UMT
                           </Text>
                         </Right>

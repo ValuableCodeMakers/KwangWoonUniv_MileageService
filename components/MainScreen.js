@@ -15,6 +15,7 @@ import RankTab from './AppTabNavigator/RankTab';
 import SendScreen from './AppTabNavigator/WalletTabSub/SendScreen.js';
 import SendConfirmScreen from './AppTabNavigator/WalletTabSub/SendConfirmScreen.js';
 import SendResultScreen from './AppTabNavigator/WalletTabSub/SendResultScreen.js';
+import SendCamera from './AppTabNavigator/WalletTabSub/SendCamera.js'
 import ReceiveScreen from './AppTabNavigator/WalletTabSub/ReceiveScreen.js';
 
 import CustomDrawerNavigator from './CustomDrawerNavigator';
@@ -37,6 +38,7 @@ async function fetchUserData(dispatch) {
     fetchUserAddress(userId),
   ]);
   const userWalletBalance = await fetchUserBalance(userWalletAddress);
+  console.log(userWalletBalance)
 
   await dispatch(
     handleUserInfo('UPDATE_info', {
@@ -61,7 +63,7 @@ async function fetchUserData(dispatch) {
       ]),
     );
   }
-  console.log('MainScreen: 정보 가져오기 완료')
+  console.log('MainScreen: 정보 가져오기 완료');
 
   await dispatch(handleLoadingState('로딩완료', true));
   console.log('MainScreen: 로딩 완료');
@@ -115,15 +117,9 @@ async function fetchUserBalance(userWalletAddress) {
   return balance;
 }
 
-//
-//
-//
-
 const MainScreen = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log('MainScreen: 기본 정보 불러오기');
-
     fetchUserData(dispatch);
   }, []);
 
@@ -142,7 +138,7 @@ const AppMainNavigator = createMaterialTopTabNavigator(
     홈: {screen: HomeTab},
     지도: {screen: MapTab},
     스캔: {screen: CameraTab},
-    결제: {screen: WalletTab},
+    지갑: {screen: WalletTab},
     랭킹: {screen: RankTab},
   },
   {
@@ -198,6 +194,7 @@ const AppTabContainer = createAppContainer(
       Send: SendScreen,
       SendConfirm: SendConfirmScreen,
       SendResult: SendResultScreen,
+      SendCamera: SendCamera,
       Receive: ReceiveScreen,
       ChangeProfile: ChangeProfileScreen,
     },

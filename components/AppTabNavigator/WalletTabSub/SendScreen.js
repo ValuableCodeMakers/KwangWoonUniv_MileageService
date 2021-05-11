@@ -42,7 +42,7 @@ class SendScreen extends Component {
                 <Text style={{ fontSize: 18 }}>상대 주소</Text>
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('QRcode', { handleState: this.handleState });
+                    this.props.navigation.navigate('SendCamera', { handleState: this.handleState });
                   }}>
                   <Icon name="camera" style={{ fontSize: 22 }} />
                 </TouchableOpacity>

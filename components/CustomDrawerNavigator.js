@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Address} from './Modules/Url.js';
-import {width, height} from './Modules/Dimensions.js';
+import {height} from './Modules/Dimensions.js';
 
 function logout(props) {
   fetch(Address.url + '/routes/logout', {
@@ -14,9 +14,7 @@ function logout(props) {
     .then((res) => {
       console.log(res);
       props.navigation.closeDrawer();
-      props.navigation.navigate('Auth', {
-        screen: 'Login',
-      });
+      props.navigation.navigate('Auth');
     });
 }
 
@@ -59,16 +57,7 @@ const CustomDrawerNavigator = (props) => {
       </View>
 
       <View style={styles.menuContainer}>
-        <View style={{...styles.menuButton, marginTop: 20}}>
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.closeDrawer();
-              props.navigation.navigate('AppMainNavigator');
-            }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>소개</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.menuButton}>
+        <View style={{...styles.menuButton, marginTop: 15}}>
           <TouchableOpacity
             onPress={() => {
               props.navigation.closeDrawer();
