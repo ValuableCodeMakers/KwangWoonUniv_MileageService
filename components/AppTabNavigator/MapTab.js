@@ -16,6 +16,7 @@ import {
   Platform,
   PermissionsAndroid,
   Image,
+  ScrollView,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import {
@@ -273,6 +274,7 @@ const MapTab = (props) => {
                     source={building.image}
                     style={styles.buildingImage}></Image>
                 </View>
+
                 <View
                   style={{
                     justifyContent: 'center',
@@ -302,15 +304,23 @@ const MapTab = (props) => {
                       500 토큰
                     </Text>
                   </View>
-                  <View>
-                    <Text style={{ fontSize: 15 }}>{building.explanation}</Text>
-                  </View>
+                  <ScrollView style={{
+                    marginTop: 5,
+                    marginBottom: 5,
+                  }}>
+                    <View>
+                      <Text style={{ fontSize: 15 }}>
+                        {building.explanation}
+                      </Text>
+                    </View>
+                  </ScrollView>
                 </View>
+
               </View>
             );
           })}
         </Animated.ScrollView>
-      </View>
+      </View >
     );
   }
 };

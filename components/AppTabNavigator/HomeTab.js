@@ -29,7 +29,7 @@ const fetchEventAction = async (userInfoState, type) => {
       await handleSaveSpecification('방문 이벤트', 500); // 내역 업데이트
       break;
     case 2:
-      await handleSaveSpecification('3회 방문 이벤트', 300); // 내역 업데이트
+      await handleSaveSpecification('3회 방문 이벤트', 800); // 내역 업데이트
       break;
   }
 
@@ -91,7 +91,7 @@ const handleGetVisitCount = (setbuildingVisitCount) => {
     .then((res) => {
       if (res.length === null) setbuildingVisitCount(0);
       if (res.length < 3) setbuildingVisitCount(res.length);
-      else setbuildingVisitCount(3);
+      else setbuildingVisitCount(res.length - 3);
     });
 };
 
@@ -147,7 +147,7 @@ const HomeTab = (props) => {
                 digitStyle={{ backgroundColor: '#ecf0f1' }}
                 onFinish={() => {
                   setModalVisible(true);
-                  //fetchEventAction(userInfoState);
+                  fetchEventAction(userInfoState, 0);
 
                   // 이벤트 중단
                   dispatch(handleHoldingEvent('학교도착, 이벤트 중단'));
@@ -179,15 +179,16 @@ const HomeTab = (props) => {
               style={styles.completeButton}
               onPress={() => {
                 setModalVisible(true);
-                setbuildingVisitCount(buildingVisitCount + 1);
-
-                if (buildingVisitCount == 0) {
+                if (buildingVisitCount === 0) {
+                  setbuildingVisitCount(1);
                   fetchEventAction(userInfoState, 1);
                 }
-                else if (buildingVisitCount == 1) {
+                else if (buildingVisitCount === 1) {
+                  setbuildingVisitCount(2);
                   fetchEventAction(userInfoState, 1);
                 }
-                else if (buildingVisitCount == 2) {
+                else if (buildingVisitCount === 2) {
+                  setbuildingVisitCount(0);
                   fetchEventAction(userInfoState, 2);
                 }
 

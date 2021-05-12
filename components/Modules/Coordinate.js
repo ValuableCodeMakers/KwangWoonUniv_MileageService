@@ -280,7 +280,7 @@ export const HanWool = {
 };
 
 export const NooRi = {
-    point: { latitude: 37.620227368156336, longitude: 127.05489118589068 },
+    point: { latitude: 37.620227368156336, longitude: 127.05499118589068 },
     coordinate: [
         { latitude: 37.62004941660347, longitude: 127.05500857566201 },
         { latitude: 37.62050406111984, longitude: 127.05531971189554 },
@@ -303,7 +303,7 @@ export const NooRi = {
 };
 
 export const Anni80 = {
-    point: { latitude: 37.61992359803878, longitude: 127.05869847544469 },
+    point: { latitude: 37.62004926587030, longitude: 127.058809656544167 },
     coordinate: [
         { latitude: 37.6199110449105, longitude: 127.05858637740856 },
         { latitude: 37.61986051506595, longitude: 127.05872831914397 },
