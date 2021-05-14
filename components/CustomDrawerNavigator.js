@@ -1,10 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {useSelector} from 'react-redux';
 import {Address} from './Modules/Url.js';
 import {height} from './Modules/Dimensions.js';
+import {useSelector, useDispatch} from 'react-redux';
 
-function logout(props) {
+import {handleLoginState} from '../redux/action';
+
+const logout = (props, dispatch) => {
+  dispatch(handleLoginState('Logout'));
+
   fetch(Address.url + '/routes/logout', {
     method: 'GET',
   })
@@ -12,16 +16,16 @@ function logout(props) {
       return res.json();
     })
     .then((res) => {
-      console.log(res);
       props.navigation.closeDrawer();
       props.navigation.navigate('Auth');
     });
-}
+};
 
 const CustomDrawerNavigator = (props) => {
   const reduxState = useSelector((state) => state); // redux의 store 가져오기
   const userInfoState = reduxState.userInfo;
   const userPhoto = reduxState.userProfilePhoto;
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -40,7 +44,7 @@ const CustomDrawerNavigator = (props) => {
             <Text style={{fontSize: 15, fontFamily: 'BMDOHYEON'}}>
               Univ. ID
             </Text>
-            <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 17, fontWeight: 'bold'}}>
               {userInfoState.userId}
             </Text>
           </View>
@@ -61,7 +65,7 @@ const CustomDrawerNavigator = (props) => {
           <TouchableOpacity
             onPress={() => {
               props.navigation.closeDrawer();
-              props.navigation.navigate('AppMainNavigator');
+              props.navigation.navigate('HomeTab');
             }}>
             <Text style={{fontSize: 20, fontWeight: 'bold'}}>홈</Text>
           </TouchableOpacity>
@@ -77,7 +81,11 @@ const CustomDrawerNavigator = (props) => {
         </View>
 
         <View style={styles.menuButton}>
-          <TouchableOpacity onPress={() => logout(props)}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.closeDrawer();
+              logout(props, dispatch);
+            }}>
             <Text style={{fontSize: 20, fontWeight: 'bold'}}>로그아웃</Text>
           </TouchableOpacity>
         </View>
@@ -101,8 +109,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   infoContainer: {
-    justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     height: height * 0.3,
     width: '100%',
     borderTopLeftRadius: 40,
@@ -110,8 +119,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   infoTextContainer: {
-    width: '70%',
-    marginTop: 10,
+    marginLeft: 10,
   },
   menuContainer: {
     alignItems: 'center',
@@ -129,6 +137,5 @@ const styles = StyleSheet.create({
     height: height * 0.1,
     borderBottomLeftRadius: 40,
     backgroundColor: '#c0392b',
-    elevation: 5,
   },
 });

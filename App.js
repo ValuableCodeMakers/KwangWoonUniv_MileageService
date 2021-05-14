@@ -16,9 +16,15 @@ import CreateWalletScreen from './components/NewRegister/CreateWalletScreen';
 
 import store from './redux/store'; // redux store
 
-const MainStack = createStackNavigator({
-  Main: MainScreen, //MainScreen 등록
-});
+const AuthStack = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Register: RegisterScreen,
+  },
+  {
+    initialRouteName: 'Login',
+  },
+);
 
 const NewRegisterStack = createStackNavigator(
   {
@@ -32,15 +38,10 @@ const NewRegisterStack = createStackNavigator(
   },
 );
 
-const AuthStack = createStackNavigator(
-  {
-    Login: LoginScreen,
-    Register: RegisterScreen,
-  },
-  {
-    initialRouteName: 'Login',
-  },
-);
+const MainStack = createSwitchNavigator({
+  Main: MainScreen, //MainScreen 등록
+  Auth: AuthStack,
+});
 
 const MainContainer = createAppContainer(
   createSwitchNavigator(

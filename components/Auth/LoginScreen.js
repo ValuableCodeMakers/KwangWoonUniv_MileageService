@@ -8,13 +8,17 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Card} from 'native-base';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {AuthCustomModal} from '../CustomModal';
-
 import {Address} from '../Modules/Url.js';
 import {width, height} from '../Modules/Dimensions.js';
 
-const handleLogin = (props, userInfo, setModalVisible) => {
+import {handleLoginState} from '../../redux/action';
+
+function handleLogin(props, userInfo, setModalVisible, dispatch) {
+  dispatch(handleLoginState('Login'));
+
   fetch(Address.url + '/routes/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -46,7 +50,7 @@ const handleLogin = (props, userInfo, setModalVisible) => {
         });
       }
     });
-};
+}
 
 const LoginScreen = (props) => {
   const [userInfo, setUserInfo] = useState({
@@ -54,6 +58,7 @@ const LoginScreen = (props) => {
     password: '',
   });
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <Fragment>
@@ -92,7 +97,9 @@ const LoginScreen = (props) => {
 
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={() => handleLogin(props, userInfo, setModalVisible)}>
+              onPress={() =>
+                handleLogin(props, userInfo, setModalVisible, dispatch)
+              }>
               <Text
                 style={{
                   fontSize: 18,

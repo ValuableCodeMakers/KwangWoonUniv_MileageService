@@ -38,6 +38,10 @@ const loadingStateData_initialState = {
   loadState: false,
 };
 
+const loginStateData_initialState = {
+  loginState: false,
+};
+
 // 건물 도착 이벤트 관련 reducer
 var index = null;
 var newArray = null;
@@ -269,6 +273,20 @@ export const loadingStateReducer = (
       return {loadState: action.result};
     case '로딩중':
       return {loadState: action.result};
+    default:
+      return state;
+  }
+};
+
+export const loginStateReducer = (
+  state = loginStateData_initialState,
+  action,
+) => {
+  switch (action.type) {
+    case 'Login':
+      return {loginState: action.result};
+    case 'Logout':
+      return {loginState: action.result};
     default:
       return state;
   }

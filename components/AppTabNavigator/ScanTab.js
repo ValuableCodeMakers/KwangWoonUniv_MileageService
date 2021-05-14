@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     width: '50%',
     height: '50%',
     alignItems: 'center',
+    opacity: 1,
   },
 });
 export default CameraTab;

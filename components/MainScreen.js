@@ -4,7 +4,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createAppContainer} from 'react-navigation';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import HomeTab from './AppTabNavigator/HomeTab';
 import MapTab from './AppTabNavigator/MapTab';
@@ -15,7 +15,7 @@ import RankTab from './AppTabNavigator/RankTab';
 import SendScreen from './AppTabNavigator/WalletTabSub/SendScreen.js';
 import SendConfirmScreen from './AppTabNavigator/WalletTabSub/SendConfirmScreen.js';
 import SendResultScreen from './AppTabNavigator/WalletTabSub/SendResultScreen.js';
-import SendCamera from './AppTabNavigator/WalletTabSub/SendCamera.js'
+import SendCamera from './AppTabNavigator/WalletTabSub/SendCamera.js';
 import ReceiveScreen from './AppTabNavigator/WalletTabSub/ReceiveScreen.js';
 
 import CustomDrawerNavigator from './CustomDrawerNavigator';
@@ -38,7 +38,6 @@ async function fetchUserData(dispatch) {
     fetchUserAddress(userId),
   ]);
   const userWalletBalance = await fetchUserBalance(userWalletAddress);
-  console.log(userWalletBalance)
 
   await dispatch(
     handleUserInfo('UPDATE_info', {
@@ -47,7 +46,7 @@ async function fetchUserData(dispatch) {
       userBalance: userWalletBalance,
     }),
   );
-  
+
   if (userPhoto) {
     // 프로필 사진이 있을때
     await dispatch(handleProfilePhoto('UPDATE_photo', userPhoto));
@@ -117,11 +116,20 @@ async function fetchUserBalance(userWalletAddress) {
   return balance;
 }
 
-const MainScreen = () => {
+const MainScreen = (props) => {
   const dispatch = useDispatch();
+  const loginState = useSelector((state) => state.loginState);
+
   useEffect(() => {
     fetchUserData(dispatch);
   }, []);
+
+  // 로그아웃시 Auth Screen으로
+  useEffect(() => {
+    if (!loginState.loginState) {
+      props.navigation.navigate('Auth');
+    }
+  }, [loginState.loginState]);
 
   return <AppTabContainer></AppTabContainer>;
 };

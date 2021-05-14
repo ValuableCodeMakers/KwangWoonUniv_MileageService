@@ -5,6 +5,7 @@ import {
   userInfoReducer,
   profilePhotoReducer,
   loadingStateReducer,
+  loginStateReducer
 } from './reducers';
 
 const reducer = combineReducers({
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   userInfo: userInfoReducer,
   userProfilePhoto: profilePhotoReducer,
   loadState: loadingStateReducer,
+  loginState: loginStateReducer
 });
 
 const store = createStore(reducer);

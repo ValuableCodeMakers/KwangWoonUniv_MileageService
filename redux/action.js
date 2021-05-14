@@ -116,3 +116,12 @@ export function handleLoadingState(type) {
       return {type: '로딩중', result: false};
   }
 }
+
+export function handleLoginState(type) {
+  switch (type) {
+    case 'Login':
+      return {type: type, result: true};
+    case 'Logout':
+      return {type: type, result: false};
+  }
+}
