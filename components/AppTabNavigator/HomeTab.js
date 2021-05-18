@@ -32,7 +32,6 @@ const fetchEventAction = async (userInfoState, type) => {
       await handleSaveSpecification('3회 방문 이벤트', 800); // 내역 업데이트
       break;
   }
-
 };
 
 const handleGetEventToken = (address) => {
