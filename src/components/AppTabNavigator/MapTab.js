@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Icon } from 'native-base';
+import React, {useState, useEffect} from 'react';
+import {Icon} from 'native-base';
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
@@ -8,7 +8,7 @@ import MapView, {
 } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   Text,
@@ -35,9 +35,9 @@ import {
   Anni80,
   IceLink,
 } from '../Modules/Coordinate.js';
-import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
+import {handleBuildingEvent, handleHoldingEvent} from '../../redux/action';
 import pinImage from '../../photo/building/pin.png';
-import { width, height } from '../Modules/Dimensions.js';
+import {width, height} from '../Modules/Dimensions.js';
 
 async function requestPermission() {
   try {
@@ -90,7 +90,7 @@ const MapTab = (props) => {
       for (i = 0; i < buildingList.length; i++) {
         if (
           geolib.isPointInPolygon(
-            { latitude: location.latitude, longitude: location.longitude },
+            {latitude: location.latitude, longitude: location.longitude},
             buildingList[i].coordinate,
           )
         ) {
@@ -100,7 +100,7 @@ const MapTab = (props) => {
       }
 
       if (locationBuilding != '') {
-        console.log("MapTab: " + locationBuilding + '도착! 시간 이벤트 실행');
+        console.log('MapTab: ' + locationBuilding + '도착! 시간 이벤트 실행');
         setArriveLocation(true);
         dispatch(handleBuildingEvent(locationBuilding)); // dispatch 에 true 전달
       }
@@ -112,7 +112,7 @@ const MapTab = (props) => {
   useEffect(() => {
     if (location) {
       const locationResult = geolib.isPointInPolygon(
-        { latitude: location.latitude, longitude: location.longitude },
+        {latitude: location.latitude, longitude: location.longitude},
         KW_Area[0],
       );
 
@@ -144,7 +144,7 @@ const MapTab = (props) => {
           },
           {
             enableHighAccuracy: true,
-            distanceFilter: 0,
+            distanceFilter: 1,
             interval: 2000,
             fastestInterval: 2000,
           },
@@ -173,21 +173,21 @@ const MapTab = (props) => {
     let x = markerId * width;
     console.log(markerId);
 
-    _scrollView.current.getNode().scrollTo({ x: x, y: 0, animated: true });
+    _scrollView.current.getNode().scrollTo({x: x, y: 0, animated: true});
   };
   const _scrollView = React.useRef(null);
 
   if (!location) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>위치 추적 권한이 필요합니다.</Text>
       </View>
     );
   } else {
     return (
-      <View style={{ flex: 1, width: '100%' }}>
+      <View style={{flex: 1, width: '100%'}}>
         <MapView
-          style={{ flex: 1 }}
+          style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
           showsMyLocationButton={true}
           showsCompass={true}
@@ -196,7 +196,6 @@ const MapTab = (props) => {
           showsUserLocation={true}
           loadingEnabled={true}
           moveOnMarkerPress={true}
-          userLocationUpdateInterval={1000}
           initialRegion={InitialRegion}
           region={{
             latitude: location.latitude,
@@ -204,21 +203,13 @@ const MapTab = (props) => {
             latitudeDelta: 0.004,
             longitudeDelta: 0.002,
           }}>
-          {/* 광운대학교 영역 동쪽*/}
+          {/* 광운대학교 영역*/}
           <Polyline
             coordinates={KW_Area[0]}
             strokeColor="#000"
             strokeWidth={3}
           />
           <Polygon coordinates={KW_Area[0]} fillColor="rgba(100,100,100,0.3)" />
-          {/* 광운대학교 영역 서쪽*/}
-          {/*
-          <Polyline
-            coordinates={KW_Area[1]}
-            strokeColor="#000"
-            strokeWidth={3}
-          />
-          <Polygon coordinates={KW_Area[1]} fillColor="rgba(100,100,100,0.3)" /> */}
 
           {buildingList.map((building, index) => (
             <Polyline
@@ -246,7 +237,7 @@ const MapTab = (props) => {
               key={index}
               image={pinImage}
               onPress={(e) => onMarkerPress(e)}
-              style={{ width: 5, height: 5 }}></Marker>
+              style={{width: 5, height: 5}}></Marker>
           ))}
         </MapView>
 
@@ -269,28 +260,23 @@ const MapTab = (props) => {
           {buildingList.map((building, index) => {
             return (
               <View style={styles.buildingCard} key={index}>
-                <View style={{ width: '100%', height: '60%' }}>
+                <View style={{width: '100%', height: '60%'}}>
                   <Image
                     source={building.image}
                     style={styles.buildingImage}></Image>
                 </View>
 
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                    height: '40%',
-                  }}>
+                <View style={styles.buildingDetail}>
                   <View
                     style={{
                       alignItems: 'center',
                       flexDirection: 'row',
                       overflow: 'hidden',
+                      paddingVertical: 5,
                     }}>
                     <Text
                       style={{
-                        fontSize: 25,
+                        fontSize: 20,
                         fontFamily: 'BMDOHYEON',
                       }}>
                       {building.title_Kor}
@@ -304,30 +290,24 @@ const MapTab = (props) => {
                       500 토큰
                     </Text>
                   </View>
-                  <ScrollView style={{
-                    marginTop: 5,
-                    marginBottom: 5,
-                  }}>
-                    <View>
-                      <Text style={{ fontSize: 15 }}>
-                        {building.explanation}
-                      </Text>
-                    </View>
+                  <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={{width: '90%'}}>
+                    <Text style={{fontSize: 15}}>{building.explanation}</Text>
                   </ScrollView>
                 </View>
-
               </View>
             );
           })}
         </Animated.ScrollView>
-      </View >
+      </View>
     );
   }
 };
 
 MapTab.navigationOptions = (screenProps) => ({
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="ios-map" style={{ color: tintColor }} />
+  tabBarIcon: ({tintColor}) => (
+    <Icon name="ios-map" style={{color: tintColor}} />
   ),
 });
 
@@ -343,21 +323,26 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: height / 3,
-    paddingVertical: 10,
   },
   buildingCard: {
     display: 'flex',
     width: width * 0.85,
-    height: height / 3.5,
+    height: height / 3.1,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: width * 0.075,
     backgroundColor: '#fff',
     borderBottomEndRadius: 35,
-    elevation: 5,
+    elevation: 7,
   },
   buildingImage: {
     width: '100%',
     height: '100%',
+  },
+  buildingDetail: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '40%',
   },
 });
