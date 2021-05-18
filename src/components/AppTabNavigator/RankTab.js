@@ -7,7 +7,7 @@ import CustomHeader from '../CustomHeader';
 
 import {Address} from '../Modules/Url.js';
 import {height} from '../Modules/Dimensions.js';
-import basicImage from '../../src/profile/profile.png'; // 기본 이미지
+import basicImage from '../../photo/profile/profile.png'; // 기본 이미지
 
 async function fetchUserRankdAndPhoto(setRankers) {
   const userRankData = await fetchUsersRank();

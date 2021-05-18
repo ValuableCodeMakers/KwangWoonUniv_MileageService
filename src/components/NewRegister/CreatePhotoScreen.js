@@ -11,7 +11,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Address } from '../Modules/Url.js';
 import { width, height } from '../Modules/Dimensions.js';
 
-import basicImage from '../../src/profile/profile.png'; // 기본 이미지
+import basicImage from '../../photo/profile/profile.png'; // 기본 이미지
 
 export default class CreateProfileScreen extends Component {
   constructor(props) {

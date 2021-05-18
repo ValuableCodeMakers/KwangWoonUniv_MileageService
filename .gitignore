@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 # back-end url
-components/Modules/Url.js
+src/components/Modules/Url.js

@@ -5,16 +5,16 @@ import {Root} from 'native-base';
 import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 
-import MainScreen from './components/MainScreen';
-import LoginScreen from './components/Auth/LoginScreen';
-import RegisterScreen from './components/Auth/RegisterScreen';
-import AuthLoadingScreen from './components/Auth/AuthLoadingScreen';
+import MainScreen from './src/components/MainScreen.js';
+import LoginScreen from './src/components/Auth/LoginScreen.js';
+import RegisterScreen from './src/components/Auth/RegisterScreen.js';
+import AuthLoadingScreen from './src/components/Auth/AuthLoadingScreen.js';
 
-import CreateProfileScreen from './components/NewRegister/CreateProfileScreen';
-import CreatePhotoScreen from './components/NewRegister/CreatePhotoScreen';
-import CreateWalletScreen from './components/NewRegister/CreateWalletScreen';
+import CreateProfileScreen from './src/components/NewRegister/CreateProfileScreen.js';
+import CreatePhotoScreen from './src/components/NewRegister/CreatePhotoScreen.js';
+import CreateWalletScreen from './src/components/NewRegister/CreateWalletScreen.js';
 
-import store from './redux/store'; // redux store
+import store from './src/redux/store.js'; // redux store
 
 const AuthStack = createStackNavigator(
   {
@@ -62,7 +62,7 @@ const MainContainer = createAppContainer(
 
 export default class App extends Component {
   componentDidMount() {
-    setTimeout(() => SplashScreen.hide(), 800);
+    setTimeout(() => SplashScreen.hide(), 600);
   }
 
   render() {

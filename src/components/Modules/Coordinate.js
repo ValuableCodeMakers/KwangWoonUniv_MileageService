@@ -96,7 +96,7 @@ export const HwaDo = {
     ],
     title_Kor: '화도관',
     title_Eng: 'HwaDo',
-    image: require('../../src/building/HwaDoImage.jpg'),
+    image: require('../../photo/building/HwaDoImage.jpg'),
     explanation: '광운대학교에서 가장 오래된 건물이다.\n대학행정실 및 총장실 등이 있다.',
 };
 
@@ -130,7 +130,7 @@ export const BiMa = {
     ],
     title_Kor: '비마관',
     title_Eng: 'BiMa',
-    image: require('../../src/building/BiMaImage.jpg'),
+    image: require('../../photo/building/BiMaImage.jpg'),
     explanation: '북카페 페가수스와, 노트북, 강의실 대여가 가능한 광운mooc센터가 있다. 전자정보공과대학과 공과대학의 핟생들이 공부하는 곳이다.',
 };
 
@@ -152,7 +152,7 @@ export const OgUi = {
     ],
     title_Kor: '옥의관',
     title_Eng: 'OgUi',
-    image: require('../../src/building/OgUiImage.jpg'),
+    image: require('../../photo/building/OgUiImage.jpg'),
     explanation: '미디어솔루션 이라는 작은 카페가 있다.\n자연과학대학 건물이다.',
 };
 
@@ -171,7 +171,7 @@ export const BokJi = {
     ],
     title_Kor: '복지관',
     title_Eng: 'BokJi',
-    image: require('../../src/building/BokJiImage.jpg'),
+    image: require('../../photo/building/BokJiImage.jpg'),
     explanation: '총학생회실과, 총동아리연합회실, \n다양한 동아리실 및 학생식당 함지마루가 있다.',
 };
 
@@ -190,7 +190,7 @@ export const YeonGu = {
     ],
     title_Kor: '연구관',
     title_Eng: 'YeonGu',
-    image: require('../../src/building/YeonGuImage.jpg'),
+    image: require('../../photo/building/YeonGuImage.jpg'),
     explanation: '광운 정보과학교육원에서 사용하는 곳이며,\n컴퓨터 필수 교양 수업을 하는 건물이다.',
 };
 
@@ -212,7 +212,7 @@ export const DongHae = {
     ],
     title_Kor: '동해문화예술관',
     title_Eng: 'DongHae',
-    image: require('../../src/building/DongHaeImage.jpg'),
+    image: require('../../photo/building/DongHaeImage.jpg'),
     explanation: '졸업식, 입학식 등 다양한 행사을 진행하는 곳이다.\n지하에는 푸드코트가 있다.',
 };
 
@@ -243,7 +243,7 @@ export const ChamBit = {
     ],
     title_Kor: '참빛관',
     title_Eng: 'ChamBit',
-    image: require('../../src/building/ChamBitImage.jpg'),
+    image: require('../../photo/building/ChamBitImage.jpg'),
     explanation: '광운대학교의 교훈인 "참과 빛"에서 따왔으며,\n전자정보 공과대학의 교수님들 연구실이 많이 있다.',
 };
 
@@ -258,7 +258,7 @@ export const SaeBit = {
     ],
     title_Kor: '새빛관',
     title_Eng: 'SaeBit',
-    image: require('../../src/building/SaeBitImage.jpg'),
+    image: require('../../photo/building/SaeBitImage.jpg'),
     explanation: '광운대학교에서 가장 최근에 지어진 건물이며,\n소프트웨어 융합대학 건물이다.',
 };
 
@@ -275,7 +275,7 @@ export const HanWool = {
     ],
     title_Kor: '한울관',
     title_Eng: 'HanWool',
-    image: require('../../src/building/HanWoolImage.jpg'),
+    image: require('../../photo/building/HanWoolImage.jpg'),
     explanation: '인문사회과학대, 정법대에서 많이 사용하는 건물이다.\n여학생들이 많아서 한울여대라고도 불린다.',
 };
 
@@ -298,7 +298,7 @@ export const NooRi = {
     ],
     title_Kor: '누리관',
     title_Eng: 'NooRi',
-    image: require('../../src/building/NooRiImage.jpg'),
+    image: require('../../photo/building/NooRiImage.jpg'),
     explanation: '경영대, 로봇학부, ROTC 건물이다.',
 };
 
@@ -313,7 +313,7 @@ export const Anni80 = {
     ],
     title_Kor: '80주년기념관',
     title_Eng: 'Anni80',
-    image: require('../../src/building/Anni80Image.jpg'),
+    image: require('../../photo/building/Anni80Image.jpg'),
     explanation: '1층에는 중앙도서관과 푸드코트가 있고, \n2층에는 카페와 쉼터가 있다.',
 };
 
@@ -332,6 +332,6 @@ export const IceLink = {
     ],
     title_Kor: '아이스링크',
     title_Eng: 'IceLink',
-    image: require('../../src/building/IceLinkImage.jpg'),
+    image: require('../../photo/building/IceLinkImage.jpg'),
     explanation: '광운대학교의 자랑 아이스링크장이다.\n재학생은 매주 목요일에 무료로 이용할 수 있다.',
 };

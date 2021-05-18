@@ -36,7 +36,7 @@ import {
   IceLink,
 } from '../Modules/Coordinate.js';
 import { handleBuildingEvent, handleHoldingEvent } from '../../redux/action';
-import pinImage from '../../src/pin.png';
+import pinImage from '../../photo/building/pin.png';
 import { width, height } from '../Modules/Dimensions.js';
 
 async function requestPermission() {
