@@ -87,6 +87,7 @@ const handleGetVisitCount = (setbuildingVisitCount) => {
 const HomeTab = (props) => {
   const [buildingVisitCount, setbuildingVisitCount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [userBalance, setUserBalance] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -103,6 +104,11 @@ const HomeTab = (props) => {
       handleGetVisitCount(setbuildingVisitCount);
     }
   }, [loadState.loadState]);
+
+  // 현재 잔액 가져오기
+  useEffect(() => {
+    setUserBalance(userInfoState.userBalance);
+  }, [userInfoState.userBalance]);
 
   const event_LocationIn = (setModalVisible) => {
     if (holdingState.state) {
@@ -255,7 +261,7 @@ const HomeTab = (props) => {
             {loadState.loadState ? (
               <Text
                 style={{fontSize: 35, color: 'white', fontFamily: 'BMDOHYEON'}}>
-                {' ' + userInfoState.userBalance}
+                {' ' + userBalance}
               </Text>
             ) : (
               <Spinner color="white" style={{height: 20}}></Spinner>

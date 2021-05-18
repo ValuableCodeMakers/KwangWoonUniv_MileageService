@@ -11,6 +11,7 @@ async function fetchUserId(props, dispatch) {
     method: 'GET',
   });
   const parsed_userData = await userData.json();
+  console.log(parsed_userData)
   const userToken = parsed_userData.userId;
 
   if (userToken === null || userToken === undefined) {

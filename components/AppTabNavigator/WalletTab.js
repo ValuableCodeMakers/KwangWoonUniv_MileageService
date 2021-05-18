@@ -44,6 +44,11 @@ const WalletTab = (props) => {
     }
   }, [loadState.loadState]);
 
+  // 현재 잔액 변화로 내역 확인하기
+  useEffect(() => {
+    fetchSpecification(setHistoryState);
+  }, [userInfoState.userBalance]);
+
   return (
     <Container>
       <CustomHeader

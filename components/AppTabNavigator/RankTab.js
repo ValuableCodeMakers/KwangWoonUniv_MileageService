@@ -63,7 +63,6 @@ async function fetchUsersPhoto(rankers) {
     }),
   });
   const postJson = await postResponse.json();
-
   if (postJson) {
     return await parseUsersPhoto(JSON.stringify(postJson), rankers);
   } else {
@@ -84,22 +83,23 @@ function parseUsersPhoto(str, rankers) {
   }
 
   let newState = {};
+
   for (let key in rankers) {
     const id = rankers[key].id;
     const balance = rankers[key].balance;
 
     let filename = '';
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < rankingPhoto.length; i++) {
       if (rankingPhoto[i].includes(id)) {
         filename = rankingPhoto[i];
+        break;
       }
     }
-
     newState[parseInt(key) + 1] = {
       id: id,
       balance: balance,
-      filename: filename,
-      photoState: true,
+      filename: filename === '' ? 'default' : filename,
+      photoState: filename === '' ? false : true,
     };
   }
 

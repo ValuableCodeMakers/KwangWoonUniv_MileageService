@@ -1,69 +1,34 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Container, Card, Button, Content } from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {Container, Card, Button, Content} from 'native-base';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { handleUserInfo } from '../../../redux/action';
-import { Address } from '../../Modules/Url.js';
-import { width, height } from '../../Modules/Dimensions.js';
+import {handleUserInfo} from '../../../redux/action';
+import {Address} from '../../Modules/Url.js';
+import {width, height} from '../../Modules/Dimensions.js';
 
-function handleTransfer(sendState, dispatch, props) {
-  console.log('토큰 전송 메소드');
-  fetch(Address.url + '/routes/transferToken', {
+async function fetchTokenTransfer(sendState) {
+  const data = await fetch(Address.url + '/routes/transferToken', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(sendState),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      console.log('트랜잭션 hash: ', data.txhash);
-      const confirmData = {
-        to: sendState.to,
-        value: sendState.value,
-        txHash: data.txhash,
-      };
+  });
+  const parsedData = await data.json();
 
-      props.navigation.navigate('SendResult', confirmData);
-    })
-    .then(() => {
-      handleSaveSpecification('토큰 전송', -sendState.value); // 내역 저장
-    })
-    .then(() => {
-      // 잔액 업데이트
-      console.log('잔액 업데이트');
-
-      setTimeout(() => {
-        fetch(Address.url + '/routes/getTokenBalance', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            address: sendState.from,
-          }),
-        })
-          .then((res) => {
-            return res.json();
-          })
-          .then((res) => {
-            let balance = res.balance;
-            let updatedBalance = balance.substr(0, balance.length - 18); // decimal 제거;
-            return updatedBalance;
-          })
-          .then((updatedBalance) => {
-            dispatch(
-              handleUserInfo('UPDATE_balacne', updatedBalance), // 잔액 업데이트
-            );
-          });
-      }, 10000);
-    });
+  console.log('트랜잭션 hash: ', parsedData.txhash);
+  const confirmData = {
+    to: sendState.to,
+    value: sendState.value,
+    txHash: parsedData.txhash,
+  };
+  return confirmData;
 }
 
-const handleSaveSpecification = (detail, amount) => {
-  fetch(Address.url + '/routes/saveSpecification', {
+async function fetchSpecification(detail, amount) {
+  await fetch(Address.url + '/routes/saveSpecification', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ date: new Date(), amount: amount, detail: detail }),
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({date: new Date(), amount: amount, detail: detail}),
   })
     .then((res) => {
       return res.json();
@@ -71,13 +36,24 @@ const handleSaveSpecification = (detail, amount) => {
     .then((data) => {
       console.log(data);
     });
-};
+}
+
+async function handleTransfer(sendState, userBalance, dispatch, props) {
+  console.log('토큰 전송 메소드');
+  const confirmData = await fetchTokenTransfer(sendState);
+  await fetchSpecification('토큰 전송', -sendState.value); // 내역 저장
+
+  // 잔액 업데이트
+  const updatedBalance = userBalance - sendState.value;
+  await dispatch(
+    handleUserInfo('UPDATE_balacne', updatedBalance), // 잔액 업데이트
+  );
+  props.navigation.navigate('SendResult', confirmData);
+}
 
 const SendConfirmScreen = (props) => {
-  const reduxState = useSelector((state) => state);
   const dispatch = useDispatch();
-  const userInfo = reduxState.userInfo;
-
+  const userInfo = useSelector((state) => state.userInfo);
   const transferData = props.navigation.state.params;
   const sendState = useState({
     id: userInfo.userId,
@@ -91,16 +67,18 @@ const SendConfirmScreen = (props) => {
   return (
     <Container style={styles.container}>
       <Card style={styles.mainContainer}>
-        <Content contentContainerStyle={{ flex: 1 }}>
+        <Content contentContainerStyle={{flex: 1}}>
           <View>
             <View style={styles.confirmContainer}>
-              <Text style={{ fontSize: 15 }}>{toAddress}... 에게</Text>
-              <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{sendState[0].value} UMT</Text>
-              <Text style={{ fontSize: 15 }}>토큰을 보낼까요?</Text>
+              <Text style={{fontSize: 15}}>{toAddress}... 에게</Text>
+              <Text style={{fontSize: 30, fontWeight: 'bold'}}>
+                {sendState[0].value} UMT
+              </Text>
+              <Text style={{fontSize: 15}}>토큰을 보낼까요?</Text>
             </View>
           </View>
           <View style={styles.cautionText}>
-            <Text style={{ fontSize: 12 }}>
+            <Text style={{fontSize: 12}}>
               상대방의 주소와 토큰의 양을 확인하세요.
             </Text>
             <Text
@@ -118,16 +96,23 @@ const SendConfirmScreen = (props) => {
           <Button
             style={styles.cancelButton}
             onPress={() => props.navigation.goBack()}>
-            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
+            <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
               취소
             </Text>
           </Button>
           <Button
             iconLeft
             style={styles.nextButton}
-            onPress={() => handleTransfer(sendState[0], dispatch, props)}
+            onPress={() =>
+              handleTransfer(
+                sendState[0],
+                userInfo.userBalance,
+                dispatch,
+                props,
+              )
+            }
             danger>
-            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#fff' }}>
+            <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
               전송
             </Text>
           </Button>

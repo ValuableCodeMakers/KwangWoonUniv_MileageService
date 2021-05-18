@@ -26,8 +26,8 @@ class SendConfirmScreen extends Component {
       <Container style={styles.container}>
         <Card style={styles.mainContainer}>
           <View style={styles.completeText}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>토큰 전송이</Text>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 25, fontWeight: 'bold' }}>토큰 전송이</Text>
+            <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
               완료되었습니다. 🤗
             </Text>
           </View>
