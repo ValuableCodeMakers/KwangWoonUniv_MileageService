@@ -1,7 +1,7 @@
-import React, {Fragment, useState, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView, RefreshControl} from 'react-native';
-import {Icon, Container, Right, Thumbnail} from 'native-base';
-import {useSelector} from 'react-redux';
+import React, { Fragment, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { Icon, Container, Right, Thumbnail } from 'native-base';
+import { useSelector } from 'react-redux';
 
 import CustomHeader from '../CustomHeader';
 
@@ -39,7 +39,7 @@ function parseUsersRank(str) {
 
   let rankers = {};
   for (let i = 0; i < 10; i++) {
-    rankers[i] = {id: ranking[i], balance: balance[i]};
+    rankers[i] = { id: ranking[i], balance: balance[i] };
   }
   return rankers;
 }
@@ -48,7 +48,7 @@ function parseUsersRank(str) {
 async function fetchUsersPhoto(rankers) {
   const postResponse = await fetch(Address.url + '/routes/getPhotos', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       user1: rankers[0].id,
       user2: rankers[1].id,
@@ -174,7 +174,7 @@ const RankTab = (props) => {
         </View>
 
         <View style={styles.upperContainer}>
-          <Text style={{fontFamily: 'BMDOHYEON', fontSize: 20}}>
+          <Text style={{ fontFamily: 'BMDOHYEON', fontSize: 20 }}>
             {getWeekend()}
           </Text>
           <View style={styles.userInfoContainer}>
@@ -189,7 +189,7 @@ const RankTab = (props) => {
               <Thumbnail circular={true} large source={basicImage}></Thumbnail>
             )}
             <Text
-              style={{fontFamily: 'BMDOHYEON', fontSize: 20, marginLeft: 20}}>
+              style={{ fontFamily: 'BMDOHYEON', fontSize: 20, marginLeft: 20 }}>
               {userInfo.userId}
             </Text>
           </View>
@@ -200,9 +200,9 @@ const RankTab = (props) => {
         ) : (
           <Fragment>
             <View style={styles.middleContainer}>
-              <View style={{alignItems: 'center', width: '30%'}}>
-                <View style={{marginBottom: 10}}>
-                  <Text style={{fontSize: 30}}>🥈</Text>
+              <View style={{ alignItems: 'center', width: '30%' }}>
+                <View style={{ marginBottom: 10 }}>
+                  <Text style={{ fontSize: 30 }}>🥈</Text>
                 </View>
                 {rankers[2].photoState ? (
                   <Thumbnail
@@ -219,7 +219,7 @@ const RankTab = (props) => {
                   <Thumbnail
                     circular={true}
                     large
-                    style={{width: 75, height: 75}}
+                    style={{ width: 75, height: 75 }}
                     source={basicImage}></Thumbnail>
                 )}
                 <View
@@ -228,18 +228,18 @@ const RankTab = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 13 }}>
                     {rankers[2].id}
                   </Text>
-                  <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                  <Text style={{ fontFamily: 'BMDOHYEON', fontSize: 15 }}>
                     {rankers[2].balance} UMT
                   </Text>
                 </View>
               </View>
 
-              <View style={{alignItems: 'center', width: '40%'}}>
-                <View style={{marginBottom: 10}}>
-                  <Text style={{fontSize: 35}}>🥇</Text>
+              <View style={{ alignItems: 'center', width: '40%' }}>
+                <View style={{ marginBottom: 10 }}>
+                  <Text style={{ fontSize: 35 }}>🥇</Text>
                 </View>
                 {rankers[1].photoState ? (
                   <Thumbnail
@@ -248,27 +248,27 @@ const RankTab = (props) => {
                     source={{
                       uri: Address.url + `/${rankers[1].filename}`,
                     }}
-                    style={{width: 90, height: 90}}></Thumbnail>
+                    style={{ width: 90, height: 90 }}></Thumbnail>
                 ) : (
                   <Thumbnail
                     circular={true}
                     large
                     source={basicImage}
-                    style={{width: 90, height: 90}}></Thumbnail>
+                    style={{ width: 90, height: 90 }}></Thumbnail>
                 )}
-                <View style={{marginTop: 3}}>
-                  <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                <View style={{ marginTop: 3 }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 13 }}>
                     {rankers[1].id}
                   </Text>
-                  <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                  <Text style={{ fontFamily: 'BMDOHYEON', fontSize: 15 }}>
                     {rankers[1].balance} UMT
                   </Text>
                 </View>
               </View>
 
-              <View style={{alignItems: 'center', width: '30%'}}>
-                <View style={{marginBottom: 10}}>
-                  <Text style={{fontSize: 30}}>🥉</Text>
+              <View style={{ alignItems: 'center', width: '30%' }}>
+                <View style={{ marginBottom: 10 }}>
+                  <Text style={{ fontSize: 30 }}>🥉</Text>
                 </View>
                 {rankers[3].photoState ? (
                   <Thumbnail
@@ -277,19 +277,19 @@ const RankTab = (props) => {
                     source={{
                       uri: Address.url + `/${rankers[3].filename}`,
                     }}
-                    style={{width: 75, height: 75}}></Thumbnail>
+                    style={{ width: 75, height: 75 }}></Thumbnail>
                 ) : (
                   <Thumbnail
                     circular={true}
                     large
                     source={basicImage}
-                    style={{width: 75, height: 75}}></Thumbnail>
+                    style={{ width: 75, height: 75 }}></Thumbnail>
                 )}
-                <View style={{marginTop: 3}}>
-                  <Text style={{fontWeight: 'bold', fontSize: 13}}>
+                <View style={{ marginTop: 3 }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 13 }}>
                     {rankers[3].id}
                   </Text>
-                  <Text style={{fontFamily: 'BMDOHYEON', fontSize: 15}}>
+                  <Text style={{ fontFamily: 'BMDOHYEON', fontSize: 15 }}>
                     {rankers[3].balance} UMT
                   </Text>
                 </View>
@@ -298,8 +298,8 @@ const RankTab = (props) => {
 
             <View style={styles.lowerContainer}>
               <ScrollView
-                style={{width: '100%'}}
-                contentContainerStyle={{justifyContent: 'center'}}
+                style={{ width: '100%' }}
+                contentContainerStyle={{ justifyContent: 'center' }}
                 refreshControl={
                   <RefreshControl
                     refreshing={false}
@@ -383,8 +383,8 @@ const RankTab = (props) => {
 };
 
 RankTab.navigationOptions = () => ({
-  tabBarIcon: ({tintColor}) => (
-    <Icon type="MaterialIcons" name="insert-chart" style={{color: tintColor}} />
+  tabBarIcon: ({ tintColor }) => (
+    <Icon type="MaterialIcons" name="insert-chart" style={{ color: tintColor }} />
   ),
 });
 

@@ -28,8 +28,8 @@ import {
   handleLoadingState,
 } from '../redux/action';
 
-import {Address} from './Modules/Url.js';
-import {width, height} from './Modules/Dimensions.js';
+import { Address } from './Modules/Url.js';
+import { width, height } from './Modules/Dimensions.js';
 
 async function fetchUserData(dispatch) {
   const userId = await fetchUserId();
@@ -80,8 +80,8 @@ async function fetchUserId() {
 async function fetchUserPhoto(userId) {
   const userPhoto = await fetch(Address.url + '/routes/getPhoto', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({userId: userId}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: userId }),
   });
   const parsed_UserPhoto = await userPhoto.json();
 
@@ -91,8 +91,8 @@ async function fetchUserPhoto(userId) {
 async function fetchUserAddress(userId) {
   const userAddress = await fetch(Address.url + '/routes/getWalletAddress', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({userId: userId}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: userId }),
   });
   const parsed_userAddress = await userAddress.json();
 
@@ -104,7 +104,7 @@ async function fetchUserBalance(userWalletAddress) {
     Address.url + '/routes/getTokenBalance',
     {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         address: userWalletAddress,
       }),
@@ -155,20 +155,20 @@ const AppMainNavigator = createMaterialTopTabNavigator(
     swipeEnabled: false,
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      labelStyle: {fontSize: 12},
+      labelStyle: { fontSize: 12 },
       style: {
         height: height * 0.1,
         ...Platform.select({
           ios: {
             backgroundColor: '#ffffff',
           },
-          android: {backgroundColor: '#ffffff'},
+          android: { backgroundColor: '#ffffff' },
         }),
       },
-      iconStyle: {height: 30, width: 30},
+      iconStyle: { height: 30, width: 30 },
       activeTintColor: '#b33939',
       inactiveTintColor: 'black',
-      indicatorStyle: {backgroundColor: '#fff'},
+      indicatorStyle: { backgroundColor: '#fff' },
       upperCaseLabel: false,
       showLabel: true,
       showIcon: true,
