@@ -76,7 +76,6 @@ const MapTab = (props) => {
 
   // 건물 이벤트 상태
   const buildingState = useSelector((state) => state.buildingEvent.events);
-  //console.log(JSON.stringify(buildingState));
 
   // 위치 이벤트 상태
   const holdingState = useSelector((state) => state.holdingEvent);
@@ -100,7 +99,7 @@ const MapTab = (props) => {
       }
 
       if (locationBuilding != '') {
-        console.log('MapTab: ' + locationBuilding + '도착! 시간 이벤트 실행');
+        //console.log('MapTab: ' + locationBuilding + '도착! 시간 이벤트 실행');
         setArriveLocation(true);
         dispatch(handleBuildingEvent(locationBuilding)); // dispatch 에 true 전달
       }
@@ -145,8 +144,8 @@ const MapTab = (props) => {
           {
             enableHighAccuracy: true,
             distanceFilter: 1,
-            interval: 2000,
-            fastestInterval: 2000,
+            interval: 1000,
+            fastestInterval: 1000,
           },
         );
 
@@ -159,14 +158,8 @@ const MapTab = (props) => {
     });
   }, []);
 
-  let mapIndex = 0;
   let mapAnimation = new Animated.Value(0);
-  // useEffect(()=>{
-  //   mapAnimation.addListener(({value})=>{
-  //     let index = Math.floor(value / 100);
 
-  //   })
-  // })
   const onMarkerPress = (mapEventData) => {
     const markerId = mapEventData._targetInst.return.key;
 
