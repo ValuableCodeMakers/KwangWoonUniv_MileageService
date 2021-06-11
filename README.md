@@ -10,15 +10,13 @@
 
 사용자는 어플리케이션의 위치(지도)기반 이벤트를 통해 토큰을 획득합니다.
 
-사용자는 해당 토큰 교환을 통해 물질적인 이득과 토큰을 얻음으로 학교 생활에 대한 성취감을 얻을 수 있습니다.
+사용자는 해당 토큰 교환을 통해 물질적인 이득과 토큰을 얻음으로 학교 생활에 대한 성취감을 얻을 수 있습니다.  
+<br/>
+## 프로젝트 결과 ✨
+[프로젝트 결과 페이지](./docs.md)
 
-### 설치
-```
-// 프론트엔드 실행
-npm install
-react-native run-android
-```
-  
+<br/>
+
 ## 프로젝트 기술 Stack ⚙️
 
 ### Front-End  https://github.com/ValuableCodeMakers/KwangWoonUniv_MileageService
@@ -43,6 +41,7 @@ Web3
 
 OpenZeppelin / https://github.com/OpenZeppelin/openzeppelin-contracts
 
+<br/>
 
 ## 아키텍쳐 🧾
 <p align="center">
