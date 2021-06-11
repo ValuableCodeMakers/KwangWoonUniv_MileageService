@@ -2,7 +2,7 @@
 ## 광운대학교 산학협력 프로젝트
 
 <p align="center">
-<img width="300" src="https://user-images.githubusercontent.com/55469709/116030139-dd6a4800-a695-11eb-848b-9c1730861b53.png"></img>
+<img width="250" src="https://user-images.githubusercontent.com/55469709/121723769-e6b65380-cb21-11eb-93a8-1d82aa5e8d0f.jpg"></img>
 </p>
 
 ## 프로젝트 소개 🔎
@@ -47,6 +47,7 @@ OpenZeppelin / https://github.com/OpenZeppelin/openzeppelin-contracts
 <p align="center">
 <img width="80%" src="https://user-images.githubusercontent.com/55469709/116030064-b449b780-a695-11eb-936b-3050e1d9b558.png"></img>
 <img width="80%" src="https://user-images.githubusercontent.com/55469709/121720676-54f91700-cb1e-11eb-8b47-2b53a6ede7b8.png"></img>
+<img width="80%" src="https://user-images.githubusercontent.com/55469709/121721051-c5a03380-cb1e-11eb-927d-efc3d1fdae6a.png"></img>
 </p>
 
 ## Team 💻
