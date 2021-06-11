@@ -232,7 +232,6 @@ const HomeTab = (props) => {
                 <Text style={{ fontWeight: 'bold' }}>건물 3회 방문 이벤트 </Text>
                 <Text>완료!</Text>
                 <Text style={{ fontSize: 23 }}>🏘</Text>
-                {/*fetchEventAction(userInfoState, 2)*/}
               </Fragment>
             ) : (
               <Fragment>

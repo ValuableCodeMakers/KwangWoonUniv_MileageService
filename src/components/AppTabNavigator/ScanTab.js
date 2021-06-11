@@ -12,17 +12,17 @@ import {width, height} from '../Modules/Dimensions.js';
 
 const handleGetEventToken = (address) => {
   console.log('CameraTab: 이벤트 토큰 전송 메소드');
-  // fetch(Address.url+'/routes/getEventToken', {
-  //   method: 'POST',
-  //   headers: {'Content-Type': 'application/json'},
-  //   body: JSON.stringify({to: address}),
-  // })
-  //   .then((res) => {
-  //     return res.json();
-  //   })
-  //   .then((data) => {
-  //     console.log('이벤트 토큰 hash', data.txhash);
-  //   });
+  fetch(Address.url + '/routes/getEventToken', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({to: address}),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log('이벤트 토큰 hash', data.txhash);
+    });
 };
 
 const CameraTab = (props) => {
