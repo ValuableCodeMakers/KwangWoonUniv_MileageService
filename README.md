@@ -46,6 +46,7 @@ OpenZeppelin / https://github.com/OpenZeppelin/openzeppelin-contracts
 ## 아키텍쳐 🧾
 <p align="center">
 <img width="80%" src="https://user-images.githubusercontent.com/55469709/116030064-b449b780-a695-11eb-936b-3050e1d9b558.png"></img>
+<img width="80%" src="https://user-images.githubusercontent.com/55469709/121720676-54f91700-cb1e-11eb-8b47-2b53a6ede7b8.png"></img>
 </p>
 
 ## Team 💻
